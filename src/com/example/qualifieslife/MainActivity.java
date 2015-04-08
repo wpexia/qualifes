@@ -3,25 +3,31 @@ package com.example.qualifieslife;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnClickListener{
 	TextView testTextView;
+	Button jump;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-//		System.out.println("12345");
+		init();
+		
 		RequestParams requestParams=new RequestParams();
 		requestParams.put("parent_id", "52");
 		//requestParams.put("logo", "home_top_slide");
-		testTextView=(TextView)findViewById(R.id.testtext);
+		
 		
 		AsyncHttpClient client=new AsyncHttpClient();
 		//JsonHttpResponseHandler jsonHttpResponseHandler=new JsonHttpResponseHandler();
@@ -62,11 +68,30 @@ public class MainActivity extends Activity {
 		
 	}
 
+	private void init() {
+		testTextView=(TextView)findViewById(R.id.testtext);
+		jump = (Button)findViewById(R.id.button);
+		jump.setOnClickListener(this);
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.button:
+			Intent intent = new Intent(this, HomePageActivity.class);
+			startActivity(intent);
+			break;
+
+		default:
+			break;
+		}
 	}
 
 }
