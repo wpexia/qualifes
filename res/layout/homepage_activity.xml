@@ -8,7 +8,9 @@
         android:id="@+id/head"
         android:layout_width="fill_parent"
         android:layout_height="96px"
-        android:background="#00aaff" >
+        android:background="#00aaff"
+        android:focusable="true"  
+		android:focusableInTouchMode="true" >
 
         <ImageView
             android:id="@+id/logo"
@@ -42,7 +44,7 @@
 	    android:id="@+id/firstPic"
 	    android:layout_width="match_parent"
 	    android:layout_height="320px"
-	    android:background="@drawable/ic_launcher"
+	    android:background="@drawable/test1"
 	    android:layout_below="@+id/head"/>
 	
 	<LinearLayout
@@ -59,14 +61,14 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="fill_parent"
 		    android:layout_weight="1"
-		    android:background="@drawable/ic_launcher" />
+		    android:background="@drawable/test1" />
         
 		<ImageButton
 	    	android:id="@+id/thirdPic"
 	    	android:layout_width="wrap_content"
 	    	android:layout_height="fill_parent"
 	    	android:layout_weight="1"
-	    	android:background="@drawable/ic_launcher"/>
+	    	android:background="@drawable/test2"/>
     </LinearLayout>
     
 		<RelativeLayout
@@ -76,44 +78,101 @@
 		    android:layout_below="@+id/twoPicViewGroup"
 	    	android:layout_marginTop="10px" 
 	    	android:background="#e3223f">
-		    
+		    <TextView
+		        android:id="@+id/label11"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_centerHorizontal="true"
+		        android:layout_marginTop="70px"
+		        android:layout_marginBottom="10px"
+		        android:textSize="8sp"
+		        android:textColor="#ffffff"
+		        android:text="让人不断回味的味道"/>
+		    <TextView
+		        android:id="@+id/label12"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@+id/label11"
+		        android:layout_alignRight="@+id/label11"
+		        android:textSize="14sp"
+		        android:textColor="#ffffff"
+		        android:text="个人护理"/>"
 		</RelativeLayout>
 		
-		<ListView 
+		<HorizontalScrollView
 		    android:id="@+id/firstList"
-		    android:layout_width="match_parent"
-		    android:layout_height="200px"
-		    android:layout_below="@+id/twoPicViewGroup"
-	    	android:layout_marginTop="10px"
-	    	android:layout_toRightOf="@+id/care">
-		    
-		</ListView>
-		
-		<ListView 
-		    android:id="@+id/secondList"
-		    android:layout_width="match_parent"
-		    android:layout_height="200px"
-		    android:layout_below="@+id/care"
-	    	android:layout_marginTop="10px">
-		    
-		</ListView>
-		
+			    android:layout_width="match_parent"
+			    android:layout_height="200px"
+			    android:layout_below="@+id/twoPicViewGroup"
+		    	android:layout_marginTop="10px"
+		    	android:layout_toRightOf="@+id/care">"
+		    <LinearLayout
+            	android:layout_width="wrap_content"
+            	android:layout_height="200px" >
+				 <GridView
+	                android:id="@+id/gridView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="200px"
+	                android:gravity="center"
+	                android:numColumns="auto_fit"
+	                android:stretchMode="spacingWidthUniform" >
+	            </GridView>
+            </LinearLayout>
+		</HorizontalScrollView>
+
+		<HorizontalScrollView
+		    android:id="@+id/secondtList"
+			    android:layout_width="match_parent"
+			    android:layout_height="200px"
+			    android:layout_below="@+id/care"
+		    	android:layout_marginTop="10px"
+		    	android:layout_toLeftOf="@+id/clean">
+		    <LinearLayout
+            	android:layout_width="wrap_content"
+            	android:layout_height="200px" >
+				 <GridView
+	                android:id="@+id/gridView2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="200px"
+	                android:gravity="center"
+	                android:numColumns="auto_fit"
+	                android:stretchMode="spacingWidthUniform" >
+	            </GridView>
+            </LinearLayout>
+		</HorizontalScrollView>
 		<RelativeLayout
 		    android:id="@+id/clean"
 		    android:layout_width="160px"
 		    android:layout_height="200px"
 		    android:layout_below="@+id/firstList"
 	    	android:layout_marginTop="10px" 
-	    	android:background="#e3223f"
+	    	android:background="#039be7"
 	    	android:layout_alignParentRight="true"
 	    	android:layout_toRightOf="@+id/clean">
-		    
+		    <TextView
+		        android:id="@+id/label21"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_centerHorizontal="true"
+		        android:layout_marginTop="70px"
+		        android:layout_marginBottom="10px"
+		        android:textSize="8sp"
+		        android:textColor="#ffffff"
+		        android:text="瞬间点亮居室的性感"/>
+		    <TextView
+		        android:id="@+id/label22"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@+id/label21"
+		        android:layout_alignLeft="@+id/label21"
+		        android:textSize="14sp"
+		        android:textColor="#ffffff"
+		        android:text="家居清洁"/>
 		</RelativeLayout>
-		
-       	<ListView 
-       	    android:id="@+id/thirdList"
-       	    android:layout_width="fill_parent"
-       	    android:layout_height="match_parent">
-       	    
-       	</ListView>
+		<ListView 
+		    android:id="@+id/listView"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:layout_below="@+id/clean"
+		    />
 </RelativeLayout>

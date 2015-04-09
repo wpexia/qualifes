@@ -35,33 +35,55 @@ public final class R {
         public static final int icon_me_pressed=0x7f020006;
         public static final int icon_shoppingcart=0x7f020007;
         public static final int icon_shoppingcart_pressed=0x7f020008;
-        public static final int logo=0x7f020009;
-        public static final int search=0x7f02000a;
-        public static final int shape=0x7f02000b;
-        public static final int star=0x7f02000c;
-        public static final int star_red=0x7f02000d;
+        public static final int item_stroke=0x7f020009;
+        public static final int logo=0x7f02000a;
+        public static final int search=0x7f02000b;
+        public static final int shape=0x7f02000c;
+        public static final int square_black=0x7f02000d;
+        public static final int star=0x7f02000e;
+        public static final int star_red=0x7f02000f;
+        public static final int test1=0x7f020010;
+        public static final int test2=0x7f020011;
+        public static final int textview_border=0x7f020012;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000f;
+        public static final int action_settings=0x7f08001e;
+        public static final int beforePrice=0x7f080008;
         public static final int button=0x7f080001;
-        public static final int care=0x7f08000a;
-        public static final int clean=0x7f08000d;
-        public static final int firstList=0x7f08000b;
-        public static final int firstPic=0x7f080006;
-        public static final int head=0x7f080002;
-        public static final int input=0x7f080004;
-        public static final int logo=0x7f080003;
-        public static final int search=0x7f080005;
-        public static final int secondList=0x7f08000c;
-        public static final int secondPic=0x7f080008;
+        public static final int care=0x7f080013;
+        public static final int clean=0x7f080019;
+        public static final int currentPrice=0x7f080007;
+        public static final int discount=0x7f080003;
+        public static final int discountTextView=0x7f080009;
+        public static final int firstList=0x7f080016;
+        public static final int firstPic=0x7f08000f;
+        public static final int fromPosi=0x7f08000a;
+        public static final int gridView1=0x7f080017;
+        public static final int gridView2=0x7f08001a;
+        public static final int head=0x7f08000b;
+        public static final int image=0x7f080002;
+        public static final int infoTextView=0x7f080006;
+        public static final int input=0x7f08000d;
+        public static final int label11=0x7f080014;
+        public static final int label12=0x7f080015;
+        public static final int label21=0x7f08001b;
+        public static final int label22=0x7f08001c;
+        public static final int listView=0x7f08001d;
+        public static final int logo=0x7f08000c;
+        public static final int price=0x7f080004;
+        public static final int search=0x7f08000e;
+        public static final int secondPic=0x7f080011;
+        public static final int secondtList=0x7f080018;
         public static final int testtext=0x7f080000;
-        public static final int thirdList=0x7f08000e;
-        public static final int thirdPic=0x7f080009;
-        public static final int twoPicViewGroup=0x7f080007;
+        public static final int thirdPic=0x7f080012;
+        public static final int top=0x7f080005;
+        public static final int twoPicViewGroup=0x7f080010;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int homepage_activity=0x7f030001;
+        public static final int good_group_item=0x7f030001;
+        public static final int good_info_item=0x7f030002;
+        public static final int homepage_activity=0x7f030003;
     }
     public static final class menu {
         public static final int home_page=0x7f070000;
