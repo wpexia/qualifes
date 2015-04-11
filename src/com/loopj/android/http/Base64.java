@@ -18,7 +18,7 @@ package com.loopj.android.http;
 
 import java.io.UnsupportedEncodingException;
 
-import com.example.qualifieslife.BuildConfig;
+import com.qualifies.app.BuildConfig;
 
 /**
  * Utilities for encoding and decoding the Base64 representation of binary data.  See RFCs <a
