@@ -1,14 +1,12 @@
-package com.qualifies.activity;
+package com.qualifies.app;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
 
-import com.qualifies.app.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import android.R.string;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

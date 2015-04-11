@@ -1,6 +1,4 @@
-package com.qualifies.activity;
-
-import com.qualifies.app.R;
+package com.qualifies.app;
 
 import android.app.Activity;
 import android.os.Bundle;

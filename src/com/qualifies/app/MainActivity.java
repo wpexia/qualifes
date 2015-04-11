@@ -1,4 +1,4 @@
-package com.qualifies.activity;
+package com.qualifies.app;
 
 import org.json.JSONObject;
 
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.TextView;
 
-import com.qualifies.app.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
