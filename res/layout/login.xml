@@ -64,13 +64,11 @@
                 android:id="@+id/LoginUsername"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentStart="false"
                 android:layout_marginLeft="18dp"
                 android:layout_toRightOf="@id/icon_username"
                 android:background="@null"
                 android:inputType="text"
-                android:text="请输入手机号"
+                android:hint="@string/mobilepleas"
                 android:textColor="#b1b1b1"
                 android:textSize="14sp" >
 
@@ -111,7 +109,7 @@
                 android:layout_toRightOf="@id/icon_password"
                 android:background="@null"
                 android:inputType="text"
-                android:text="请输入登录密码"
+                android:hint="@string/pswplease"
                 android:textColor="#b1b1b1"
                 android:textSize="14sp" />
 
