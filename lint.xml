@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="InflateParams" severity="ignore">
+        <ignore path="src/com/qualifes/adapter/HomePageView1ListAdapter.java" />
+    </issue>
+    <issue id="ViewHolder" severity="ignore">
+        <ignore path="src/com/qualifes/adapter/HomePageView1ListAdapter.java" />
+    </issue>
+</lint>
