@@ -370,6 +370,17 @@ public class RequestParams implements Serializable {
         fileParams.remove(key);
         urlParamsWithObjects.remove(key);
     }
+    
+    /***
+     * ÐÂÔöµÄ
+     * Removes all parameters from the request.
+     */
+    public void clear() {
+		urlParams.clear();
+		streamParams.clear();
+		fileParams.clear();
+		urlParamsWithObjects.clear();
+	}
 
     /**
      * Check if a parameter is defined.
