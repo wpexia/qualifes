@@ -1,0 +1,209 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context="com.example.qualifieslife.HomePageActivity" >
+
+    <RelativeLayout
+        android:id="@+id/head"
+        android:layout_width="fill_parent"
+        android:layout_height="96px"
+        android:background="#00aaff"
+        android:focusable="true" 
+		android:focusableInTouchMode="true">
+	
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:background="@drawable/logo"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/homepageLogo" />
+
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="match_parent"
+            android:layout_height="60px"
+            android:layout_toRightOf="@+id/logo"
+            android:layout_marginLeft="28px"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30px"
+            android:background="@drawable/shape"
+            android:textSize="10sp"
+            android:hint="请输入搜索的商品名称和品牌名"/>
+        
+        <ImageButton 
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/input"
+            android:background="@drawable/search"
+            android:layout_centerVertical="true"
+            />
+    </RelativeLayout>
+    <com.qualifes.view.model.MyScrollView 
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/head"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            
+			<com.qualifes.view.model.MyViewFlipper
+			    android:id="@+id/viewFlipper"
+			    android:layout_width="match_parent"
+			    android:layout_height="320px"
+			    />
+			
+			<LinearLayout
+			    android:id="@+id/twoPicViewGroup"
+		        android:layout_width="fill_parent"
+		        android:layout_height="170px"
+		        android:orientation="horizontal"
+		        android:weightSum="2" 
+		        android:layout_below="@+id/viewFlipper"
+			    android:layout_marginTop="10px" >
+		
+		        <ImageButton 
+				    android:id="@+id/secondPic"
+				    android:layout_width="wrap_content"
+				    android:layout_height="fill_parent"
+				    android:layout_weight="1"
+				    android:background="@drawable/test1" />
+		        
+				<ImageButton
+			    	android:id="@+id/thirdPic"
+			    	android:layout_width="wrap_content"
+			    	android:layout_height="fill_parent"
+			    	android:layout_weight="1"
+			    	android:background="@drawable/test2"/>
+		    </LinearLayout>
+		    
+		    	<LinearLayout
+		    	    android:layout_width="match_parent"
+		    	    android:layout_height="match_parent"
+		    	    android:orientation="horizontal">
+					<RelativeLayout
+					    android:id="@+id/care"
+					    android:layout_width="160px"
+					    android:layout_height="200px"
+					    android:layout_below="@+id/twoPicViewGroup"
+				    	android:layout_marginTop="10px" 
+				    	android:background="#e3223f">
+					    <TextView
+					        android:id="@+id/label11"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:layout_centerHorizontal="true"
+					        android:layout_marginTop="70px"
+					        android:layout_marginBottom="10px"
+					        android:textSize="8sp"
+					        android:textColor="#ffffff"
+					        android:text="让人不断回味的味道"/>
+					    <TextView
+					        android:id="@+id/label12"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:layout_below="@+id/label11"
+					        android:layout_alignRight="@+id/label11"
+					        android:textSize="14sp"
+					        android:textColor="#ffffff"
+					        android:text="个人护理"/>"
+					</RelativeLayout>
+					
+					<HorizontalScrollView
+					    android:id="@+id/firstList"
+						    android:layout_width="match_parent"
+						    android:layout_height="200px"
+						    android:layout_below="@+id/twoPicViewGroup"
+					    	android:layout_marginTop="10px"
+					    	android:layout_toRightOf="@+id/care">"
+					    <LinearLayout
+			            	android:layout_width="wrap_content"
+			            	android:layout_height="200px" >
+							 <GridView
+				                android:id="@+id/gridView1"
+				                android:layout_width="wrap_content"
+				                android:layout_height="200px"
+				                android:gravity="center"
+				                android:numColumns="auto_fit"
+				                android:stretchMode="spacingWidthUniform" >
+				            </GridView>
+			            </LinearLayout>
+					</HorizontalScrollView>
+			</LinearLayout>
+			
+			<RelativeLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_below="@+id/care"
+			    android:layout_marginTop="10px" >
+					<HorizontalScrollView 
+					    android:id="@+id/secondtList" 
+					    android:layout_width="match_parent" 
+					    android:layout_height="200px" 
+					    android:layout_marginTop="10px" 
+					    android:layout_toLeftOf="@+id/clean">
+					    <LinearLayout 
+					        android:layout_width="wrap_content" 
+					        android:layout_height="200px">
+							 
+							 <GridView android:id="@+id/gridView2" 
+							     android:layout_width="wrap_content" 
+							     android:layout_height="200px" 
+							     android:gravity="center" 
+							     android:numColumns="auto_fit" 
+							     android:stretchMode="spacingWidthUniform">
+				            </GridView>
+			            </LinearLayout>
+					</HorizontalScrollView>
+					
+					<RelativeLayout 
+					    android:id="@+id/clean" 
+					    android:layout_width="160px" 
+					    android:layout_height="200px" 
+					    android:background="#039be7" 
+					    android:layout_alignParentRight="true" 
+					    android:layout_toRightOf="@+id/clean">
+					    <TextView android:id="@+id/label21" 
+					        android:layout_width="wrap_content" 
+					        android:layout_height="wrap_content" 
+					        android:layout_centerHorizontal="true" 
+					        android:layout_marginTop="70px" 
+					        android:layout_marginBottom="10px" 
+					        android:textSize="8sp" 
+					        android:textColor="#ffffff" 
+					        android:text="瞬间点亮居室的性感" />
+					    <TextView 
+					        android:id="@+id/label22" 
+					        android:layout_width="wrap_content" 
+					        android:layout_height="wrap_content" 
+					        android:layout_below="@+id/label21" 
+					        android:layout_alignLeft="@+id/label21" 
+					        android:textSize="14sp" 
+					        android:textColor="#ffffff" 
+					        android:text="家居清洁" />
+					</RelativeLayout>
+				</RelativeLayout>
+				
+				<LinearLayout 
+				    android:id="@+id/linear" 
+				    android:layout_width="match_parent" 
+				    android:layout_height="wrap_content" 
+				    android:layout_below="@+id/clean">
+					
+					<com.qualifes.view.model.MyListView 
+					    android:id="@+id/bottom" 
+					    android:layout_width="fill_parent" 
+					    android:layout_height="wrap_content">
+					</com.qualifes.view.model.MyListView>
+				</LinearLayout>
+		</LinearLayout>		
+	</com.qualifes.view.model.MyScrollView>
+</RelativeLayout>
