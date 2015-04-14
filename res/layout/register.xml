@@ -115,7 +115,8 @@
                     android:background="#00000000"
                     android:text="免费获取"
                     android:textColor="#00aaff"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:layout_centerInParent="true"/>
         </RelativeLayout>
 
         <View
