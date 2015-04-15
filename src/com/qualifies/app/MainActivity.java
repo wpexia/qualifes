@@ -1,5 +1,6 @@
 package com.qualifies.app;
 
+import android.widget.RelativeLayout;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -23,8 +24,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		init();
-		
-		RequestParams requestParams=new RequestParams();
+        RequestParams requestParams=new RequestParams();
 		requestParams.put("parent_id", "52");
 		//requestParams.put("logo", "home_top_slide");
 		

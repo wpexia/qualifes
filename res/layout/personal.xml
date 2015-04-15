@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:orientation="vertical">
+
+    <TwoLineListItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_gravity="right">
+    </TwoLineListItem>
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:id="@+id/rela"
+            android:layout_height="145dp" android:background="#ff0087c2">
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/setting" android:layout_gravity="right"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                android:layout_marginRight="15dp" android:layout_marginTop="15dp" android:src="@drawable/icon_set"
+                android:background="#ff0087c2"/>
+        <Button
+                android:layout_width="110dp"
+                android:layout_height="33dp"
+                android:text="登陆"
+                android:textColor="#ffffff"
+                android:textSize="14sp"
+                android:id="@+id/button2"
+                android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
+                android:layout_marginLeft="60dp" android:layout_marginTop="58dp"
+                android:background="@drawable/buttonstyle"/>
+        <Button
+                android:layout_width="110dp"
+                android:layout_height="33dp"
+                android:text="注册"
+                android:textColor="#ffffff"
+                android:textSize="14sp"
+                android:id="@+id/button3"
+                android:layout_alignTop="@+id/button2" android:layout_toRightOf="@+id/button2"
+                android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@+id/button2" android:background="@drawable/buttonstyle"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="品质生活，比海淘跟真、更快、更合算！"
+                android:textColor="#ffffff"
+                android:textSize="12sp"
+                android:id="@+id/textView"
+                android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
+                android:layout_marginBottom="16dp"/>
+
+    </RelativeLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        <RelativeLayout
+                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_weight="1" android:background="#ff00aaff" >
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/icon_pay"
+                    android:src="@drawable/icon_pay"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="待付款"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp"
+                    android:id="@+id/textView2"
+                    android:layout_below="@+id/icon_pay" android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_weight="1" android:background="#ff00aaff">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/icon_car"
+                    android:src="@drawable/icon_car"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="待发货"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp"
+                    android:layout_below="@+id/icon_car" android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_weight="1" android:background="#ff00aaff">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/icon_list"
+                    android:src="@drawable/icon_list"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的订单"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp"
+                    android:layout_below="@+id/icon_list" android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent" android:background="#f4f4f4">
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="51dp"
+                android:background="#ffffff">
+
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/icon_history"
+                    android:src="@drawable/icon_history" android:background="#ffffff"
+                    android:layout_centerVertical="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="浏览历史"
+                    android:textColor="#6e6e6e"
+                    android:textSize="16sp" android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/icon_history" android:layout_toEndOf="@+id/icon_history"
+                    android:layout_marginLeft="18dp"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                    android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"
+                    android:id="@+id/imageButton"/>
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="#dedede"
+                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="51dp"
+                android:background="#ffffff">
+
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/icon_follow"
+                    android:src="@drawable/icon_follow" android:background="#ffffff"
+                    android:layout_centerVertical="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的收藏"
+                    android:textColor="#6e6e6e"
+                    android:textSize="16sp"
+                    android:id="@+id/textView3" android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/icon_follow" android:layout_toEndOf="@+id/icon_follow"
+                    android:layout_marginLeft="18dp"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                    android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="#dedede"
+                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="51dp"
+                android:background="#ffffff">
+
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/icon_money"
+                    android:src="@drawable/icon_money" android:background="#ffffff"
+                    android:layout_centerVertical="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的红包"
+                    android:textColor="#6e6e6e"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/icon_money" android:layout_toEndOf="@+id/icon_money"
+                    android:layout_marginLeft="18dp"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                    android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="#dedede"
+                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="51dp"
+                android:background="#ffffff">
+
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/icon_position"
+                    android:src="@drawable/icon_position" android:background="#ffffff"
+                    android:layout_centerVertical="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="收货地址"
+                    android:textColor="#6e6e6e"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/icon_position" android:layout_toEndOf="@+id/icon_position"
+                    android:layout_marginLeft="18dp"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                    android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="#dedede"
+                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="51dp"
+                android:background="#ffffff">
+
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/icon_realname"
+                    android:src="@drawable/icon_realname" android:background="#ffffff"
+                    android:layout_centerVertical="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="实名认证"
+                    android:textColor="#6e6e6e"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/icon_realname" android:layout_toEndOf="@+id/icon_realname"
+                    android:layout_marginLeft="18dp"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                    android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp">
+    </LinearLayout>
+</LinearLayout>
