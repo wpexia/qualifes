@@ -5,6 +5,7 @@ import android.os.Message;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.SyncHttpClient;
+import com.qualifies.app.config.Api;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -15,7 +16,7 @@ public class RegisterManager {
     private String username;
     private String password;
     private String code;
-
+    private String service = "reg_user";
 
     public static RegisterManager getInst() {
         return inst;
@@ -33,13 +34,13 @@ public class RegisterManager {
         public void run() {
             final Message msg = handler.obtainMessage();
             SyncHttpClient client = new SyncHttpClient();
-            RequestParams requestParams = new RequestParams();
+            final RequestParams requestParams = new RequestParams();
             requestParams.put("_type", "gc");
             requestParams.put("phone", username);
-            client.post("http://test.qualifes.com:80/app_api/v_1.03/api.php?service=reg_user", requestParams, new JsonHttpResponseHandler() {
+            client.post(Api.url(service), requestParams, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    msg.what = 0;
+                    Api.dealSuccessRes(response, msg);
                     handler.sendMessage(msg);
                 }
 
@@ -47,7 +48,7 @@ public class RegisterManager {
                 public void onFailure(int statusCode,
                                       org.apache.http.Header[] headers, String responseString,
                                       Throwable throwable) {
-                    msg.what = 1;
+                    Api.dealFailRes(msg);
                     handler.sendMessage(msg);
                 }
             });
@@ -71,10 +72,10 @@ public class RegisterManager {
             requestParams.put("_type", "cod");
             requestParams.put("phone", username);
             requestParams.put("verify", code);
-            client.post("http://test.qualifes.com:80/app_api/v_1.03/api.php?service=reg_user", requestParams, new JsonHttpResponseHandler() {
+            client.post(Api.url(service), requestParams, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    msg.what = 0;
+                    Api.dealSuccessRes(response, msg);
                     handler.sendMessage(msg);
                 }
 
@@ -82,7 +83,7 @@ public class RegisterManager {
                 public void onFailure(int statusCode,
                                       org.apache.http.Header[] headers, String responseString,
                                       Throwable throwable) {
-                    msg.what = 1;
+                    Api.dealFailRes(msg);
                     handler.sendMessage(msg);
                 }
             });
@@ -109,10 +110,10 @@ public class RegisterManager {
             requestParams.put("phone", username);
             requestParams.put("verify", code);
             requestParams.put("pwd", password);
-            client.post("http://test.qualifes.com:80/app_api/v_1.03/api.php?service=reg_user", requestParams, new JsonHttpResponseHandler() {
+            client.post(Api.url(service), requestParams, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    msg.what = 0;
+                    Api.dealSuccessRes(response, msg);
                     handler.sendMessage(msg);
                 }
 
@@ -120,7 +121,7 @@ public class RegisterManager {
                 public void onFailure(int statusCode,
                                       org.apache.http.Header[] headers, String responseString,
                                       Throwable throwable) {
-                    msg.what = 1;
+                    Api.dealFailRes(msg);
                     handler.sendMessage(msg);
                 }
             });

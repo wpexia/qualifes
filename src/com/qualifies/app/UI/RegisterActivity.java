@@ -86,18 +86,18 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 startActivity(intent);
             }
             break;
-            case R.id.agree:{
+            case R.id.agree: {
                 if (username.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT).show();
                     break;
-                }else if (code.getText().toString().equals("")) {
+                } else if (code.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "验证码不能为空！", Toast.LENGTH_SHORT).show();
                     break;
-                }else if (password.getText().toString().equals("")) {
+                } else if (password.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "密码不能为空！", Toast.LENGTH_SHORT).show();
                     break;
-                }else {
-                    registerManager.verify(username.getText().toString(), code.getText().toString(),  verifyHandler);
+                } else {
+                    registerManager.verify(username.getText().toString(), code.getText().toString(), verifyHandler);
                 }
             }
             break;
@@ -105,27 +105,22 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     }
 
 
-    //获取严重码Handler
+    //获取验证码Handler
     Handler gcHandler = new Handler() {
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0: {
-                    time = new Timer();
-                    task = new TimerTask() {
-                        public void run() {
-                            Message message = new Message();
-                            message.what = 1;
-                            timeHandler.sendMessage(message);
-                        }
-                    };
-                    count = 61;
-                    getCode.setEnabled(false);
-                    time.schedule(task, 1000, 1000);
-                }
-                break;
-                case 1: {
-                    Toast.makeText(getApplicationContext(), "获取失败，请重试", Toast.LENGTH_SHORT).show();
-                }
+            Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+            if (msg.what == 0) {
+                time = new Timer();
+                task = new TimerTask() {
+                    public void run() {
+                        Message message = new Message();
+                        message.what = 1;
+                        timeHandler.sendMessage(message);
+                    }
+                };
+                count = 61;
+                getCode.setEnabled(false);
+                time.schedule(task, 1000, 1000);
             }
         }
     };
@@ -155,7 +150,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 }
                 break;
                 case 1: {
-                    Toast.makeText(getApplicationContext(), "验证码错误，请重试", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -168,7 +163,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 case 0: {
                     try {
                         Thread.sleep(1000);
-                        Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), msg.obj.toString() , Toast.LENGTH_SHORT).show();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -177,7 +172,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 }
                 break;
                 case 1: {
-                    Toast.makeText(getApplicationContext(), "注册失败，请重试", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
         }
