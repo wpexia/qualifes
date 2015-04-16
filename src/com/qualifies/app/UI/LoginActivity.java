@@ -1,7 +1,8 @@
-package com.qualifies.app;
+package com.qualifies.app.ui;
 
 import android.widget.Toast;
 import com.loopj.android.http.SyncHttpClient;
+import com.qualifies.app.R;
 import org.apache.http.Header;
 import org.json.JSONObject;
 

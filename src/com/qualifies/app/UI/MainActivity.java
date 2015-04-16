@@ -1,6 +1,6 @@
-package com.qualifies.app;
+package com.qualifies.app.ui;
 
-import android.widget.RelativeLayout;
+import com.qualifies.app.R;
 import org.json.JSONObject;
 
 import android.app.Activity;

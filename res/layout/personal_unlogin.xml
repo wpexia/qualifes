@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="145dp" android:background="#ff0087c2">
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/personal_setting" android:layout_gravity="right"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+            android:layout_marginRight="15dp" android:layout_marginTop="15dp" android:src="@drawable/personal_setting"
+            android:background="#ff0087c2"/>
+    <Button
+            android:layout_width="110dp"
+            android:layout_height="33dp"
+            android:text="登陆"
+            android:textColor="@drawable/press80_white"
+            android:textSize="14sp"
+            android:id="@+id/personal_login"
+            android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
+            android:layout_marginLeft="60dp" android:layout_marginTop="58dp"
+            android:background="@drawable/buttonstyle"/>
+    <Button
+            android:layout_width="110dp"
+            android:layout_height="33dp"
+            android:text="注册"
+            android:textColor="@drawable/press80_white"
+            android:textSize="14sp"
+            android:id="@+id/personal_register"
+            android:layout_alignTop="@+id/personal_login" android:layout_toRightOf="@+id/personal_login"
+            android:layout_marginLeft="20dp"
+            android:layout_toEndOf="@+id/personal_login" android:background="@drawable/buttonstyle"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="品质生活，比海淘更真、更快、更合算！"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"/>
+</RelativeLayout>

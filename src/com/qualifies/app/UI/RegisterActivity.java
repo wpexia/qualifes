@@ -1,4 +1,4 @@
-package com.qualifies.app;
+package com.qualifies.app.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.SyncHttpClient;
+import com.qualifies.app.R;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
