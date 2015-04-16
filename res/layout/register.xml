@@ -114,7 +114,7 @@
                     android:layout_alignParentRight="true"
                     android:background="#00000000"
                     android:text="免费获取"
-                    android:textColor="#00aaff"
+                    android:textColor="@drawable/register_text_press"
                     android:textSize="14sp"
                     android:layout_centerInParent="true"/>
         </RelativeLayout>
@@ -190,7 +190,7 @@
             android:background="@null"
             android:gravity="center"
             android:text="《品质生活用户服务协议》"
-            android:textColor="#00aaff"
+            android:textColor="@drawable/register_text_press"
             android:textSize="14sp">
 
     </Button>

@@ -11,7 +11,7 @@ import com.qualifies.app.R;
 import com.qualifies.app.ui.LoginActivity;
 import com.qualifies.app.ui.RegisterActivity;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class PersonalActivity extends Activity implements View.OnClickListener {
 
     private SharedPreferences sp;
 
@@ -33,7 +33,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private void updateView() {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         hideFragment(transaction);
-        if (!sp.contains("username")) {
+        if (sp.contains("username")) {
             if (loginFragment == null) {
                 loginFragment = new LoginFragment();
                 transaction.add(R.id.personal_fragment, loginFragment);
@@ -66,12 +66,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         final int id = v.getId();
         switch (id) {
             case R.id.personal_login: {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent = new Intent(PersonalActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
             break;
             case R.id.personal_register: {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(PersonalActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         }

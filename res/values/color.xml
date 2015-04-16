@@ -3,5 +3,5 @@
     <color name="personal_button_normal">#ff00aaff</color>
     <color name="personal_button_pressed">#ff0099c6</color>
     <color name="white">#ffffffff</color>
-    <color name="f4f4f4">#f4f4f4</color>
+    <color name="f4f4f4">#fff4f4f4</color>
 </resources>

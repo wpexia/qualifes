@@ -24,7 +24,7 @@
                 android:label="@string/protocol_name">
         </activity>
         <activity
-                android:name=".ui.personal.MainActivity"
+                android:name=".ui.personal.PersonalActivity"
                 android:label="@string/wo_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

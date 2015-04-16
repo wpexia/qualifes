@@ -2,7 +2,6 @@ package com.qualifies.app.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,17 +12,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.SyncHttpClient;
+import com.manager.RegisterManager;
 import com.qualifies.app.R;
-import org.apache.http.Header;
-import org.json.JSONObject;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends Activity implements View.OnClickListener {
 
     private EditText username;
     private EditText code;
@@ -35,12 +30,13 @@ public class RegisterActivity extends Activity {
     private int count;
     private Timer time;
     private TimerTask task;
+    private RegisterManager registerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
+        registerManager = RegisterManager.getInst();
         initView();
     }
 
@@ -52,76 +48,19 @@ public class RegisterActivity extends Activity {
         viewPasword = (Button) findViewById(R.id.show_password);
         protocol = (Button) findViewById(R.id.protocol);
         agree = (Button) findViewById(R.id.agree);
-        getCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!username.getText().toString().equals("")) {
-                    Thread gcThread = new Thread(new GcThread());
-                    gcThread.start();
-                } else {
-                    Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        getCode.setOnClickListener(this);
+        protocol.setOnClickListener(this);
+        agree.setOnClickListener(this);
         viewPasword.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
                         password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                        viewPasword.setTextColor(Color.argb(204, 0, 170, 255));
                     }
                     break;
                     case MotionEvent.ACTION_UP: {
                         password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                        viewPasword.setTextColor(Color.argb(255, 0, 170, 255));
-                    }
-                }
-
-                return false;
-            }
-        });
-        protocol.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        protocol.setTextColor(Color.argb(204, 0, 170, 255));
-                        Intent intent = new Intent(RegisterActivity.this, ProtocolActivity.class);
-                        startActivity(intent);
-                    }
-                    break;
-                    case MotionEvent.ACTION_UP: {
-                        protocol.setTextColor(Color.argb(255, 0, 170, 255));
-                    }
-                }
-                return false;
-            }
-        });
-        agree.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        agree.setBackgroundColor(Color.argb(255,201,28,56));
-                        if(username.getText().toString().equals("")){
-                            Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT).show();
-                            return false;
-                        }
-                        if(code.getText().toString().equals("")){
-                            Toast.makeText(getApplicationContext(), "验证码不能为空！", Toast.LENGTH_SHORT).show();
-                            return false;
-                        }
-                        if(password.getText().toString().equals("")){
-                            Toast.makeText(getApplicationContext(), "密码不能为空！", Toast.LENGTH_SHORT).show();
-                            return false;
-                        }
-                        Thread verify = new Thread(new VerifyThread());
-                        verify.start();
-                    }
-                    break;
-                    case MotionEvent.ACTION_UP: {
-                        agree.setBackgroundColor(Color.argb(255, 195, 34, 63));
                     }
                 }
                 return false;
@@ -129,30 +68,43 @@ public class RegisterActivity extends Activity {
         });
     }
 
-    class GcThread implements Runnable {
-        @Override
-        public void run() {
-            final Message msg = gcHandler.obtainMessage();
-            SyncHttpClient client = new SyncHttpClient();
-            RequestParams requestParams = new RequestParams();
-            requestParams.put("_type", "gc");
-            requestParams.put("phone", username.getText().toString());
-            client.post("http://test.qualifes.com:80/app_api/v_1.03/api.php?service=reg_user", requestParams, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    msg.what = 0;
-                    gcHandler.sendMessage(msg);
-                }
 
-                @Override
-                public void onFailure(int statusCode,
-                                      org.apache.http.Header[] headers, String responseString,
-                                      Throwable throwable) {
-
+    @Override
+    public void onClick(View v) {
+        final int id = v.getId();
+        switch (id) {
+            case R.id.get_code: {
+                if (username.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT).show();
+                } else {
+                    registerManager.getCode(username.getText().toString(), gcHandler);
                 }
-            });
+            }
+            break;
+            case R.id.protocol: {
+                Intent intent = new Intent(RegisterActivity.this, ProtocolActivity.class);
+                startActivity(intent);
+            }
+            break;
+            case R.id.agree:{
+                if (username.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT).show();
+                    break;
+                }else if (code.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "验证码不能为空！", Toast.LENGTH_SHORT).show();
+                    break;
+                }else if (password.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "密码不能为空！", Toast.LENGTH_SHORT).show();
+                    break;
+                }else {
+                    registerManager.verify(username.getText().toString(), code.getText().toString(),  verifyHandler);
+                }
+            }
+            break;
         }
     }
+
+
 
     Handler gcHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -161,7 +113,6 @@ public class RegisterActivity extends Activity {
                     time = new Timer();
                     task = new TimerTask() {
                         public void run() {
-
                             Message message = new Message();
                             message.what = 1;
                             timeHandler.sendMessage(message);
@@ -179,6 +130,7 @@ public class RegisterActivity extends Activity {
         }
     };
 
+    //延时Handler
     Handler timeHandler = new Handler() {
         public void handleMessage(Message msg) {
             count = count - msg.what;
@@ -194,40 +146,12 @@ public class RegisterActivity extends Activity {
         }
     };
 
-
-    class VerifyThread implements Runnable {
-        @Override
-        public void run() {
-            final Message msg = verifyHandler.obtainMessage();
-            SyncHttpClient client = new SyncHttpClient();
-            RequestParams requestParams = new RequestParams();
-            requestParams.put("_type", "cod");
-            requestParams.put("phone", username.getText().toString());
-            requestParams.put("verify", code.getText().toString());
-            client.post("http://test.qualifes.com:80/app_api/v_1.03/api.php?service=reg_user", requestParams, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    msg.what = 0;
-                    verifyHandler.sendMessage(msg);
-                }
-
-                @Override
-                public void onFailure(int statusCode,
-                                      org.apache.http.Header[] headers, String responseString,
-                                      Throwable throwable) {
-                    msg.what = 1;
-                    verifyHandler.sendMessage(msg);
-                }
-            });
-        }
-    }
-
+    //验证码确认Handler
     Handler verifyHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0: {
-                    Thread registerThread = new Thread(new RegisterThread());
-                    registerThread.start();
+                    registerManager.register(username.getText().toString(), code.getText().toString(), password.getText().toString(), registerHandler);
                 }
                 break;
                 case 1: {
@@ -237,33 +161,6 @@ public class RegisterActivity extends Activity {
         }
     };
 
-
-    class RegisterThread implements Runnable {
-        @Override
-        public void run() {
-            final Message msg = registerHandler.obtainMessage();
-            SyncHttpClient client = new SyncHttpClient();
-            RequestParams requestParams = new RequestParams();
-            requestParams.put("_type", "reg");
-            requestParams.put("phone", username.getText().toString());
-            requestParams.put("verify", code.getText().toString());
-            client.post("http://test.qualifes.com:80/app_api/v_1.03/api.php?service=reg_user", requestParams, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    msg.what = 0;
-                    registerHandler.sendMessage(msg);
-                }
-
-                @Override
-                public void onFailure(int statusCode,
-                                      org.apache.http.Header[] headers, String responseString,
-                                      Throwable throwable) {
-                    msg.what = 1;
-                    registerHandler.sendMessage(msg);
-                }
-            });
-        }
-    }
 
     Handler registerHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -285,6 +182,5 @@ public class RegisterActivity extends Activity {
             }
         }
     };
-
 
 }

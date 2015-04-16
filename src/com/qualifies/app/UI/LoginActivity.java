@@ -2,6 +2,7 @@ package com.qualifies.app.ui;
 
 import android.widget.Toast;
 import com.loopj.android.http.SyncHttpClient;
+import com.manager.LoginManager;
 import com.qualifies.app.R;
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -26,6 +27,7 @@ public class LoginActivity extends Activity implements OnClickListener {
     private Button LoginButton;
     private Button forgetPasswordButton;
     private Button registerButton;
+    private LoginManager loginManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +52,17 @@ public class LoginActivity extends Activity implements OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == LoginButton) {
-            if(userNameText.getText().toString().equals("")){
+            if (userNameText.getText().toString().equals("")) {
                 Toast.makeText(getApplicationContext(), "请输入手机号", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if(passwordText.getText().toString().equals("")){
+            if (passwordText.getText().toString().equals("")) {
                 Toast.makeText(getApplicationContext(), "请输入密码", Toast.LENGTH_SHORT).show();
                 return;
             }
-            Thread loginThread = new Thread(new LoginThread());
-            loginThread.start();
+
+            loginManager = LoginManager.getInstance();
+            loginManager.login(userNameText.getText().toString(), passwordText.getText().toString(), handler);
         }
         if (v == forgetPasswordButton) {
             //TO-DO
@@ -68,49 +71,8 @@ public class LoginActivity extends Activity implements OnClickListener {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
         }
-
-
     }
-
-    class LoginThread implements Runnable {
-
-        @Override
-        public void run() {
-            String username = userNameText.getText().toString();
-            String password = passwordText.getText().toString();
-            SyncHttpClient client = new SyncHttpClient();
-            RequestParams requestParams = new RequestParams();
-            final Message msg = handler.obtainMessage();
-            final StringBuffer responsemessage = new StringBuffer("");
-            requestParams.put("_type", "log");
-            requestParams.put("phone", username);
-            requestParams.put("pwd", password);
-            client.post("http://test.qualifes.com:80/app_api/v_1.03/api.php?service=log_user", requestParams, new JsonHttpResponseHandler() {
-
-                @Override
-                public void onSuccess(int statusCode, Header[] headers,
-                                      JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
-                    responsemessage.append(response.toString());
-                    msg.what = 0;
-                    handler.sendMessage(msg);
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers,
-                                      Throwable throwable, JSONObject errorResponse) {
-                    super.onFailure(statusCode, headers, throwable, errorResponse);
-                    responsemessage.append(errorResponse.toString());
-                    msg.what = 0;
-                    handler.sendMessage(msg);
-                }
-            });
-        }
-    }
-
-
     //Handler
-
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
