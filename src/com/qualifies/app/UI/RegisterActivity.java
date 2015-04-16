@@ -24,7 +24,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     private EditText code;
     private EditText password;
     private Button getCode;
-    private Button viewPasword;
+    private Button viewPassword;
     private Button protocol;
     private Button agree;
     private int count;
@@ -45,13 +45,13 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         code = (EditText) findViewById(R.id.codename);
         password = (EditText) findViewById(R.id.password_name);
         getCode = (Button) findViewById(R.id.get_code);
-        viewPasword = (Button) findViewById(R.id.show_password);
+        viewPassword = (Button) findViewById(R.id.show_password);
         protocol = (Button) findViewById(R.id.protocol);
         agree = (Button) findViewById(R.id.agree);
         getCode.setOnClickListener(this);
         protocol.setOnClickListener(this);
         agree.setOnClickListener(this);
-        viewPasword.setOnTouchListener(new View.OnTouchListener() {
+        viewPassword.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -105,7 +105,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     }
 
 
-
+    //获取严重码Handler
     Handler gcHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -161,7 +161,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         }
     };
 
-
+    //注册Handler
     Handler registerHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {

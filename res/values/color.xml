@@ -4,4 +4,6 @@
     <color name="personal_button_pressed">#ff0099c6</color>
     <color name="white">#ffffffff</color>
     <color name="f4f4f4">#fff4f4f4</color>
+    <color name="registernor">#c3223f</color>
+    <color name="registerpre">#c91c38</color>
 </resources>

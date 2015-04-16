@@ -136,7 +136,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_alignParentLeft="true"
-
                     android:gravity="center"
                     android:src="@drawable/icon_password"/>
 
@@ -151,36 +150,26 @@
                     android:hint="请设置登录密码"
                     android:textColorHint="#b1b1b1"
                     android:textSize="14sp"/>
-            <LinearLayout
-                    android:id="@+id/add_part"
-                    android:layout_width="24dp"
-                    android:layout_height="fill_parent"
-                    android:orientation="vertical"
-                    android:layout_alignParentRight="true"
-                    ></LinearLayout>
-            <RelativeLayout
-                    android:layout_width="50dp"
-                    android:layout_height="20dp"
-                    android:layout_toLeftOf="@id/add_part"
-                    android:layout_marginTop="15dp"
-                    android:background="#00aaff">
-                <Button
-                        android:id="@+id/show_password"
-                        android:layout_width="48dp"
-                        android:layout_height="18dp"
-                        android:layout_centerInParent="true"
-                        android:background="#ffffff"
-                        android:text="显示"
-                        android:textColor="#00aaff"
-                        android:textSize="10sp"
-                        ></Button>
-            </RelativeLayout>
+
+            <Button
+                    android:id="@+id/show_password"
+                    android:layout_width="48dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/register_showpassword"
+                    android:text="显示"
+                    android:textColor="@drawable/register_text_press"
+                    android:textSize="10sp"
+                    android:layout_centerVertical="true" android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" android:layout_marginRight="24dp"
+                    android:layout_marginEnd="29dp"/>
+
         </RelativeLayout>
 
         <View
                 android:layout_width="fill_parent"
                 android:layout_height="0.5dp"
                 android:background="#b1b1b1"/>
+
     </LinearLayout>
     <Button
             android:id="@+id/protocol"
@@ -191,9 +180,7 @@
             android:gravity="center"
             android:text="《品质生活用户服务协议》"
             android:textColor="@drawable/register_text_press"
-            android:textSize="14sp">
-
-    </Button>
+            android:textSize="14sp"/>
 
 
     <Button
@@ -201,15 +188,10 @@
             android:layout_marginTop="15dp"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:background="#c3223f"
+            android:background="@drawable/register_button"
             android:gravity="center"
             android:text="同意协议并注册"
             android:textColor="#ffffff"
             android:textSize="16sp"
-            >
-
-
-    </Button>
-
-
+            />
 </LinearLayout>

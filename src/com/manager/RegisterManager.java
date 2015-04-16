@@ -47,7 +47,8 @@ public class RegisterManager {
                 public void onFailure(int statusCode,
                                       org.apache.http.Header[] headers, String responseString,
                                       Throwable throwable) {
-
+                    msg.what = 1;
+                    handler.sendMessage(msg);
                 }
             });
         }
