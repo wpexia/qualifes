@@ -1,4 +1,4 @@
-package com.manager;
+package com.qualifies.app.manager;
 
 import android.os.Handler;
 import android.os.Message;

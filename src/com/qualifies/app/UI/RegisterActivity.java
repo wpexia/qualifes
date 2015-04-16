@@ -12,8 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.manager.RegisterManager;
 import com.qualifies.app.R;
+import com.qualifies.app.manager.RegisterManager;
 
 import java.util.Timer;
 import java.util.TimerTask;

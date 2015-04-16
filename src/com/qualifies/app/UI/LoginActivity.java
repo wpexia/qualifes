@@ -1,14 +1,8 @@
 package com.qualifies.app.ui;
 
 import android.widget.Toast;
-import com.loopj.android.http.SyncHttpClient;
-import com.manager.LoginManager;
+import com.managers.LoginManager;
 import com.qualifies.app.R;
-import org.apache.http.Header;
-import org.json.JSONObject;
-
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import com.qualifies.app.manager.LoginManager;
 
 public class LoginActivity extends Activity implements OnClickListener {
     private EditText userNameText;
