@@ -6,10 +6,10 @@ import org.json.JSONObject;
 
 public class Api {
 
-    private static String url = "http://test.qualifes.com:80/app_api/v_1.03/api.php?";
+    private static String url = "http://www.qualifes.com:80/app_api/v_1.03/api.php?service=";
 
     public static String url(String service) {
-        return url + "service=" + service;
+        return url + service;
     }
 
     public static void dealSuccessRes(JSONObject response, Message msg) {
