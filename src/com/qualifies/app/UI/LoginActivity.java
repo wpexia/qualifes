@@ -1,7 +1,7 @@
 package com.qualifies.app.ui;
 
 import android.widget.Toast;
-import com.managers.LoginManager;
+import com.qualifies.app.manager.LoginManager;
 import com.qualifies.app.R;
 
 import android.app.Activity;
@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import com.qualifies.app.manager.LoginManager;
 
 public class LoginActivity extends Activity implements OnClickListener {
     private EditText userNameText;
@@ -81,7 +80,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                 }
                 break;
                 case 1:
-                    Toast.makeText(getApplicationContext(), "登录失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     break;
             }
 

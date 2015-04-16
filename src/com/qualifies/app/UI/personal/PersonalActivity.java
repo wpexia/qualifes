@@ -8,8 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import com.qualifies.app.R;
-import com.qualifies.app.ui.LoginActivity;
-import com.qualifies.app.ui.RegisterActivity;
 
 public class PersonalActivity extends Activity implements View.OnClickListener {
 
@@ -26,9 +24,15 @@ public class PersonalActivity extends Activity implements View.OnClickListener {
         sp = this.getSharedPreferences("user", MODE_PRIVATE);
         setContentView(R.layout.personal);
         fragmentManager = getFragmentManager();
-        updateView();
+        initView();
+
     }
 
+
+    private void initView() {
+        updateView();
+        findViewById(R.id.personal_history).setOnClickListener(this);
+    }
 
     private void updateView() {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -65,15 +69,11 @@ public class PersonalActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         final int id = v.getId();
         switch (id) {
-            case R.id.personal_login: {
-                Intent intent = new Intent(PersonalActivity.this, LoginActivity.class);
+            case R.id.personal_history: {
+                Intent intent = new Intent(PersonalActivity.this, HistoryActivity.class);
                 startActivity(intent);
             }
             break;
-            case R.id.personal_register: {
-                Intent intent = new Intent(PersonalActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
         }
     }
 
