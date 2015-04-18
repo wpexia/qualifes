@@ -8,8 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 public class ConnectionURL {
-	public final static String baseURL = "http://test.qualifes.com:80/app_api/v_1.02/api.php?service=";
-	private static String visualURL = "visual";
+	public final static String baseURL = "http://www.qualifes.com:80/app_api/v_1.03/api.php?service=";
+	private static String visualURL = "get_visual";
 	private static String searchURL = "get_so";
 	
 	public final static String getVisualURL() {
@@ -52,4 +52,5 @@ public class ConnectionURL {
           
         return bitmap;  
     }  
+    
 }

@@ -19,8 +19,9 @@
 	    android:layout_marginLeft="16px"
 	    android:layout_marginTop="12px"
 	    android:layout_marginBottom="10px"
-	    android:textColor="#ff4824"
+	    android:textColor="#ff3300"
 	    android:gravity="center"
+	    android:textSize="9sp"
 	    android:background="@drawable/textview_border"/>
 	<TextView 
 	    android:id="@+id/price"
@@ -32,6 +33,7 @@
 	    android:layout_marginRight="16px"
 	    android:layout_marginTop="12px"
 	    android:layout_marginBottom="10px"
+	    android:textSize="9sp"
 	    android:gravity="center"
 	    android:background="@drawable/square_black"/>
 </RelativeLayout>

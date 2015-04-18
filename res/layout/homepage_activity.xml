@@ -70,19 +70,19 @@
 		        android:layout_below="@+id/viewFlipper"
 			    android:layout_marginTop="10px" >
 		
-		        <ImageButton 
+		        <ImageView 
 				    android:id="@+id/secondPic"
-				    android:layout_width="wrap_content"
+				    android:layout_width="fill_parent"
 				    android:layout_height="fill_parent"
 				    android:layout_weight="1"
-				    android:background="@drawable/test1" />
+				    android:scaleType="fitXY"/>
 		        
-				<ImageButton
+				<ImageView
 			    	android:id="@+id/thirdPic"
-			    	android:layout_width="wrap_content"
+			    	android:layout_width="fill_parent"
 			    	android:layout_height="fill_parent"
 			    	android:layout_weight="1"
-			    	android:background="@drawable/test2"/>
+			    	android:scaleType="fitXY"/>
 		    </LinearLayout>
 		    
 		    	<LinearLayout

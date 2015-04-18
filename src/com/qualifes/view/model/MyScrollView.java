@@ -18,8 +18,6 @@ public class MyScrollView extends ScrollView{
 	//µ×²¿¼àÌý
 	private OnGetBottomListener onGetBottomListener;
 	
-	private GestureDetector detector;
-	
 	public MyScrollView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -61,21 +59,14 @@ public class MyScrollView extends ScrollView{
 	    }
 
 	    @Override
-	    	public boolean onTouchEvent(MotionEvent ev) {
-	    		// TODO Auto-generated method stub
-	    		super.onTouchEvent(ev);
-	    		return detector.onTouchEvent(ev);
-	    	}
+	    public boolean onTouchEvent(MotionEvent ev){
+	    	return super.onTouchEvent(ev);
+	    }
 	    
 	    @Override
-	    	public boolean dispatchTouchEvent(MotionEvent ev) {
-	    		// TODO Auto-generated method stub
-	    		detector.onTouchEvent(ev);
-	    		super.dispatchTouchEvent(ev);
-	    		return true;
-	    	}
+	    public boolean dispatchTouchEvent(MotionEvent ev) {
+	    	// TODO Auto-generated method stub
+	    	return super.dispatchTouchEvent(ev);
+	    }
 	    
-	    public void setGestureDetector(GestureDetector gestureDetector) {
-	    	detector = gestureDetector;
-		}
 }

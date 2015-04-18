@@ -1,11 +1,17 @@
 package com.example.qualifieslife;
 
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -13,14 +19,21 @@ import com.loopj.android.http.ConnectionURL;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.qualifes.adapter.HomePageGridViewAdapter;
+import com.qualifes.adapter.HomePageListViewAdapter;
 import com.qualifes.adapter.MyAdapter;
+import com.qualifes.data.model.GoodInfo;
 import com.qualifes.view.model.MyListView;
 import com.qualifes.view.model.MyScrollView;
 import com.qualifes.view.model.MyScrollView.OnGetBottomListener;
 import com.qualifes.view.model.MyViewFlipper;
 
+import android.R.bool;
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.GestureDetector;
@@ -40,9 +53,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 public class HomePageActivity extends Activity implements OnClickListener,OnGetBottomListener,OnGestureListener{
-
-	private int[] imgs = { R.drawable.a, R.drawable.b,
-			  R.drawable.c, R.drawable.d, R.drawable.e };
+	
+	List<Goods> TopSlide;
+	List<Goods> special_middle;
+	
+	List<GoodInfo> goods_red;
+	List<GoodInfo> goods_blue;
+	List<GoodInfo> goods_bottom;
 	
 	private GestureDetector gestureDetector = null;
 	private Activity mActivity = null;
@@ -52,8 +69,8 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 	
 	MyScrollView scrollView;
 	MyViewFlipper viewFlipper = null;
-	ImageButton imageButtonL;
-	ImageButton imageButtonR;
+	ImageView imageButtonL;
+	ImageView imageButtonR;
 	GridView gridView1;
 	GridView gridView2;
 	MyListView listView;
@@ -65,6 +82,7 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 		requestWindowFeature(Window.FEATURE_NO_TITLE); 
 		setContentView(R.layout.homepage_activity);
 		init();
+		accessServer();
 	}
 
 	@Override
@@ -76,9 +94,6 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
@@ -102,51 +117,38 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 		
 		imageButtonSearch = (ImageButton)findViewById(R.id.search);
 		imageButtonSearch.setOnClickListener(this);
-		imageButtonL = (ImageButton)findViewById(R.id.secondPic);
+		imageButtonL = (ImageView)findViewById(R.id.secondPic);
 		imageButtonL.setOnClickListener(this);
-		imageButtonR = (ImageButton)findViewById(R.id.thirdPic);
+		imageButtonR = (ImageView)findViewById(R.id.thirdPic);
 		imageButtonR.setOnClickListener(this);
 		
 		gridView1 = (GridView)findViewById(R.id.gridView1);
 		gridView2 = (GridView)findViewById(R.id.gridView2);
 		
 		listView = (MyListView)findViewById(R.id.bottom);
+			
 		
-		//viewFlipper
-		for (int i = 0; i < imgs.length; i++) { 			// 添加图片源
-			ImageView iv = new ImageView(this);
-			iv.setImageResource(imgs[i]);
-			iv.setScaleType(ImageView.ScaleType.FIT_XY);
-			viewFlipper.addView(iv, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-		}
-		
-		viewFlipper.setAutoStart(true);			// 设置自动播放功能（点击事件，前自动播放）
-		viewFlipper.setFlipInterval(1500);
-		if(viewFlipper.isAutoStart() && !viewFlipper.isFlipping()){
-			viewFlipper.startFlipping(this);
-		}
-		
-		//个人护理和家居清洁
-		int size = 5;
-		int itemWidth = 200;
-		int gridviewWidth = size * itemWidth;
-
-		//设定gridView的尺寸
-		LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(gridviewWidth, LinearLayout.LayoutParams.FILL_PARENT);
-		
-		gridView1.setLayoutParams(params2); // 重点
-		gridView1.setColumnWidth(itemWidth); // 重点
-		gridView1.setStretchMode(GridView.NO_STRETCH);
-		gridView1.setNumColumns(size); // 重点
-		
-		gridView2.setLayoutParams(params2); // 重点
-		gridView2.setColumnWidth(itemWidth); // 重点
-		gridView2.setStretchMode(GridView.STRETCH_SPACING);
-		gridView2.setNumColumns(size); // 重点
-		
-		gridView1.setAdapter(new HomePageGridViewAdapter(getApplicationContext(), null, R.layout.good_group_item));
-		gridView2.setAdapter(new HomePageGridViewAdapter(getApplicationContext(), null, R.layout.good_group_item));
-		
+//		//个人护理和家居清洁
+//		int size = 5;
+//		int itemWidth = 200;
+//		int gridviewWidth = size * itemWidth;
+//
+//		//设定gridView的尺寸
+//		LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(gridviewWidth, LinearLayout.LayoutParams.FILL_PARENT);
+//		
+//		gridView1.setLayoutParams(params2); // 重点
+//		gridView1.setColumnWidth(itemWidth); // 重点
+//		gridView1.setStretchMode(GridView.NO_STRETCH);
+//		gridView1.setNumColumns(size); // 重点
+//		
+//		gridView2.setLayoutParams(params2); // 重点
+//		gridView2.setColumnWidth(itemWidth); // 重点
+//		gridView2.setStretchMode(GridView.STRETCH_SPACING);
+//		gridView2.setNumColumns(size); // 重点
+//		
+//		gridView1.setAdapter(new HomePageGridViewAdapter(getApplicationContext(), null, R.layout.good_group_item));
+//		gridView2.setAdapter(new HomePageGridViewAdapter(getApplicationContext(), null, R.layout.good_group_item));
+//		
 		//设定ListView的数据
 		List<Map<String, Object>> data = new ArrayList<Map<String,Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -170,30 +172,292 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 		//将listview外层框架设置宽高
 		linear.setLayoutParams(lp);
 		
-		String[] from = {"infoTextView"};
-		int[] to = {R.id.infoTextView};
-		listView.setAdapter(new MyAdapter(getApplicationContext(), data, R.layout.good_info_item, from, to));
+		
 		
 	}
 	
+	Handler mHandler = new Handler(){
+		public void handleMessage(Message msg) {
+			
+			if (msg.what == 1) {
+
+					for (int i = 0; i < TopSlide.size(); i++) {
+						ImageView iv = new ImageView(getApplicationContext());
+						iv.setImageBitmap(TopSlide.get(i).imageBitmap);
+						iv.setScaleType(ImageView.ScaleType.FIT_XY);
+						viewFlipper.addView(iv, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+						
+						viewFlipper.setAutoStart(true);			// 设置自动播放功能（点击事件，前自动播放）
+						viewFlipper.setFlipInterval(1500);
+						if(viewFlipper.isAutoStart() && !viewFlipper.isFlipping()){
+							viewFlipper.startFlipping(getApplicationContext());
+						}
+					}
+					
+			}else if(msg.what == 2){
+					imageButtonL.setImageBitmap(special_middle.get(0).imageBitmap);
+					imageButtonR.setImageBitmap(special_middle.get(1).imageBitmap);
+			}else if(msg.what == 3){
+				
+				//个人护理和家居清洁
+				int size = goods_red.size();
+				
+				System.out.println(size+"jjjjjjjj");
+				
+				int itemWidth = 200;
+				int gridviewWidth = size * itemWidth;
+
+				//设定gridView的尺寸
+				LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+				
+				gridView1.setLayoutParams(params2); // 重点
+				gridView1.setColumnWidth(itemWidth); // 重点
+				gridView1.setStretchMode(GridView.NO_STRETCH);
+				gridView1.setNumColumns(size); // 重点
+				gridView1.setAdapter(new HomePageGridViewAdapter(getApplicationContext(), goods_red, R.layout.good_group_item));
+					
+			}else if (msg.what==4) {
+				//个人护理和家居清洁
+				int size = goods_blue.size();
+				
+				int itemWidth = 200;
+				int gridviewWidth = size * itemWidth;
+
+				//设定gridView的尺寸
+				LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+				
+				gridView2.setLayoutParams(params2); // 重点
+				gridView2.setColumnWidth(itemWidth); // 重点
+				gridView2.setStretchMode(GridView.NO_STRETCH);
+				gridView2.setNumColumns(size); // 重点
+				gridView2.setAdapter(new HomePageGridViewAdapter(getApplicationContext(), goods_blue, R.layout.good_group_item));
+				
+			}else if (msg.what==5) {
+				//个人护理和家居清洁
+				listView.setAdapter(new HomePageListViewAdapter(getApplicationContext(), goods_bottom, R.layout.good_info_item));
+			}
+		};
+	};
+	
+	
+	private void accessServer() {
+		
+		RequestParams requestParams=new RequestParams();
+		
+		
+		//home_top_slide 部分
+		requestParams.put("type", "activity");
+		requestParams.put("logo", "home_top_slide");
+		client.get(ConnectionURL.getVisualURL(), requestParams,new JsonHttpResponseHandler(){
+			@Override
+			public void onSuccess(int statusCode, Header[] headers,JSONObject response) {
+				super.onSuccess(statusCode, headers, response);
+				TopSlide = new ArrayList<Goods>();
+				
+				try {
+					JSONArray dataArray = response.getJSONArray("data");
+					
+					for (int i = 0; i < dataArray.length(); i++){
+						JSONObject object = dataArray.getJSONObject(i);
+						
+						TopSlide.add(new Goods(object.getString("name"), object.getString("img"), object.getString("url")));
+						
+					}
+					MyThread myThread = new MyThread(1);
+					myThread.start();
+					
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					Throwable throwable, JSONObject errorResponse) {
+				super.onFailure(statusCode, headers, throwable, errorResponse);
+			}
+		});
+		
+		//home_special_middle 部分
+		requestParams.clear();
+		requestParams.put("type", "activity");
+		requestParams.put("logo", "home_special_middle");
+		client.get(ConnectionURL.getVisualURL(), requestParams,new JsonHttpResponseHandler(){
+			public void onSuccess(int statusCode, Header[] headers,JSONObject response) {
+				super.onSuccess(statusCode, headers, response);
+				special_middle = new ArrayList<Goods>();
+				
+				try {
+					JSONArray dataArray = response.getJSONArray("data");
+					for (int i = 0; i < dataArray.length(); i++){
+						JSONObject object = dataArray.getJSONObject(i);
+						special_middle.add(new Goods(object.getString("name"), object.getString("img"), object.getString("url")));
+					}
+					MyThread myThread = new MyThread(2);
+					myThread.start();
+					
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					Throwable throwable, JSONObject errorResponse) {
+				super.onFailure(statusCode, headers, throwable, errorResponse);
+			}
+		});
+		
+		//home_goods_red 部分
+		requestParams.clear();
+		requestParams.put("type", "goods");
+		requestParams.put("logo", "home_goods_red");
+		client.get(ConnectionURL.getVisualURL(), requestParams,new JsonHttpResponseHandler(){
+			public void onSuccess(int statusCode, Header[] headers,JSONObject response) {
+				super.onSuccess(statusCode, headers, response);
+				goods_red = new ArrayList<GoodInfo>();
+				
+				try {
+					JSONObject dataObject = response.getJSONObject("data");
+					JSONArray dataArray = dataObject.getJSONArray("goods");
+					
+					System.out.println(dataArray);
+					
+					for (int i = 0; i < dataArray.length(); i++){
+						JSONObject object = dataArray.getJSONObject(i);
+						
+						goods_red.add(new GoodInfo(Integer.parseInt(object.getString("goods_id")),
+								object.getString("goods_name"),
+								object.getString("goods_img"),
+								convertInt2Boolean(object.getInt("is_coll")),
+								object.getString("origin"),
+								new BigDecimal(object.getString("market_price")),
+								new BigDecimal(object.getString("shop_price")),
+								Boolean.getBoolean(object.getString("is_best")),
+								Boolean.getBoolean(object.getString("is_new")),
+								Boolean.getBoolean(object.getString("is_hot")),
+								Boolean.getBoolean(object.getString("is_promote"))
+								));
+						
+					}
+					MyThread myThread = new MyThread(3);
+					myThread.start();
+					
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					Throwable throwable, JSONObject errorResponse) {
+				super.onFailure(statusCode, headers, throwable, errorResponse);
+			}
+		});
+		
+		// home_goods_blue 部分
+		requestParams.clear();
+		requestParams.put("type", "goods");
+		requestParams.put("logo", "home_goods_blue");
+		client.get(ConnectionURL.getVisualURL(), requestParams,new JsonHttpResponseHandler(){
+			public void onSuccess(int statusCode, Header[] headers,JSONObject response) {
+				super.onSuccess(statusCode, headers, response);
+				goods_blue = new ArrayList<GoodInfo>();
+				
+				try {
+					JSONObject dataObject = response.getJSONObject("data");
+					JSONArray dataArray = dataObject.getJSONArray("goods");
+					
+					System.out.println(dataArray);
+					
+					for (int i = 0; i < dataArray.length(); i++){
+						JSONObject object = dataArray.getJSONObject(i);
+						
+						goods_blue.add(new GoodInfo(Integer.parseInt(object.getString("goods_id")),
+								object.getString("goods_name"),
+								object.getString("goods_img"),
+								convertInt2Boolean(object.getInt("is_coll")),
+								object.getString("origin"),
+								new BigDecimal(object.getString("market_price")),
+								new BigDecimal(object.getString("shop_price")),
+								Boolean.getBoolean(object.getString("is_best")),
+								Boolean.getBoolean(object.getString("is_new")),
+								Boolean.getBoolean(object.getString("is_hot")),
+								Boolean.getBoolean(object.getString("is_promote"))
+								));
+						
+					}
+					MyThread myThread = new MyThread(4);
+					myThread.start();
+					
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					Throwable throwable, JSONObject errorResponse) {
+				super.onFailure(statusCode, headers, throwable, errorResponse);
+			}
+		});
+		
+		
+		// home_goods_bottom 部分
+		requestParams.clear();
+		requestParams.put("type", "goods");
+		requestParams.put("logo", "home_goods_bottom");
+		client.get(ConnectionURL.getVisualURL(), requestParams,new JsonHttpResponseHandler(){
+			public void onSuccess(int statusCode, Header[] headers,JSONObject response) {
+				super.onSuccess(statusCode, headers, response);
+				goods_bottom = new ArrayList<GoodInfo>();
+				
+				try {
+					JSONObject dataObject = response.getJSONObject("data");
+					JSONArray dataArray = dataObject.getJSONArray("goods");
+
+					for (int i = 0; i < dataArray.length(); i++) {
+						JSONObject object = dataArray.getJSONObject(i);
+
+						goods_bottom.add(new GoodInfo(
+								Integer.parseInt(object.getString("goods_id")), 
+								object.getString("goods_name"),
+								object.getString("goods_img"),
+								convertInt2Boolean(object.getInt("is_coll")), 
+								object.getString("origin"),
+								new BigDecimal(object.getString("market_price")),
+								new BigDecimal(object.getString("shop_price")),
+								Boolean.getBoolean(object.getString("is_best")),
+								Boolean.getBoolean(object.getString("is_new")),
+								Boolean.getBoolean(object.getString("is_hot")),
+								Boolean.getBoolean(object.getString("is_promote"))));
+					}
+					MyThread myThread = new MyThread(5);
+					myThread.start();
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					Throwable throwable, JSONObject errorResponse) {
+				super.onFailure(statusCode, headers, throwable,
+						errorResponse);
+			}
+		});
+	}
+	
+	// 监听点击事件
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		
 			case R.id.search:
-				String inputSearch = editText.getText().toString();
-				RequestParams requestParams=new RequestParams();
-				requestParams.put("data[keywords]", inputSearch);
-				client.get(ConnectionURL.getSearchURL(),requestParams, new JsonHttpResponseHandler(){
-					@Override
-					public void onSuccess(int statusCode, Header[] headers,
-							JSONObject response) {
-
-						super.onSuccess(statusCode, headers, response);
-						System.out.println(response.toString());
-					}
-				});
+				
 				break;
 			case R.id.secondPic:
 				
@@ -206,12 +470,16 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 		}
 	}
 
+	// 监听scroll到特定位置的
 	@Override
 	public void onBottom() {
 		// TODO Auto-generated method stub
 		listView.setBottomFlag(true);
 	}
 
+	
+	
+	//OnGestureListener 实现的手势监听
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		System.out.println("asdsadadadaddasda");
@@ -219,7 +487,6 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 		viewFlipper.setAutoStart(false);	
 		return gestureDetector.onTouchEvent(event); 		// 注册手势事件
 	}
-
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 		if (e2.getX() - e1.getX() > 120) {			 // 从左向右滑动（左进右出）
@@ -244,24 +511,118 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 
 	@Override
 	public boolean onDown(MotionEvent e) {
-		return false;
-	}
-
-	@Override
-	public void onLongPress(MotionEvent e) {
-	}
-
-	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void onShowPress(MotionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public boolean onSingleTapUp(MotionEvent e) {
+		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+			float distanceY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onLongPress(MotionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private class Goods{
+		public String name;
+		public String imageStr;
+		public Bitmap imageBitmap;
+		public String webURL;
+		public Goods(String _name,String _imageStr,String _webURL){
+			name = _name;
+			imageStr = _imageStr;
+			webURL = _webURL;
+		}
+	}
+	
+	
+	class MyThread extends Thread{
+		int what;
+		
+		public MyThread(int what){
+			this.what = what;
+		}
+		@Override
+		public void run() {
+			super.run();
+			if(what == 1){
+				for (int i = 0; i < TopSlide.size(); i++) {
+					Bitmap tempBitmap = getHttpBitmap(TopSlide.get(i).imageStr);
+					TopSlide.get(i).imageBitmap = tempBitmap;
+				}
+			}else if(what==2) {
+				for (int i = 0; i < special_middle.size(); i++) {
+					Bitmap tempBitmap = getHttpBitmap(special_middle.get(i).imageStr);
+					special_middle.get(i).imageBitmap = tempBitmap;
+				}
+			}else if (what==3) {
+				for (int i = 0; i < goods_red.size(); i++) {
+					Bitmap tempBitmap = getHttpBitmap(goods_red.get(i).getGoods_img());
+					goods_red.get(i).setGoods_imgBitmap(tempBitmap);
+				}
+			}else if (what==4) {
+				for (int i = 0; i < goods_blue.size(); i++) {
+					Bitmap tempBitmap = getHttpBitmap(goods_blue.get(i).getGoods_img());
+					goods_blue.get(i).setGoods_imgBitmap(tempBitmap);
+				}
+			}else if (what==5) {
+				for (int i = 0; i < goods_bottom.size(); i++) {
+					Bitmap tempBitmap = getHttpBitmap(goods_bottom.get(i).getGoods_img());
+					goods_bottom.get(i).setGoods_imgBitmap(tempBitmap);
+				}
+			}
+			
+			Message message = mHandler.obtainMessage();
+			message.what= this.what;
+			mHandler.sendMessage(message);
+		}
+	}
+	  /**
+     * 获取网落图片资源
+     * @param url
+     * @return
+     */
+    public static Bitmap getHttpBitmap(String url){
+        URL myFileURL;
+        Bitmap bitmap=null;
+        try{
+            myFileURL = new URL(url);
+            HttpURLConnection conn=(HttpURLConnection)myFileURL.openConnection();
+            conn.setConnectTimeout(6000);
+            conn.setDoInput(true);
+            conn.setUseCaches(false);
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        System.out.println(bitmap);
+        return bitmap;
+    }
+
+    private boolean convertInt2Boolean(int i){
+    	if(i==0){
+    		return false;
+    	}else{
+    		return true;
+    	}
+    }
 }
