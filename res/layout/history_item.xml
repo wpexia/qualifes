@@ -5,6 +5,7 @@
         android:orientation="vertical"
         android:layout_height="100dp"
         android:id="@+id/MyListItem"
+        android:minHeight="100dp"
         android:background="@color/white">
 
     <ImageView
@@ -19,55 +20,57 @@
             android:textColor="#6e6e6e"
             android:textSize="14sp"
             android:text="婴儿神仙水 Mommy bilss gripe 缓解 胀气 吐奶等"
-            android:id="@+id/textView" android:layout_alignParentTop="true" android:layout_toRightOf="@+id/imageView"
-            android:layout_marginLeft="24dp" android:layout_marginTop="10dp"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="产地 美国"
-            android:textColor="#6e6e6e"
-            android:textSize="9sp"
-            android:id="@+id/textView2" android:layout_alignParentBottom="true"
-            android:layout_alignLeft="@+id/textView" android:layout_alignStart="@+id/textView"
-            android:layout_marginBottom="5dp"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="55% 折扣"
-            android:textColor="#ff3300"
-            android:textSize="9sp"
-            android:id="@+id/textView3" android:layout_above="@+id/textView2" android:layout_alignLeft="@+id/textView2"
-            android:layout_alignStart="@+id/textView2" android:layout_marginBottom="3dp"/>
+            android:id="@+id/title" android:layout_alignParentTop="true" android:layout_toRightOf="@+id/imageView"
+            android:layout_marginLeft="24dp" android:layout_marginTop="10dp" android:selectAllOnFocus="false"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="￥298.00"
             android:textColor="#ff3300"
             android:textSize="16sp"
-            android:id="@+id/textView4" android:layout_above="@+id/textView3" android:layout_alignLeft="@+id/textView3"
-            android:layout_alignStart="@+id/textView3" android:layout_marginBottom="4dp"/>
+            android:id="@+id/price" android:layout_below="@+id/title" android:layout_alignLeft="@+id/title"
+            android:layout_alignStart="@+id/title"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="55% 折扣"
+            android:textColor="#ff3300"
+            android:textSize="9sp"
+            android:id="@+id/discount"
+            android:layout_below="@+id/price" android:layout_alignLeft="@+id/title"
+            android:layout_alignStart="@+id/title"
+            android:paddingTop="4dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="产地 美国"
+            android:textColor="#6e6e6e"
+            android:textSize="9sp"
+            android:id="@+id/place"
+            android:layout_below="@+id/discount" android:layout_alignLeft="@+id/title"
+            android:layout_alignStart="@+id/title"
+            android:paddingTop="3dp"
+            android:paddingBottom="5dp"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="￥589.00"
             android:textSize="9sp"
             android:textColor="#6e6e6e"
-            android:id="@+id/textView5" android:layout_alignBottom="@+id/textView4"
-            android:layout_toRightOf="@+id/textView4"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="2dp"/>
+            android:id="@+id/oldPrice" android:layout_alignBottom="@+id/price"
+            android:layout_toRightOf="@+id/price"
+            android:paddingLeft="5dp" android:paddingBottom="2dp"/>
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/star_red"
-            android:id="@+id/imageView2"
+            android:id="@+id/star"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true" android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"/>
+            android:paddingBottom="15dp"/>
     <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="15dp"
-            android:background="#b1b1b1" />
+            android:background="#FFDEDEDE"/>
 </RelativeLayout>
