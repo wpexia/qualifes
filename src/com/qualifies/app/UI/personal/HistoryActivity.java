@@ -10,13 +10,14 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.qualifies.app.R;
 
-public class HistoryActivity extends Activity{
+public class HistoryActivity extends Activity {
     private SwipeMenuListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history);
-        listView = (SwipeMenuListView)findViewById(R.id.listView);
+        listView = (SwipeMenuListView) findViewById(R.id.listView);
 
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
