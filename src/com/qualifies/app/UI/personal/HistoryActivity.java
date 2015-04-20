@@ -33,7 +33,7 @@ public class HistoryActivity extends Activity {
         title.setText("浏览历史");
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         hideFragment(transaction);
-        if (!sp.contains("history")) {
+        if (sp.contains("history")) {
             if (historyNotNullFragment == null) {
                 historyNotNullFragment = new HistoryNotNullFragment();
                 transaction.add(R.id.fragment, historyNotNullFragment);
