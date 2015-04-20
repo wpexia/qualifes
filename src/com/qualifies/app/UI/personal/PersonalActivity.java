@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import com.qualifies.app.R;
+import com.qualifies.app.ui.fragment.LoginFragment;
+import com.qualifies.app.ui.fragment.UnLoginFragment;
 
 public class PersonalActivity extends Activity implements View.OnClickListener {
 
@@ -32,6 +34,7 @@ public class PersonalActivity extends Activity implements View.OnClickListener {
     private void initView() {
         updateView();
         findViewById(R.id.personal_history).setOnClickListener(this);
+        findViewById(R.id.personal_follow).setOnClickListener(this);
     }
 
     private void updateView() {
@@ -74,6 +77,9 @@ public class PersonalActivity extends Activity implements View.OnClickListener {
                 startActivity(intent);
             }
             break;
+            case R.id.personal_follow: {
+                
+            }
         }
     }
 

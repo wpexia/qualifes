@@ -1,4 +1,4 @@
-package com.qualifies.app.ui.personal;
+package com.qualifies.app.ui.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
