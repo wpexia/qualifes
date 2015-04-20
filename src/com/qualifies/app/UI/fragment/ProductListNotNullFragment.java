@@ -19,10 +19,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class HistoryNotNullFragment extends Fragment {
+public class ProductListNotNullFragment extends Fragment {
     private SwipeMenuListView listView;
     private ProductListAdapter historyAdapter;
     private View mView;
+    private boolean hasStar = false;
+
+
+    public void setStar(boolean star) {
+        hasStar = star;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,7 +40,7 @@ public class HistoryNotNullFragment extends Fragment {
     private void initView() {
         listView = (SwipeMenuListView) mView.findViewById(R.id.listView);
         createSwipeMenu();
-        historyAdapter = new ProductListAdapter(getActivity(), getData());
+        historyAdapter = new ProductListAdapter(getActivity(), getData(), hasStar);
         listView.setAdapter(historyAdapter);
         listView.setDividerHeight(0);
     }

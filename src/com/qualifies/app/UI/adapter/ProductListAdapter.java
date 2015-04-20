@@ -2,7 +2,6 @@ package com.qualifies.app.ui.adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +20,9 @@ public class ProductListAdapter extends BaseAdapter {
     private boolean hasStar = false;
 
     public ProductListAdapter(Context context, List<HashMap<String, Object>> data, boolean star) {
-        this(context, data);
-        hasStar = star;
-    }
-
-    public ProductListAdapter(Context context, List<HashMap<String, Object>> data) {
         mInflater = LayoutInflater.from(context);
         mData = data;
+        hasStar = star;
     }
 
     @Override

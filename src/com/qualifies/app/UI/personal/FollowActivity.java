@@ -1,5 +1,6 @@
 package com.qualifies.app.ui.personal;
 
+
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -10,7 +11,7 @@ import com.qualifies.app.R;
 import com.qualifies.app.ui.fragment.ProductListNotNullFragment;
 import com.qualifies.app.ui.fragment.ProductListNullFragment;
 
-public class HistoryActivity extends Activity {
+public class FollowActivity extends Activity {
 
     private SharedPreferences sp;
 
@@ -28,15 +29,14 @@ public class HistoryActivity extends Activity {
     }
 
     private void initView() {
-        TextView title;
-        title = (TextView) findViewById(R.id.title);
-        title.setText("浏览历史");
+        TextView title = (TextView) findViewById(R.id.title);
+        title.setText("我的收藏");
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         hideFragment(transaction);
-        if (sp.contains("history")) {
+        if (sp.contains("follow")) {
             if (productListNotNullFragment == null) {
                 productListNotNullFragment = new ProductListNotNullFragment();
-                productListNotNullFragment.setStar(false);
+                productListNotNullFragment.setStar(true);
                 transaction.add(R.id.fragment, productListNotNullFragment);
             } else {
                 transaction.show(productListNullFragment);
@@ -44,7 +44,7 @@ public class HistoryActivity extends Activity {
         } else {
             if (productListNullFragment == null) {
                 productListNullFragment = new ProductListNullFragment();
-                productListNullFragment.setContent("暂无浏览记录");
+                productListNullFragment.setContent("暂无收藏");
                 transaction.add(R.id.fragment, productListNullFragment);
             } else {
                 transaction.show(productListNullFragment);
@@ -61,4 +61,5 @@ public class HistoryActivity extends Activity {
             transaction.hide(productListNullFragment);
         }
     }
+
 }

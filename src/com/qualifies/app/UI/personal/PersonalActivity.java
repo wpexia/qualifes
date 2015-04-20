@@ -78,8 +78,10 @@ public class PersonalActivity extends Activity implements View.OnClickListener {
             }
             break;
             case R.id.personal_follow: {
-                
+                Intent intent = new Intent(PersonalActivity.this, FollowActivity.class);
+                startActivity(intent);
             }
+            break;
         }
     }
 
