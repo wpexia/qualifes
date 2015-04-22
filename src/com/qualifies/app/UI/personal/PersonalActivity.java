@@ -27,7 +27,6 @@ public class PersonalActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.personal);
         fragmentManager = getFragmentManager();
         initView();
-
     }
 
 
@@ -82,6 +81,10 @@ public class PersonalActivity extends Activity implements View.OnClickListener {
                 startActivity(intent);
             }
             break;
+            case R.id.personal_setting: {
+                Intent intent = new Intent(PersonalActivity.this, SettingActivity.class);
+                startActivity(intent);
+            }
         }
     }
 

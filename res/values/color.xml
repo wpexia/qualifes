@@ -6,4 +6,6 @@
     <color name="f4f4f4">#fff4f4f4</color>
     <color name="registernor">#c3223f</color>
     <color name="registerpre">#c91c38</color>
+    <color name="settingRed">#e3223f</color>
+    <color name="settingGray">#6e6e6e</color>
 </resources>

@@ -150,7 +150,7 @@
                 android:layout_marginTop="21dp"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
-                android:background="#c3223f"
+                android:background="@drawable/red_button"
                 android:gravity="center"
                 android:text="登录"
                 android:textColor="#ffffff"

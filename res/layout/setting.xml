@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:background="@color/f4f4f4"
+              android:layout_height="match_parent">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:background="#00aaff"
+            >
+
+        <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="15dp"
+                android:background="@null"
+                android:src="@drawable/icon_back"/>
+
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="设置"
+                android:layout_centerVertical="true"
+                android:gravity="center_horizontal"
+                android:textColor="#ffffff"
+                android:textSize="18sp">
+        </TextView>
+    </RelativeLayout>
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="78dp">
+        <RelativeLayout android:layout_width="match_parent" android:layout_weight="1" android:layout_height="fill_parent">
+            <Button
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/settingbutton"
+                    android:text="拨打400-894-6066"
+                    android:textColor="#6e6e6e"
+                    android:textSize="14sp"
+                    android:id="@+id/button3"
+                    android:layout_gravity="center" android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                    android:layout_marginRight="10dp"/>
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_weight="1" android:layout_height="fill_parent">
+            <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="150dp"
+                    android:background="@drawable/settingbutton"
+                    android:layout_height="50dp"
+                    android:clickable="true"
+                    android:id="@+id/openImage" android:layout_gravity="center" android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
+                    android:layout_marginLeft="10dp">
+                <RelativeLayout android:background="@drawable/settingopen"  android:layout_width="20dp" android:id="@+id/open" android:layout_height="fill_parent">
+                    <TextView android:layout_width="wrap_content"
+                              android:id="@+id/openText"
+                              android:text="关"
+                              android:textColor="@color/white"
+                              android:textSize="14sp"
+                              android:layout_centerInParent="true"
+                              android:layout_height="wrap_content"
+                            />
+                </RelativeLayout>
+                <TextView android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_toRightOf="@+id/open"
+                          android:id="@+id/wifitext"
+                          android:text="仅WIFI环境加载图片"
+                          android:layout_centerInParent="true"
+                          android:textColor="#6e6e6e"
+                          android:textSize="14sp"
+                        />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
+                  android:layout_height="wrap_content">
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/presonal_press_line"
+                android:clickable="true"
+                android:id="@+id/changepassword">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="修改密码"
+                    android:textColor="#6e6e6e"
+                    android:textSize="16sp" android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/personal_icon_history"
+                    android:layout_toEndOf="@+id/personal_icon_history"
+                    android:layout_marginLeft="15dp"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                    android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="#dedede"
+                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/presonal_press_line"
+                android:clickable="true"
+                android:id="@+id/cleancache">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="清除缓存"
+                    android:textColor="#6e6e6e"
+                    android:textSize="16sp" android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/personal_icon_history"
+                    android:layout_toEndOf="@+id/personal_icon_history"
+                    android:layout_marginLeft="15dp"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                    android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="#dedede"
+                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/presonal_press_line"
+                android:clickable="true"
+                android:id="@+id/rete">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="给品质生活打分"
+                    android:textColor="#6e6e6e"
+                    android:textSize="16sp" android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/personal_icon_history"
+                    android:layout_toEndOf="@+id/personal_icon_history"
+                    android:layout_marginLeft="15dp"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                    android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="#dedede"
+                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/presonal_press_line"
+                android:clickable="true"
+                android:id="@+id/checkupdate">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="检测更新"
+                    android:textColor="#6e6e6e"
+                    android:textSize="16sp" android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/personal_icon_history"
+                    android:layout_toEndOf="@+id/personal_icon_history"
+                    android:layout_marginLeft="15dp"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                    android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="#dedede"
+                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/presonal_press_line"
+                android:clickable="true"
+                android:id="@+id/aboutus">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="关于我们"
+                    android:textColor="#6e6e6e"
+                    android:textSize="16sp" android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/personal_icon_history"
+                    android:layout_toEndOf="@+id/personal_icon_history"
+                    android:layout_marginLeft="15dp"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                    android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="#dedede"
+                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/presonal_press_line"
+                android:clickable="true"
+                android:id="@+id/help">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="使用帮助"
+                    android:textColor="#6e6e6e"
+                    android:textSize="16sp" android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/personal_icon_history"
+                    android:layout_toEndOf="@+id/personal_icon_history"
+                    android:layout_marginLeft="15dp"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                    android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="#dedede"
+                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <Button android:layout_width="fill_parent"
+            android:id="@+id/logout"
+            android:background="@drawable/red_button"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/white"
+            android:text="退出登录"/>
+
+</LinearLayout>

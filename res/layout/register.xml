@@ -188,7 +188,7 @@
             android:layout_marginTop="15dp"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:background="@drawable/register_button"
+            android:background="@drawable/red_button"
             android:gravity="center"
             android:text="同意协议并注册"
             android:textColor="#ffffff"

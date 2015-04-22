@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.qualifies.app.R;
 import com.qualifies.app.ui.LoginActivity;
 import com.qualifies.app.ui.RegisterActivity;
+import com.qualifies.app.ui.personal.PersonalActivity;
 
 
 public class UnLoginFragment extends Fragment implements View.OnClickListener {
@@ -18,6 +19,12 @@ public class UnLoginFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.personal_login).setOnClickListener(this);
         view.findViewById(R.id.personal_register).setOnClickListener(this);
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().findViewById(R.id.personal_setting).setOnClickListener((PersonalActivity) getActivity());
     }
 
     @Override

@@ -33,8 +33,8 @@ public class LoginActivity extends Activity implements OnClickListener {
     }
 
     private void InitView() {
-        userNameText = (EditText) findViewById(R.id.LoginUsername);
-        passwordText = (EditText) findViewById(R.id.LoginPassword);
+        userNameText = (EditText) findViewById(R.id.old_pwd);
+        passwordText = (EditText) findViewById(R.id.new_pwd);
         LoginButton = (Button) findViewById(R.id.Login);
         forgetPasswordButton = (Button) findViewById(R.id.ForgetPassword);
         registerButton = (Button) findViewById(R.id.RegisterInLogin);
