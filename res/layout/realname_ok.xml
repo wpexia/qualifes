@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+                android:background="@color/f4f4f4"
+              android:layout_height="match_parent">
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="50dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="身份认证成功"
+                android:textColor="#6e6e6e"
+                android:id="@+id/realok" android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView4" android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/realok" android:layout_toStartOf="@+id/realok"
+                android:src="@drawable/icon_success"
+                android:paddingRight="10dp"/>
+    </RelativeLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="50dp"
+            android:background="#ffffff"
+            android:orientation="vertical">
+
+        <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="#b1b1b1"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/icon_old"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="#6e6e6e"
+                    android:gravity="center"
+                    android:text="姓&#160;&#160;&#160;&#160;名&#160;&#160;&#160;&#160;"
+                    />
+
+            <TextView
+                    android:id="@+id/old_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="18dp"
+                    android:layout_toRightOf="@id/icon_old"
+                    android:background="@null"
+                    android:inputType="text"
+                    android:gravity="center"
+                    android:text="XXX"
+                    android:textColor="#6e6e6e"
+                    android:textSize="14sp">
+
+                <requestFocus/>
+            </TextView>
+        </RelativeLayout>
+
+
+        <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="15dp"
+                android:background="#b1b1b1"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/icon_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center"
+                    android:textColor="#6e6e6e"
+                    android:text="身份证号"
+                    />
+
+            <TextView
+                    android:id="@+id/new_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="18dp"
+                    android:layout_toRightOf="@id/icon_new"
+                    android:background="@null"
+                    android:inputType="textPassword"
+                    android:hint="12345678900"
+                    android:gravity="center"
+                    android:textColor="#6e6e6e"
+                    android:textSize="14sp"/>
+
+
+        </RelativeLayout>
+
+        <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="#b1b1b1"/>
+    </LinearLayout>
+</RelativeLayout>
