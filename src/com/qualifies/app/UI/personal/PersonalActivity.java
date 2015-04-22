@@ -34,6 +34,7 @@ public class PersonalActivity extends Activity implements View.OnClickListener {
         updateView();
         findViewById(R.id.personal_history).setOnClickListener(this);
         findViewById(R.id.personal_follow).setOnClickListener(this);
+        findViewById(R.id.personal_position).setOnClickListener(this);
     }
 
     private void updateView() {
@@ -83,6 +84,11 @@ public class PersonalActivity extends Activity implements View.OnClickListener {
             break;
             case R.id.personal_setting: {
                 Intent intent = new Intent(PersonalActivity.this, SettingActivity.class);
+                startActivity(intent);
+            }
+            break;
+            case R.id.personal_position: {
+                Intent intent = new Intent(PersonalActivity.this, PositionActivity.class);
                 startActivity(intent);
             }
         }

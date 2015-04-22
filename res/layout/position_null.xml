@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+                android:background="@color/f4f4f4"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView5" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/icon_add"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="您还没有收货地址"
+            android:id="@+id/textView5"
+            android:textColor="#6e6e6e"
+            android:textSize="16sp"
+            android:paddingTop="23dp"
+            android:layout_below="@+id/imageView5" android:layout_centerHorizontal="true"/>
+    <Button
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:text="+添加收货地址"
+            android:textColor="@drawable/register_text_press"
+            android:textSize="16sp"
+            android:background="@color/white"
+            android:id="@+id/button4" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"/>
+</RelativeLayout>
