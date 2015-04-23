@@ -5,6 +5,9 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_home_page">HomePageActivity</string>
-	<string name="homepageSearch">search</string>
-	<string name="homepageLogo">logo</string>
+    <string name="homepageSearch">search</string>
+    <string name="homepageLogo">logo</string>
+    <string name="title_activity_good_spec">GoodSpecActivity</string>
+    <string name="title_activity_home_search">HomeSearchActivity</string>
+
 </resources>

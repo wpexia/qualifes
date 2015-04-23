@@ -29,6 +29,7 @@ import com.qualifes.view.model.MyViewFlipper;
 
 import android.R.bool;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -42,17 +43,20 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class HomePageActivity extends Activity implements OnClickListener,OnGetBottomListener,OnGestureListener{
+public class HomePageActivity extends Activity implements OnClickListener,OnGetBottomListener,OnGestureListener,OnItemClickListener{
 	
 	List<Goods> TopSlide;
 	List<Goods> special_middle;
@@ -110,6 +114,14 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 		client=new AsyncHttpClient();
 		
 		editText = (EditText)findViewById(R.id.input);
+		editText.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				Intent intent2 = new Intent(HomePageActivity.this, HomeSearchActivity.class);
+				startActivity(intent2);
+				return true;
+			}
+		});
 		scrollView = (MyScrollView)findViewById(R.id.scrollView);
 		scrollView.setBottomListener(this);
 		
@@ -123,40 +135,11 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 		imageButtonR.setOnClickListener(this);
 		
 		gridView1 = (GridView)findViewById(R.id.gridView1);
+		gridView1.setOnItemClickListener(this);
 		gridView2 = (GridView)findViewById(R.id.gridView2);
-		
+		gridView2.setOnItemClickListener(this);
 		listView = (MyListView)findViewById(R.id.bottom);
-			
-		
-//		//个人护理和家居清洁
-//		int size = 5;
-//		int itemWidth = 200;
-//		int gridviewWidth = size * itemWidth;
-//
-//		//设定gridView的尺寸
-//		LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(gridviewWidth, LinearLayout.LayoutParams.FILL_PARENT);
-//		
-//		gridView1.setLayoutParams(params2); // 重点
-//		gridView1.setColumnWidth(itemWidth); // 重点
-//		gridView1.setStretchMode(GridView.NO_STRETCH);
-//		gridView1.setNumColumns(size); // 重点
-//		
-//		gridView2.setLayoutParams(params2); // 重点
-//		gridView2.setColumnWidth(itemWidth); // 重点
-//		gridView2.setStretchMode(GridView.STRETCH_SPACING);
-//		gridView2.setNumColumns(size); // 重点
-//		
-//		gridView1.setAdapter(new HomePageGridViewAdapter(getApplicationContext(), null, R.layout.good_group_item));
-//		gridView2.setAdapter(new HomePageGridViewAdapter(getApplicationContext(), null, R.layout.good_group_item));
-//		
-		//设定ListView的数据
-		List<Map<String, Object>> data = new ArrayList<Map<String,Object>>();
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("infoTextView", "123");
-		for (int i = 0; i < 10; i++) {
-			data.add(map);
-			
-		}
+		listView.setOnItemClickListener(this);
 		
 		//listView外框架
 	    LinearLayout linear = (LinearLayout)findViewById(R.id.linear);
@@ -164,19 +147,14 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 	    //获取屏幕分辨率
 		final DisplayMetrics displayMetrics = new DisplayMetrics();
 	    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-	    
 	    final int height = displayMetrics.heightPixels;
-		
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,height-400);
-		
 		//将listview外层框架设置宽高
 		linear.setLayoutParams(lp);
 		
-		
-		
 	}
 	
-	Handler mHandler = new Handler(){
+	public Handler mHandler = new Handler(){
 		public void handleMessage(Message msg) {
 			
 			if (msg.what == 1) {
@@ -564,27 +542,27 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 			super.run();
 			if(what == 1){
 				for (int i = 0; i < TopSlide.size(); i++) {
-					Bitmap tempBitmap = getHttpBitmap(TopSlide.get(i).imageStr);
+					Bitmap tempBitmap = ConnectionURL.getHttpBitmap(TopSlide.get(i).imageStr);
 					TopSlide.get(i).imageBitmap = tempBitmap;
 				}
 			}else if(what==2) {
 				for (int i = 0; i < special_middle.size(); i++) {
-					Bitmap tempBitmap = getHttpBitmap(special_middle.get(i).imageStr);
+					Bitmap tempBitmap = ConnectionURL.getHttpBitmap(special_middle.get(i).imageStr);
 					special_middle.get(i).imageBitmap = tempBitmap;
 				}
 			}else if (what==3) {
 				for (int i = 0; i < goods_red.size(); i++) {
-					Bitmap tempBitmap = getHttpBitmap(goods_red.get(i).getGoods_img());
+					Bitmap tempBitmap = ConnectionURL.getHttpBitmap(goods_red.get(i).getGoods_img());
 					goods_red.get(i).setGoods_imgBitmap(tempBitmap);
 				}
 			}else if (what==4) {
 				for (int i = 0; i < goods_blue.size(); i++) {
-					Bitmap tempBitmap = getHttpBitmap(goods_blue.get(i).getGoods_img());
+					Bitmap tempBitmap = ConnectionURL.getHttpBitmap(goods_blue.get(i).getGoods_img());
 					goods_blue.get(i).setGoods_imgBitmap(tempBitmap);
 				}
 			}else if (what==5) {
 				for (int i = 0; i < goods_bottom.size(); i++) {
-					Bitmap tempBitmap = getHttpBitmap(goods_bottom.get(i).getGoods_img());
+					Bitmap tempBitmap = ConnectionURL.getHttpBitmap(goods_bottom.get(i).getGoods_img());
 					goods_bottom.get(i).setGoods_imgBitmap(tempBitmap);
 				}
 			}
@@ -599,24 +577,7 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
      * @param url
      * @return
      */
-    public static Bitmap getHttpBitmap(String url){
-        URL myFileURL;
-        Bitmap bitmap=null;
-        try{
-            myFileURL = new URL(url);
-            HttpURLConnection conn=(HttpURLConnection)myFileURL.openConnection();
-            conn.setConnectTimeout(6000);
-            conn.setDoInput(true);
-            conn.setUseCaches(false);
-            InputStream is = conn.getInputStream();
-            bitmap = BitmapFactory.decodeStream(is);
-            is.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        System.out.println(bitmap);
-        return bitmap;
-    }
+    
 
     private boolean convertInt2Boolean(int i){
     	if(i==0){
@@ -625,4 +586,29 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
     		return true;
     	}
     }
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		Intent intent = new Intent(HomePageActivity.this, GoodDetailActivity.class);
+		Bundle bundle = new Bundle();
+		
+		switch (parent.getId()) {
+		case R.id.gridView1:
+			bundle.putInt("goods_id", goods_red.get(position).getGoods_id());
+			break;
+		case R.id.gridView2:
+			bundle.putInt("goods_id", goods_blue.get(position).getGoods_id());
+			break;
+		case R.id.bottom:
+			bundle.putInt("goods_id", goods_bottom.get(position).getGoods_id());
+			break;
+		default:
+			break;
+		}
+		
+		intent.putExtra("goods_id", bundle);
+		startActivity(intent);
+		
+	}
 }

@@ -25,6 +25,7 @@
             android:id="@+id/input"
             android:layout_width="match_parent"
             android:layout_height="60px"
+             android:clickable="true"
             android:layout_toRightOf="@+id/logo"
             android:layout_marginLeft="28px"
             android:layout_centerVertical="true"

@@ -2,8 +2,6 @@ package com.qualifes.adapter;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.example.qualifieslife.R;

@@ -28,8 +28,15 @@
             android:name=".HomePageActivity"
             android:label="@string/title_activity_home_page" >
         </activity>
+        <activity android:name=".GoodDetailActivity" >
+        </activity>
         <activity
-            android:name=".GoodDetailActivity" >
+            android:name=".GoodSpecActivity"
+            android:label="@string/title_activity_good_spec" >
+        </activity>
+        <activity
+            android:name=".HomeSearchActivity"
+            android:label="@string/title_activity_home_search" >
         </activity>
     </application>
 
