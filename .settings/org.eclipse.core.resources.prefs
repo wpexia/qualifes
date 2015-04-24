@@ -1,3 +1,4 @@
 eclipse.preferences.version=1
-encoding//src/com/qualifes/adapter/HomePageGridViewAdapter.java=UTF-8
-encoding//src/com/qualifes/view/model/MyListView.java=UTF-8
+encoding//src/com/qualifies/app/adapter/HomePageGridViewAdapter.java=UTF-8
+encoding//src/com/qualifies/app/adapter/HomePageListViewAdapter.java=UTF-8
+encoding//src/com/qualifies/app/view/model/MyListView.java=UTF-8

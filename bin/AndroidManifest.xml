@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.qualifies.app"
+    package="com.example.qualifieslife"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -14,38 +14,16 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.NoTitleBar" >
+        android:theme="@style/AppTheme" >
         <activity
-<<<<<<< HEAD
-            android:name=".ui.RegisterActivity"
-            android:label="@string/register_name" >
-        </activity>
-        <activity
-                android:name=".ui.ProtocolActivity"
-                android:label="@string/protocol_name">
-        </activity>
-        <activity
-                android:name=".ui.personal.PersonalActivity"
-                android:label="@string/wo_name">
-=======
             android:name="com.qualifies.app.qualifieslife.MainActivity"
             android:label="@string/app_name" >
->>>>>>> f15d608b4f62202e9dd1486e11ecd081a9dae1e6
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-        <activity android:name=".ui.LoginActivity"/>
-        <activity android:name=".ui.personal.HistoryActivity"/>
-        <activity android:name=".ui.personal.FollowActivity"/>
-        <activity android:name=".ui.personal.SettingActivity"/>
-        <activity android:name=".ui.personal.RealNameActivity"/>
-        <activity android:name=".ui.personal.PositionActivity"/>
-        <activity android:name=".ui.personal.AddPositionActivity"/>
-=======
         <activity
             android:name="com.qualifies.app.qualifieslife.HomePageActivity"
             android:label="@string/title_activity_home_page" >
@@ -64,7 +42,6 @@
             android:name="com.qualifies.app.qualifieslife.HomeSearchResultActivity"
             android:label="@string/title_activity_home_search_result" >
         </activity>
->>>>>>> f15d608b4f62202e9dd1486e11ecd081a9dae1e6
     </application>
 
 </manifest>
