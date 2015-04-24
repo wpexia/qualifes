@@ -38,6 +38,7 @@
         <activity android:name=".ui.personal.SettingActivity"/>
         <activity android:name=".ui.personal.RealNameActivity"/>
         <activity android:name=".ui.personal.PositionActivity"/>
+        <activity android:name=".ui.personal.AddPositionActivity"/>
     </application>
 
 </manifest>

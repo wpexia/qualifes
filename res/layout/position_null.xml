@@ -27,5 +27,5 @@
             android:textColor="@drawable/register_text_press"
             android:textSize="16sp"
             android:background="@color/white"
-            android:id="@+id/button4" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"/>
+            android:id="@+id/add" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"/>
 </RelativeLayout>

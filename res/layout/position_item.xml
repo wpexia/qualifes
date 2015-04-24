@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#6e6e6e"
-            android:text="上海市闵行区浦江镇三路公路3585号6号楼"
+            android:text="上海市闵行区浦江镇三路公路3585号6号楼上海市闵行区浦江镇三路公路3585号6号楼"
             android:textSize="12sp"
             android:id="@+id/textView7"
             android:paddingLeft="15dp"

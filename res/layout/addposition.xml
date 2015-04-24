@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/f4f4f4"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:background="#00aaff"
+            >
+
+        <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="15dp"
+                android:background="@null"
+                android:src="@drawable/icon_back"/>
+
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="新增收货地址"
+                android:layout_centerVertical="true"
+                android:gravity="center_horizontal"
+                android:textColor="#ffffff"
+                android:textSize="18sp">
+        </TextView>
+    </RelativeLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#ffffff"
+            android:orientation="vertical">
+
+        <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="#b1b1b1"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/icon_old"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="#6e6e6e"
+                    android:gravity="center"
+                    android:text="收货人&#160;&#160;&#160;&#160;&#160;"
+                    />
+
+            <EditText
+                    android:id="@+id/old_pwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="18dp"
+                    android:layout_toRightOf="@id/icon_old"
+                    android:background="@null"
+                    android:inputType="text"
+                    android:hint="请输入收货人姓名"
+                    android:textColorHint="#b1b1b1"
+                    android:textSize="14sp">
+            </EditText>
+        </RelativeLayout>
+
+
+        <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="15dp"
+                android:background="#b1b1b1"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/icon_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:textColor="#6e6e6e"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center"
+                    android:text="手机号码"
+                    />
+
+            <EditText
+                    android:id="@+id/new_pwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="18dp"
+                    android:layout_toRightOf="@id/icon_new"
+                    android:background="@null"
+                    android:inputType="textPassword"
+                    android:hint="请输入手机号码"
+                    android:textColorHint="#b1b1b1"
+                    android:textSize="14sp"/>
+
+
+        </RelativeLayout>
+
+        <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="#b1b1b1"/>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/icon_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:textColor="#6e6e6e"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center"
+                    android:text="固定电话"
+                    />
+
+            <EditText
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="18dp"
+                    android:layout_toRightOf="@id/icon_phone"
+                    android:background="@null"
+                    android:inputType="textPassword"
+                    android:hint="选填"
+                    android:textColorHint="#b1b1b1"
+                    android:textSize="14sp"/>
+
+
+        </RelativeLayout>
+
+        <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="#b1b1b1"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp"
+            android:background="#ffffff"
+            android:orientation="vertical">
+
+        <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="#b1b1b1"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/icon_position"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="#6e6e6e"
+                    android:gravity="center"
+                    android:text="请选择省/市/区"
+                    />
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                    android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
+
+        </RelativeLayout>
+
+
+        <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="15dp"
+                android:background="#b1b1b1"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1">
+
+            <EditText
+                    android:id="@+id/position"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:background="@null"
+                    android:hint="详细地址"
+                    android:gravity="top"
+                    android:paddingTop="12dp"
+                    android:textColorHint="#b1b1b1"
+                    android:textSize="14sp"/>
+        </RelativeLayout>
+
+        <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="#b1b1b1"/>
+    </LinearLayout>
+    <Button
+            android:id="@+id/save"
+            android:layout_marginTop="50dp"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/red_button"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            >
+    </Button>
+
+    <Button
+            android:id="@+id/savedefault"
+            android:layout_marginTop="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:text="保存并设为默认"
+            android:textColor="@drawable/press80_red"
+            android:textSize="16sp"
+            >
+    </Button>
+</LinearLayout>
