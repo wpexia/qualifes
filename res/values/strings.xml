@@ -9,5 +9,6 @@
     <string name="homepageLogo">logo</string>
     <string name="title_activity_good_spec">GoodSpecActivity</string>
     <string name="title_activity_home_search">HomeSearchActivity</string>
+    <string name="title_activity_home_search_result">HomeSearchResultActivity</string>
 
 </resources>
