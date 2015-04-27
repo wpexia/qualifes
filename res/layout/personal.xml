@@ -228,7 +228,7 @@
         <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="51dp"
-                android:id="@+id/realname"
+                android:id="@+id/personal_realname"
                 android:clickable="true"
                 android:background="@drawable/presonal_press_line">
 

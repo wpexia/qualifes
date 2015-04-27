@@ -30,7 +30,7 @@ public class PositionActivity extends Activity implements View.OnClickListener {
     private void initView() {
         FragmentTransaction transaction = manager.beginTransaction();
         hideFragment(transaction);
-        if (!sp.contains("position")) {
+        if (sp.contains("position")) {
             if (positionNullFragment == null) {
                 positionNullFragment = new PositionNullFragment();
                 transaction.add(R.id.content, positionNullFragment);
