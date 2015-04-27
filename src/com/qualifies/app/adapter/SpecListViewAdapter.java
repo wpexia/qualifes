@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.qualifieslife.R;
+import com.qualifies.app.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

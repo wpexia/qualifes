@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.util.Log;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -166,7 +167,7 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 						iv.setScaleType(ImageView.ScaleType.FIT_XY);
 						viewFlipper.addView(iv, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 						
-						viewFlipper.setAutoStart(true);			// �����Զ����Ź��ܣ�����¼���ǰ�Զ����ţ�
+						viewFlipper.setAutoStart(true);			// �����Զ����Ź��ܣ�����¼���ǰ�Զ����ţ�?
 						viewFlipper.setFlipInterval(1500);
 						if(viewFlipper.isAutoStart() && !viewFlipper.isFlipping()){
 							viewFlipper.startFlipping(getApplicationContext());
@@ -429,7 +430,7 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 		});
 	}
 	
-	// ��������¼�
+	// ��������¼�?
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -462,13 +463,13 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		System.out.println("asdsadadadaddasda");
-		viewFlipper.stopFlipping();				// ����¼���ֹͣ�Զ�����
+		viewFlipper.stopFlipping();				// ����¼���ֹͣ�Զ�����?
 		viewFlipper.setAutoStart(false);	
 		return gestureDetector.onTouchEvent(event); 		// ע�������¼�
 	}
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-		if (e2.getX() - e1.getX() > 120) {			 // �������һ���������ҳ���
+		if (e2.getX() - e1.getX() > 120) {			 // �������һ���������ҳ���?
 			Animation rInAnim = AnimationUtils.loadAnimation(mActivity, R.anim.push_right_in); 	// ���һ���������Ľ���Ч����alpha  0.1 -> 1.0��
 			Animation rOutAnim = AnimationUtils.loadAnimation(mActivity, R.anim.push_right_out); // ���һ����Ҳ໬���Ľ���Ч����alpha 1.0  -> 0.1��
 
@@ -476,7 +477,7 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 			viewFlipper.setOutAnimation(rOutAnim);
 			viewFlipper.showPrevious();
 			return true;
-		} else if (e2.getX() - e1.getX() < -120) {		 // �������󻬶����ҽ������
+		} else if (e2.getX() - e1.getX() < -120) {		 // �������󻬶����ҽ������?
 			Animation lInAnim = AnimationUtils.loadAnimation(mActivity, R.anim.push_left_in);		// ���󻬶�������Ľ���Ч����alpha 0.1  -> 1.0��
 			Animation lOutAnim = AnimationUtils.loadAnimation(mActivity, R.anim.push_left_out); 	// ���󻬶��Ҳ໬���Ľ���Ч����alpha 1.0  -> 0.1��
 
@@ -536,6 +537,7 @@ public class HomePageActivity extends Activity implements OnClickListener,OnGetB
 		int what;
 		
 		public MyThread(int what){
+			Log.e("Mythread"," " + what);
 			this.what = what;
 		}
 		@Override

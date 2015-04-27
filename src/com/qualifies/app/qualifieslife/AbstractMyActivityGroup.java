@@ -12,12 +12,12 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.RadioButton;
 
 /**
- * ×Ô¼ºÊµÏÖµÄÒ»¸öÍ¨ÓÃActivityGroup¡£
- * ¿ÉÒÔÍ¨¹ı¼òµ¥µÄÖØĞ´ËüÀ´ÖÆ×÷ÓĞµ¼º½°´Å¥ºÍÓÃµ¼º½°´Å¥¿ØÖÆ¶¯Ì¬¼ÓÔØActivityµÄActivityGroup¡£
- * ¿ª·¢ÕßĞèÒªÔÚÊµÏÖÀàÖĞÊµÏÖÈı¸ö·½·¨£º
- *     1.Ö¸¶¨¶¯Ì¬¼ÓÔØActivityµÄÈİÆ÷µÄ¶ÔÏó£¬getContainer()·½·¨¡£
- *     2.³õÊ¼»¯ËùÓĞµÄµ¼º½°´Å¥£¬initRadioBtns()·½·¨£¬¿ª·¢ÕßÒª±éÀúËùÓĞµÄµ¼º½°´Å¥²¢Ö´ĞĞinitRadioBtn(int id)·½·¨¡£
- *     3.ÊµÏÖµ¼º½°´Å¥¶¯×÷¼àÌıÆ÷µÄ¾ßÌå·½·¨£¬onCheckedChanged(...)·½·¨¡£Õâ¸ö·½·¨½«ÊµÏÖÄ³¸öµ¼º½°´Å¥ÓëÒªÆô¶¯¶ÔÓ¦µÄActivityµÄ¹ØÁª¹ØÏµ£¬¿ÉÒÔµ÷ÓÃsetContainerView(...)·½·¨¡£
+ * è‡ªå·±å®ç°çš„ä¸€ä¸ªé€šç”¨ActivityGroupã€‚
+ * å¯ä»¥é€šè¿‡ç®€å•çš„é‡å†™å®ƒæ¥åˆ¶ä½œæœ‰å¯¼èˆªæŒ‰é’®å’Œç”¨å¯¼èˆªæŒ‰é’®æ§åˆ¶åŠ¨æ€åŠ è½½Activityçš„ActivityGroupã€‚
+ * å¼€å‘è€…éœ€è¦åœ¨å®ç°ç±»ä¸­å®ç°ä¸‰ä¸ªæ–¹æ³•ï¼š
+ *     1.æŒ‡å®šåŠ¨æ€åŠ è½½Activityçš„å®¹å™¨çš„å¯¹è±¡ï¼ŒgetContainer()æ–¹æ³•ã€‚
+ *     2.åˆå§‹åŒ–æ‰€æœ‰çš„å¯¼èˆªæŒ‰é’®ï¼ŒinitRadioBtns()æ–¹æ³•ï¼Œå¼€å‘è€…è¦éå†æ‰€æœ‰çš„å¯¼èˆªæŒ‰é’®å¹¶æ‰§è¡ŒinitRadioBtn(int id)æ–¹æ³•ã€‚
+ *     3.å®ç°å¯¼èˆªæŒ‰é’®åŠ¨ä½œç›‘å¬å™¨çš„å…·ä½“æ–¹æ³•ï¼ŒonCheckedChanged(...)æ–¹æ³•ã€‚è¿™ä¸ªæ–¹æ³•å°†å®ç°æŸä¸ªå¯¼èˆªæŒ‰é’®ä¸è¦å¯åŠ¨å¯¹åº”çš„Activityçš„å…³è”å…³ç³»ï¼Œå¯ä»¥è°ƒç”¨setContainerView(...)æ–¹æ³•ã€‚
  * @author zet
  *
  */
@@ -30,20 +30,20 @@ CompoundButton.OnCheckedChangeListener{
         initRadioBtns();
     }
     
-    //¼ÓÔØActivityµÄViewÈİÆ÷£¬ÈİÆ÷Ó¦¸ÃÊÇViewGroupµÄ×ÓÀà
+    //åŠ è½½Activityçš„Viewå®¹å™¨ï¼Œå®¹å™¨åº”è¯¥æ˜¯ViewGroupçš„å­ç±»
     private ViewGroup container;
     
     private LocalActivityManager localActivityManager;
     
     /**
-     * ¼ÓÔØActivityµÄViewÈİÆ÷µÄid²¢²»ÊÇ¹Ì¶¨µÄ£¬½«ÃüÃû¹æÔò½»¸ø¿ª·¢Õß
-     * ¿ª·¢Õß¿ÉÒÔÔÚ²¼¾ÖÎÄ¼şÖĞ×Ô¶¨ÒåÆäid£¬Í¨¹ıÖØĞ´Õâ¸ö·½·¨»ñµÃÕâ¸öViewÈİÆ÷µÄ¶ÔÏó
+     * åŠ è½½Activityçš„Viewå®¹å™¨çš„idå¹¶ä¸æ˜¯å›ºå®šçš„ï¼Œå°†å‘½åè§„åˆ™äº¤ç»™å¼€å‘è€…
+     * å¼€å‘è€…å¯ä»¥åœ¨å¸ƒå±€æ–‡ä»¶ä¸­è‡ªå®šä¹‰å…¶idï¼Œé€šè¿‡é‡å†™è¿™ä¸ªæ–¹æ³•è·å¾—è¿™ä¸ªViewå®¹å™¨çš„å¯¹è±¡
      * @return
      */
     abstract protected ViewGroup getContainer();
     
     /**
-     * ¹©ÊµÏÖÀàµ÷ÓÃ£¬¸ù¾İµ¼º½°´Å¥id³õÊ¼»¯°´Å¥
+     * ä¾›å®ç°ç±»è°ƒç”¨ï¼Œæ ¹æ®å¯¼èˆªæŒ‰é’®idåˆå§‹åŒ–æŒ‰é’®
      * @param id
      */
     protected void initRadioBtn(int id){
@@ -52,12 +52,12 @@ CompoundButton.OnCheckedChangeListener{
     }
     
     /**
-     * ¿ª·¢Õß±ØĞëÖØĞ´Õâ¸ö·½·¨£¬À´±éÀú²¢³õÊ¼»¯ËùÓĞµÄµ¼º½°´Å¥
+     * å¼€å‘è€…å¿…é¡»é‡å†™è¿™ä¸ªæ–¹æ³•ï¼Œæ¥éå†å¹¶åˆå§‹åŒ–æ‰€æœ‰çš„å¯¼èˆªæŒ‰é’®
      */
     abstract protected void initRadioBtns();
     
     /**
-     * ÎªÆô¶¯Activity³õÊ¼»¯IntentĞÅÏ¢
+     * ä¸ºå¯åŠ¨Activityåˆå§‹åŒ–Intentä¿¡æ¯
      * @param cls
      * @return
      */
@@ -66,9 +66,9 @@ CompoundButton.OnCheckedChangeListener{
     }
     
     /**
-     * ¹©¿ª·¢ÕßÔÚÊµÏÖÀàÖĞµ÷ÓÃ£¬ÄÜ½«ActivityÈİÆ÷ÄÚµÄActivityÒÆ³ı£¬ÔÙ½«Ö¸¶¨µÄÄ³¸öActivity¼ÓÈë
-     * @param activityName ¼ÓÔØµÄActivityÔÚlocalActivityManagerÖĞµÄÃû×Ö
-     * @param activityClassTye    Òª¼ÓÔØActivityµÄÀàĞÍ
+     * ä¾›å¼€å‘è€…åœ¨å®ç°ç±»ä¸­è°ƒç”¨ï¼Œèƒ½å°†Activityå®¹å™¨å†…çš„Activityç§»é™¤ï¼Œå†å°†æŒ‡å®šçš„æŸä¸ªActivityåŠ å…¥
+     * @param activityName åŠ è½½çš„Activityåœ¨localActivityManagerä¸­çš„åå­—
+     * @param activityClassTye    è¦åŠ è½½Activityçš„ç±»å‹
      */
     protected void setContainerView(String activityName, Class<?> activityClassTye){
         if(null == localActivityManager){
@@ -79,7 +79,7 @@ CompoundButton.OnCheckedChangeListener{
             container = getContainer();
         }
         
-        //ÒÆ³ıÄÚÈİ²¿·ÖÈ«²¿µÄView
+        //ç§»é™¤å†…å®¹éƒ¨åˆ†å…¨éƒ¨çš„View
         container.removeAllViews();
         
         Activity contentActivity = localActivityManager.getActivity(activityName);
@@ -87,7 +87,7 @@ CompoundButton.OnCheckedChangeListener{
             localActivityManager.startActivity(activityName, initIntent(activityClassTye));
         }
         
-        //¼ÓÔØActivity
+        //åŠ è½½Activity
         container.addView(
                 localActivityManager.getActivity(activityName)
                         .getWindow().getDecorView(),

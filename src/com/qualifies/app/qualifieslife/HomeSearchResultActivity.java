@@ -1,6 +1,6 @@
 package com.qualifies.app.qualifieslife;
 
-import com.example.qualifieslife.R;
+import com.qualifies.app.R;
 
 import android.app.Activity;
 import android.os.Bundle;

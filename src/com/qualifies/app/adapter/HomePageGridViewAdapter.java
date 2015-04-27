@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.List;
 
-import com.example.qualifieslife.R;
+import com.qualifies.app.R;
 import com.qualifies.app.data.model.GoodInfo;
 
 import android.content.Context;

@@ -3,7 +3,7 @@ package com.qualifies.app.adapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.example.qualifieslife.R;
+import com.qualifies.app.R;
 
 import android.content.Context;
 import android.view.View;

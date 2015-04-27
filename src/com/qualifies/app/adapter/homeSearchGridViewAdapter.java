@@ -5,8 +5,8 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.example.qualifieslife.R;
-import com.example.qualifieslife.R.layout;
+import com.qualifies.app.R;
+import com.qualifies.app.R.layout;
 
 import android.app.Activity;
 import android.content.Context;

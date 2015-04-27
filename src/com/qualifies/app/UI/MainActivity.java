@@ -70,8 +70,8 @@ public class MainActivity extends Activity implements OnClickListener{
 
 	private void init() {
 		testTextView=(TextView)findViewById(R.id.testtext);
-		jump = (Button)findViewById(R.id.button);
-		jump.setOnClickListener(this);
+//		jump = (Button)findViewById(R.id.button);
+//		jump.setOnClickListener(this);
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,15 +83,15 @@ public class MainActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		switch (v.getId()) {
-		case R.id.button:
-			Intent intent = new Intent(this, MainActivity.class);
-			startActivity(intent);
-			break;
-
-		default:
-			break;
-		}
+//		switch (v.getId()) {
+//		case R.id.button:
+//			Intent intent = new Intent(this, MainActivity.class);
+//			startActivity(intent);
+//			break;
+//
+//		default:
+//			break;
+//		}
 	}
 
 }

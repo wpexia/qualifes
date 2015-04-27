@@ -10,7 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.qualifieslife.R;
+import com.qualifies.app.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.ConnectionURL;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -137,13 +137,13 @@ public class GoodDetailActivity extends Activity implements OnClickListener{
 					detail_goods_name.setText(dataObject.getString("goods_name"));
 					BigDecimal shopPrice = new BigDecimal(dataObject.getString("shop_price"));
 					BigDecimal marketPrice = new BigDecimal(dataObject.getString("market_price"));
-					detail_shop_price.setText("£¤"+shopPrice);
-					detail_market_price.setText("£¤"+marketPrice);
+					detail_shop_price.setText("ï¿½ï¿½"+shopPrice);
+					detail_market_price.setText("ï¿½ï¿½"+marketPrice);
 					detail_market_price.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); 
 					BigDecimal result = shopPrice.divide(marketPrice,new MathContext(2)).multiply(new BigDecimal(10));
-					detail_discount.setText(result+"ÕÛ");
+					detail_discount.setText(result+"ï¿½ï¿½");
 					
-					detail_origin.setText("²úµØ  "+dataObject.getString("origin"));
+					detail_origin.setText("ï¿½ï¿½ï¿½ï¿½  "+dataObject.getString("origin"));
 			        
 					MyThread thread = new MyThread(1, imgStrs);
 					thread.start();
@@ -212,7 +212,7 @@ public class GoodDetailActivity extends Activity implements OnClickListener{
 					iv.setScaleType(ImageView.ScaleType.FIT_XY);
 					detail_imgs.addView(iv, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 					
-					detail_imgs.setAutoStart(true);			// ÉèÖÃ×Ô¶¯²¥·Å¹¦ÄÜ£¨µã»÷ÊÂ¼þ£¬Ç°×Ô¶¯²¥·Å£©
+					detail_imgs.setAutoStart(true);			// ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Å¹ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Ç°ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Å£ï¿½
 					detail_imgs.setFlipInterval(1500);
 					if(detail_imgs.isAutoStart() &&imgBitmaps.size()>1&& !detail_imgs.isFlipping()){
 						detail_imgs.startFlipping(getApplicationContext());

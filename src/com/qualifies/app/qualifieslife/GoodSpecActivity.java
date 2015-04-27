@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.qualifieslife.R;
+import com.qualifies.app.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.ConnectionURL;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -114,8 +114,8 @@ public class GoodSpecActivity extends Activity implements OnClickListener{
 				try {
 					JSONObject dataObject = response.getJSONObject("data");
 					spec_goods_name.setText(dataObject.getString("goods_name"));
-					spec_shop_price.setText("£¤"+dataObject.getString("shop_price"));
-					spec_origin.setText("²úµØ "+dataObject.getString("origin"));
+					spec_shop_price.setText("ï¿½ï¿½"+dataObject.getString("shop_price"));
+					spec_origin.setText("ï¿½ï¿½ï¿½ï¿½ "+dataObject.getString("origin"));
 					goods_number = Integer.parseInt(dataObject.getString("goods_number"));
 					max_sale_number = Integer.parseInt(dataObject.getString("max_sale_number"));
 					if(max_sale_number>0){
@@ -185,7 +185,7 @@ public class GoodSpecActivity extends Activity implements OnClickListener{
 		case R.id.spec_count_sub:
 			int numSub = Integer.parseInt(spec_count_num.getText().toString());
 			if(numSub==1||numSub==max_sale_number){
-				Toast.makeText(getApplicationContext(), "²»ÄÜÔÙÉÙÁËÅ¶", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¶", Toast.LENGTH_SHORT).show();
 			}else {
 				spec_count_num.setText(String.valueOf(--numSub));
 			}
@@ -203,7 +203,7 @@ public class GoodSpecActivity extends Activity implements OnClickListener{
 				System.out.println(ids);
 				
 			}else {
-				Toast.makeText(getApplicationContext(), "Ç×£¬ÇëÑ¡ÔñÉÌÆ·ÊôÐÔÅ¶", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "ï¿½×£ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½Å¶", Toast.LENGTH_SHORT).show();
 			}
 			break;
 		default:

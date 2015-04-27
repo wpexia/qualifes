@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.qualifieslife.R;
+import com.qualifies.app.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.ConnectionURL;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -124,7 +124,7 @@ public class HomeSearchActivity extends Activity implements OnClickListener{
 			break;
 		case R.id.home_search_search:
 			if(home_search_input.getText().toString().isEmpty()){
-				Toast.makeText(getApplicationContext(), "ÇëÊäÈëËÑË÷µÄÉÌÆ·ÐÅÏ¢", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½Ï¢", Toast.LENGTH_SHORT).show();
 			}else {
 				String input = home_search_input.getText().toString();
 				
