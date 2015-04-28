@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/f4f4f4"
+              android:layout_width="match_parent"
+              android:paddingTop="10dp"
+              android:paddingLeft="15dp"
+              android:paddingRight="15dp"
+              android:layout_height="match_parent">
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:background="#e9e9e9"
+            android:layout_height="71dp">
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:id="@+id/editText"
+                android:layout_marginLeft="10dp"
+                android:layout_toLeftOf="@+id/textView11"
+                android:layout_marginRight="20dp"
+                android:hint="请输入红包号"
+                android:textSize="14sp"
+                android:textColorHint="#bebebe"
+                android:layout_centerVertical="true"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加红包"
+                android:textSize="16sp"
+                android:background="#e9e9e9"
+                android:layout_marginRight="18dp"
+                android:textColor="#bebebe"
+                android:id="@+id/textView11"
+                android:layout_centerVertical="true" android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+    <ListView android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+</LinearLayout>
