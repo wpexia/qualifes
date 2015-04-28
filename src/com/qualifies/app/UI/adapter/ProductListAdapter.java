@@ -19,10 +19,13 @@ public class ProductListAdapter extends BaseAdapter {
     private List<HashMap<String, Object>> mData;
     private boolean hasStar = false;
 
-    public ProductListAdapter(Context context, List<HashMap<String, Object>> data, boolean star) {
-        mInflater = LayoutInflater.from(context);
+    public ProductListAdapter(List<HashMap<String, Object>> data, boolean star) {
         mData = data;
         hasStar = star;
+    }
+
+    public void setContent(Context context) {
+        mInflater = LayoutInflater.from(context);
     }
 
     @Override

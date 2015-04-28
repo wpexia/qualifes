@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/icon_in"
                 android:paddingRight="15dp"
-                android:id="@+id/imageView6" android:layout_centerVertical="true" android:layout_alignParentRight="true"
+                android:id="@+id/icon_in" android:layout_centerVertical="true" android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"/>
         <TextView
                 android:layout_width="wrap_content"
@@ -46,8 +46,8 @@
                 android:paddingRight="17dp"
                 android:text="默认地址"
                 android:id="@+id/textView8" android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/imageView6"
-                android:layout_toStartOf="@+id/imageView6"/>
+                android:layout_toLeftOf="@+id/icon_in"
+                android:layout_toStartOf="@+id/icon_in"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,8 +57,8 @@
                 android:paddingRight="17dp"
                 android:text="18964959647"
                 android:layout_below="@+id/textView8"
-                android:id="@+id/textView9" android:layout_toLeftOf="@+id/imageView6"
-                android:layout_toStartOf="@+id/imageView6"/>
+                android:id="@+id/textView9" android:layout_toLeftOf="@+id/icon_in"
+                android:layout_toStartOf="@+id/icon_in"/>
     </RelativeLayout>
     <ListView android:layout_width="fill_parent"
               android:layout_height="wrap_content"

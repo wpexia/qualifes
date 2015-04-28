@@ -40,9 +40,15 @@ public class ProductListNotNullFragment extends Fragment {
     private void initView() {
         listView = (SwipeMenuListView) mView.findViewById(R.id.listView);
         createSwipeMenu();
-        historyAdapter = new ProductListAdapter(getActivity(), getData(), hasStar);
+        historyAdapter = new ProductListAdapter(getData(), hasStar);
         listView.setAdapter(historyAdapter);
         listView.setDividerHeight(0);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        historyAdapter.setContent(getActivity());
     }
 
     private void createSwipeMenu() {

@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import com.qualifies.app.R;
+import com.qualifies.app.ui.fragment.PositionChoseFragment;
 import com.qualifies.app.ui.fragment.PositionNullFragment;
 import com.qualifies.app.ui.fragment.PositionOKFragment;
 
@@ -16,6 +17,7 @@ public class PositionActivity extends Activity implements View.OnClickListener {
     private SharedPreferences sp;
     private PositionNullFragment positionNullFragment;
     private PositionOKFragment positionOKFragment;
+    private PositionChoseFragment positionChoseFragment;
     private FragmentManager manager;
 
     @Override
@@ -55,6 +57,9 @@ public class PositionActivity extends Activity implements View.OnClickListener {
         if (positionOKFragment != null) {
             transaction.hide(positionOKFragment);
         }
+        if (positionChoseFragment != null) {
+            transaction.hide(positionChoseFragment);
+        }
     }
 
     @Override
@@ -64,6 +69,18 @@ public class PositionActivity extends Activity implements View.OnClickListener {
             case R.id.add: {
                 Intent intent = new Intent(PositionActivity.this, AddPositionActivity.class);
                 startActivity(intent);
+            }
+            break;
+            case R.id.icon_in: {
+                FragmentTransaction transaction = manager.beginTransaction();
+                hideFragment(transaction);
+                if(positionChoseFragment == null) {
+                    positionChoseFragment = new PositionChoseFragment();
+                    transaction.add(R.id.content, positionChoseFragment);
+                } else {
+                    transaction.show(positionChoseFragment);
+                }
+                transaction.commit();
             }
             break;
         }

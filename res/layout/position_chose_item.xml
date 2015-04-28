@@ -19,9 +19,9 @@
     <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="15dp"
-            android:id="@+id/radioButton" android:layout_centerVertical="true" android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
+            android:button="@drawable/radiobutton"
+            android:id="@+id/positionradio" android:layout_centerVertical="true" android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" android:layout_marginRight="15dp"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             android:paddingLeft="15dp"
             android:paddingTop="15dp"
             android:paddingRight="17dp"
-            android:layout_toLeftOf="@+id/radioButton"
+            android:layout_toLeftOf="@+id/positionradio"
             android:layout_below="@+id/textView6"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"/>
@@ -46,6 +46,6 @@
             android:paddingRight="17dp"
             android:text="18964959647"
             android:id="@+id/textView9"
-            android:layout_toLeftOf="@+id/radioButton"
-            android:layout_toStartOf="@+id/radioButton"/>
+            android:layout_toLeftOf="@+id/positionradio"
+            android:layout_toStartOf="@+id/positionradio"/>
 </RelativeLayout>

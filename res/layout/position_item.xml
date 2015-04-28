@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/icon_in"
             android:paddingRight="15dp"
-            android:id="@+id/imageView6"
+            android:id="@+id/icon_in"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"/>
@@ -35,7 +35,7 @@
             android:paddingLeft="15dp"
             android:paddingTop="15dp"
             android:paddingRight="17dp"
-            android:layout_toLeftOf="@+id/imageView6"
+            android:layout_toLeftOf="@+id/icon_in"
             android:layout_below="@+id/textView6"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"/>
@@ -49,6 +49,6 @@
             android:paddingRight="17dp"
             android:text="18964959647"
             android:id="@+id/textView9"
-            android:layout_toLeftOf="@+id/imageView6"
-            android:layout_toStartOf="@+id/imageView6"/>
+            android:layout_toLeftOf="@+id/icon_in"
+            android:layout_toStartOf="@+id/icon_in"/>
 </RelativeLayout>

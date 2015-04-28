@@ -28,7 +28,7 @@ public class PositionOKFragment extends Fragment {
 
     private void initView() {
         listView = (ListView) mView.findViewById(R.id.listView);
-        adapter = new PositionAdapter(getActivity(), getData());
+        adapter = new PositionAdapter(getData());
         listView.setAdapter(adapter);
     }
 
@@ -36,7 +36,9 @@ public class PositionOKFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        adapter.setContent(getActivity());
         mView.findViewById(R.id.add).setOnClickListener((PositionActivity) getActivity());
+        mView.findViewById(R.id.icon_in).setOnClickListener((PositionActivity) getActivity());
     }
 
     private List<HashMap<String, Object>> getData() {
