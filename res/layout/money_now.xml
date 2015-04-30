@@ -15,6 +15,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
                 android:id="@+id/editText"
+                android:background="@drawable/money_edit"
+                android:paddingLeft="8dp"
                 android:layout_marginLeft="10dp"
                 android:layout_toLeftOf="@+id/textView11"
                 android:layout_marginRight="20dp"
@@ -34,5 +36,5 @@
                 android:layout_centerVertical="true" android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"/>
     </RelativeLayout>
-    <ListView android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+    <ListView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/listView"/>
 </LinearLayout>

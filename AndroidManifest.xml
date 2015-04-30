@@ -44,24 +44,21 @@
         <activity android:name=".ui.personal.RealNameActivity"/>
         <activity android:name=".ui.personal.PositionActivity"/>
         <activity android:name=".ui.personal.AddPositionActivity"/>
+        <activity android:name=".ui.personal.MoneyActivity"/>
         <activity
                 android:name="com.qualifies.app.qualifieslife.HomePageActivity"
-                android:label="@string/title_activity_home_page">
-        </activity>
-        <activity android:name="com.qualifies.app.qualifieslife.GoodDetailActivity">
-        </activity>
+                android:label="@string/title_activity_home_page"/>
+        <activity android:name="com.qualifies.app.qualifieslife.GoodDetailActivity"/>
         <activity
                 android:name="com.qualifies.app.qualifieslife.GoodSpecActivity"
                 android:label="@string/title_activity_good_spec">
         </activity>
         <activity
                 android:name="com.qualifies.app.qualifieslife.HomeSearchActivity"
-                android:label="@string/title_activity_home_search">
-        </activity>
+                android:label="@string/title_activity_home_search"/>
         <activity
                 android:name="com.qualifies.app.qualifieslife.HomeSearchResultActivity"
-                android:label="@string/title_activity_home_search_result">
-        </activity>
+                android:label="@string/title_activity_home_search_result"/>
     </application>
 
 </manifest>

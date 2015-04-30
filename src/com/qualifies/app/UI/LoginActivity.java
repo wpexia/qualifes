@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import com.qualifies.app.ui.personal.PersonalActivity;
 
 public class LoginActivity extends Activity implements OnClickListener {
     private EditText userNameText;
@@ -33,8 +34,8 @@ public class LoginActivity extends Activity implements OnClickListener {
     }
 
     private void InitView() {
-        userNameText = (EditText) findViewById(R.id.old_pwd);
-        passwordText = (EditText) findViewById(R.id.new_pwd);
+        userNameText = (EditText) findViewById(R.id.LoginUsername);
+        passwordText = (EditText) findViewById(R.id.LoginPassword);
         LoginButton = (Button) findViewById(R.id.Login);
         forgetPasswordButton = (Button) findViewById(R.id.ForgetPassword);
         registerButton = (Button) findViewById(R.id.RegisterInLogin);
@@ -56,7 +57,7 @@ public class LoginActivity extends Activity implements OnClickListener {
             }
 
             loginManager = LoginManager.getInstance();
-            loginManager.login(userNameText.getText().toString(), passwordText.getText().toString(), handler);
+            loginManager.login(userNameText.getText().toString(), passwordText.getText().toString(), handler, this);
         }
         if (v == forgetPasswordButton) {
             //TO-DO
@@ -74,9 +75,8 @@ public class LoginActivity extends Activity implements OnClickListener {
                     Bundle bundle = new Bundle();
                     bundle.putString("username", userNameText.getText().toString());
                     Toast.makeText(getApplicationContext(), "登陆成功", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent();
-//                    intent.putExtras(bundle);
-//                    startActivity(intent);
+                    Intent intent = new Intent(LoginActivity.this, PersonalActivity.class);
+                    startActivity(intent);
                 }
                 break;
                 case 1:

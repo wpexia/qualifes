@@ -3,55 +3,75 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/white"
+                android:background="@color/f4f4f4"
                 android:minHeight="80dp">
-    <View android:layout_width="4dp" android:layout_height="fill_parent" android:background="#e3223f"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="￥"
-            android:textColor="#e3223f"
-            android:textSize="18sp"
-            android:layout_marginLeft="13dp"
-            android:id="@+id/rmb" android:layout_alignBottom="@+id/money" android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="20"
-            android:id="@+id/money"
-            android:textSize="30sp"
-            android:textColor="#e3223f"
-            android:layout_toRightOf="@+id/rmb"
-            android:layout_marginTop="14dp"
-            />
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:text="满200减20，限制牙膏使用"
-              android:textSize="10sp"
-              android:textColor="#6e6e6e"
-              android:layout_below="@+id/money"
-              android:layout_alignLeft="@+id/rmb"
-              android:layout_marginTop="12dp"
-            />
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="线上红包"
-            android:id="@+id/type"
-            android:layout_marginTop="25dp"
-            android:textColor="#6e6e6e"
-            android:textSize="14sp"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:layout_below="@+id/type"
-              android:layout_marginTop="12dp"
-              android:textSize="10sp"
-              android:textColor="#6e6e6e"
-              android:layout_alignRight="@+id/type"
-              android:text="2015年2月28日过期"
-            />
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:layout_height="fill_parent">
+        <View
+                android:layout_width="4dp"
+                android:id="@+id/left"
+                android:layout_height="fill_parent"
+                android:background="#e3223f"/>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="fill_parent">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="#e3223f"
+                    android:textSize="18sp"
+                    android:layout_marginTop="16dp"
+                    android:paddingLeft="13dp"
+                    android:id="@+id/rmb" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20"
+                    android:id="@+id/money"
+                    android:paddingTop="5dp"
+                    android:textSize="30sp"
+                    android:textColor="#e3223f"
+                    android:layout_alignBottom="@+id/rmb"
+                    android:layout_toRightOf="@+id/rmb"
+                    />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="满200减20，限制牙膏使用"
+                      android:textSize="10sp"
+                      android:textColor="#6e6e6e"
+                      android:layout_below="@+id/rmb"
+                      android:layout_alignParentLeft="true"
+                      android:layout_alignParentStart="true"
+                      android:paddingLeft="13dp"
+                      android:layout_marginTop="12dp"
+                    />
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="线上红包"
+                    android:id="@+id/type"
+                    android:layout_marginTop="25dp"
+                    android:textColor="#6e6e6e"
+                    android:textSize="14sp"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"/>
+            <TextView android:layout_width="wrap_content"
+                      android:id="@+id/deadline"
+                      android:layout_height="wrap_content"
+                      android:layout_below="@+id/type"
+                      android:layout_marginTop="12dp"
+                      android:textSize="10sp"
+                      android:textColor="#6e6e6e"
+                      android:layout_alignRight="@+id/type"
+                      android:text="2015年2月28日过期"
+                    />
+        </RelativeLayout>
+    </LinearLayout>
+
+
 </RelativeLayout>
