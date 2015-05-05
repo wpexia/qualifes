@@ -1,4 +1,4 @@
-package com.qualifies.app.ui.personal;
+package com.qualifies.app.uis.personal;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -8,9 +8,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import com.qualifies.app.R;
-import com.qualifies.app.ui.fragment.PositionChoseFragment;
-import com.qualifies.app.ui.fragment.PositionNullFragment;
-import com.qualifies.app.ui.fragment.PositionOKFragment;
+import com.qualifies.app.uis.fragment.PositionChoseFragment;
+import com.qualifies.app.uis.fragment.PositionNullFragment;
+import com.qualifies.app.uis.fragment.PositionOKFragment;
 
 public class PositionActivity extends Activity implements View.OnClickListener {
 

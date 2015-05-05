@@ -1,4 +1,4 @@
-package com.qualifies.app.ui;
+package com.qualifies.app.uis;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.qualifies.app.ui.fragment;
+package com.qualifies.app.uis.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -6,19 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.qualifies.app.R;
-import com.qualifies.app.ui.personal.PersonalActivity;
+import com.qualifies.app.uis.personal.PositionActivity;
 
+public class PositionNullFragment extends Fragment {
+    View mView;
 
-public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.personal_login, container, false);
-        return view;
+        mView = inflater.inflate(R.layout.position_null, container, false);
+        return mView;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().findViewById(R.id.personal_setting).setOnClickListener((PersonalActivity)getActivity());
+        mView.findViewById(R.id.add).setOnClickListener((PositionActivity) getActivity());
     }
 }

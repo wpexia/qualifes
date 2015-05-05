@@ -1,4 +1,4 @@
-package com.qualifies.app.ui.personal;
+package com.qualifies.app.uis.personal;
 
 
 import android.app.Activity;
@@ -7,8 +7,8 @@ import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import com.qualifies.app.R;
-import com.qualifies.app.ui.fragment.RealNameNULLFragment;
-import com.qualifies.app.ui.fragment.RealNameOKFragment;
+import com.qualifies.app.uis.fragment.RealNameNULLFragment;
+import com.qualifies.app.uis.fragment.RealNameOKFragment;
 
 public class RealNameActivity extends Activity {
 

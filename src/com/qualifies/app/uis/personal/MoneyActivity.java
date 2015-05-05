@@ -1,4 +1,4 @@
-package com.qualifies.app.ui.personal;
+package com.qualifies.app.uis.personal;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -6,8 +6,8 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import com.qualifies.app.R;
-import com.qualifies.app.ui.fragment.MoneyHistoryFragment;
-import com.qualifies.app.ui.fragment.MoneyNowFragment;
+import com.qualifies.app.uis.fragment.MoneyHistoryFragment;
+import com.qualifies.app.uis.fragment.MoneyNowFragment;
 
 public class MoneyActivity extends Activity implements View.OnClickListener {
 

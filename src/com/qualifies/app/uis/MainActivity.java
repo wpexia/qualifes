@@ -1,10 +1,9 @@
-package com.qualifies.app.ui;
+package com.qualifies.app.uis;
 
 import com.qualifies.app.R;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;

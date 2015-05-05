@@ -1,4 +1,4 @@
-package com.qualifies.app.ui.fragment;
+package com.qualifies.app.uis.fragment;
 
 import android.app.Fragment;
 import android.graphics.Color;
@@ -13,7 +13,7 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.qualifies.app.R;
-import com.qualifies.app.ui.adapter.ProductListAdapter;
+import com.qualifies.app.uis.adapter.ProductListAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.qualifies.app.ui.adapter;
+package com.qualifies.app.uis.adapter;
 
 
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.RadioButton;
 import com.qualifies.app.R;
-import com.qualifies.app.ui.personal.PositionActivity;
+import com.qualifies.app.uis.personal.PositionActivity;
 
 import java.util.HashMap;
 import java.util.List;

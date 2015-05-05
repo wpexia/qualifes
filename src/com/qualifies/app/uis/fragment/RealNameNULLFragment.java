@@ -1,4 +1,4 @@
-package com.qualifies.app.ui.fragment;
+package com.qualifies.app.uis.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;

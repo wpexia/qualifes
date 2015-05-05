@@ -1,4 +1,4 @@
-package com.qualifies.app.ui.adapter;
+package com.qualifies.app.uis.adapter;
 
 
 import android.content.Context;

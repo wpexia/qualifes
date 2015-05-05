@@ -1,4 +1,4 @@
-package com.qualifies.app.ui.personal;
+package com.qualifies.app.uis.personal;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -8,8 +8,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import com.qualifies.app.R;
-import com.qualifies.app.ui.fragment.LoginFragment;
-import com.qualifies.app.ui.fragment.UnLoginFragment;
+import com.qualifies.app.uis.fragment.LoginFragment;
+import com.qualifies.app.uis.fragment.UnLoginFragment;
 
 public class PersonalActivity extends Activity implements View.OnClickListener {
 

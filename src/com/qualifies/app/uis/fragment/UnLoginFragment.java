@@ -1,4 +1,4 @@
-package com.qualifies.app.ui.fragment;
+package com.qualifies.app.uis.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.qualifies.app.R;
-import com.qualifies.app.ui.LoginActivity;
-import com.qualifies.app.ui.RegisterActivity;
-import com.qualifies.app.ui.personal.PersonalActivity;
+import com.qualifies.app.uis.LoginActivity;
+import com.qualifies.app.uis.RegisterActivity;
+import com.qualifies.app.uis.personal.PersonalActivity;
 
 
 public class UnLoginFragment extends Fragment implements View.OnClickListener {

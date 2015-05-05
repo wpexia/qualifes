@@ -1,4 +1,4 @@
-package com.qualifies.app.ui.personal;
+package com.qualifies.app.uis.personal;
 
 import android.app.Activity;
 import android.os.Bundle;

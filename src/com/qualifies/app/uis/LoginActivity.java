@@ -1,4 +1,4 @@
-package com.qualifies.app.ui;
+package com.qualifies.app.uis;
 
 import android.widget.Toast;
 import com.qualifies.app.manager.LoginManager;
@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import com.qualifies.app.ui.personal.PersonalActivity;
+import com.qualifies.app.uis.personal.PersonalActivity;
 
 public class LoginActivity extends Activity implements OnClickListener {
     private EditText userNameText;

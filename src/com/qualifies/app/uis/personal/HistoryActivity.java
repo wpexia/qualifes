@@ -1,4 +1,4 @@
-package com.qualifies.app.ui.personal;
+package com.qualifies.app.uis.personal;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -7,8 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 import com.qualifies.app.R;
-import com.qualifies.app.ui.fragment.ProductListNotNullFragment;
-import com.qualifies.app.ui.fragment.ProductListNullFragment;
+import com.qualifies.app.uis.fragment.ProductListNotNullFragment;
+import com.qualifies.app.uis.fragment.ProductListNullFragment;
 
 public class HistoryActivity extends Activity {
 
