@@ -76,6 +76,7 @@ public class LoginManager {
                             SharedPreferences sp = context.getSharedPreferences("user", context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sp.edit();
                             editor.putString("token",response.getString("token"));
+                            editor.putString("username", username);
                             editor.apply();
                         } catch (JSONException e) {
                             e.printStackTrace();
