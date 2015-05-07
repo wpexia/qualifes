@@ -56,25 +56,6 @@ public class LoginManager {
         this.handler = handler;
         this.context = context;
 
-
-//        try {
-//            InputStream inPublickey = context.getAssets().open("rsa_public_key.pem");
-//            PublicKey publickey = RSAUtils.loadPublicKey(inPublickey);
-//            byte[] encrytbate = RSAUtils.encryptData(password.getBytes("UTF-8"), publickey);
-//            String afterEncry = new String(Base64.encode(encrytbate, Base64.DEFAULT));
-//            this.password = afterEncry;
-//            Log.e("encry", afterEncry);
-//
-//            InputStream inPrivateKey = context.getAssets().open("pkcs8_rsa_private_key.pem");
-//            PrivateKey privateKey = RSAUtils.loadPrivateKey(inPrivateKey);
-//            byte[] decryByte = RSAUtils.decryptData(Base64.decode(this.password, Base64.DEFAULT), privateKey);
-//            String decrypystr = new String(decryByte);
-//            Log.e("decry", decrypystr);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
         Thread loginThread = new Thread(new LoginThread());
         loginThread.start();
     }
