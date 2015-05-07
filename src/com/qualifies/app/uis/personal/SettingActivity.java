@@ -35,10 +35,10 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 boolean image = sp.getBoolean("loadImage", false);
                 SharedPreferences.Editor editor = sp.edit();
                 editor.putBoolean("loadImage", !image);
+                editor.apply();
                 TextView openText = (TextView) findViewById(R.id.openText);
                 RelativeLayout open = (RelativeLayout) findViewById(R.id.open);
                 TextView wifi = (TextView) findViewById(R.id.wifitext);
-                editor.apply();
                 if (image) {
                     openText.setText("开");
                     wifi.setTextColor(getResources().getColor(R.color.settingRed));

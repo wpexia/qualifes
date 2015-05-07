@@ -18,6 +18,7 @@ public class ProductListAdapter extends BaseAdapter {
     private LayoutInflater mInflater = null;
     private List<HashMap<String, Object>> mData;
     private boolean hasStar = false;
+    private Context context;
 
     public ProductListAdapter(List<HashMap<String, Object>> data, boolean star) {
         mData = data;
@@ -25,6 +26,7 @@ public class ProductListAdapter extends BaseAdapter {
     }
 
     public void setContent(Context context) {
+        this.context = context;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -57,7 +59,9 @@ public class ProductListAdapter extends BaseAdapter {
         price.setText(mData.get(position).get("price").toString());
         oldPrice.setText(mData.get(position).get("oldPrice").toString());
         oldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.FAKE_BOLD_TEXT_FLAG);
-        new DownloadImageTask(image).execute(mData.get(position).get("image").toString());
+        if(context.getSharedPreferences("user", context.MODE_PRIVATE).getBoolean("loadImage", false)){
+            new DownloadImageTask(image).execute(mData.get(position).get("image").toString());
+        }
         return convertView;
     }
 
