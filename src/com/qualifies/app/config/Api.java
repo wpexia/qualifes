@@ -46,8 +46,10 @@ public class Api {
                 return "登录成功";
             case 204:
                 return "注册成功";
-            case 206:
+            case 205:
                 return "更新成功";
+            case 206:
+                return "发送成功";
             case 207:
                 return "添加成功";
             case 208:

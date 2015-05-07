@@ -42,7 +42,7 @@ public class PersonalActivity extends Activity implements View.OnClickListener {
     private void updateView() {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         hideFragment(transaction);
-        if (sp.contains("username")) {
+        if (sp.contains("token")) {
             if (loginFragment == null) {
                 loginFragment = new LoginFragment();
                 transaction.add(R.id.personal_fragment, loginFragment);

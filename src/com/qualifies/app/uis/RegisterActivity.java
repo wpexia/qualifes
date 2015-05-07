@@ -77,7 +77,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 if (username.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT).show();
                 } else {
-                    registerManager.getCode(username.getText().toString(), gcHandler);
+                    registerManager.getCode(username.getText().toString(), gcHandler, this);
                 }
             }
             break;
@@ -97,7 +97,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                     Toast.makeText(getApplicationContext(), "密码不能为空！", Toast.LENGTH_SHORT).show();
                     break;
                 } else {
-                    registerManager.verify(username.getText().toString(), code.getText().toString(), verifyHandler);
+                    registerManager.register(username.getText().toString(), code.getText().toString(), password.getText().toString(), registerHandler, this);
                 }
             }
             break;
@@ -138,21 +138,6 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
             }
             getCode.setText(String.valueOf(count));
             super.handleMessage(msg);
-        }
-    };
-
-    //验证码确认Handler
-    Handler verifyHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0: {
-                    registerManager.register(username.getText().toString(), code.getText().toString(), password.getText().toString(), registerHandler);
-                }
-                break;
-                case 1: {
-                    Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
         }
     };
 

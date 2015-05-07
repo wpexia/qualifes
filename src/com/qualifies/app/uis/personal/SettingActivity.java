@@ -23,6 +23,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
     private void initView() {
         openImage = (RelativeLayout) findViewById(R.id.openImage);
         openImage.setOnClickListener(this);
+        findViewById(R.id.logout).setOnClickListener(this);
     }
 
     @Override
@@ -48,6 +49,12 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                     openImage.setBackgroundResource(R.drawable.settingbutton);
                     open.setBackgroundResource(R.drawable.settingopen);
                 }
+            }
+            break;
+            case R.id.logout: {
+                SharedPreferences.Editor editor = sp.edit();
+                editor.remove("token");
+                editor.apply();
             }
             break;
         }

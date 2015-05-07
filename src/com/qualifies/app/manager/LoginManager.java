@@ -1,24 +1,23 @@
 package com.qualifies.app.manager;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Base64;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.SyncHttpClient;
+import android.util.Log;
+import com.loopj.android.http.*;
 import com.qualifies.app.config.Api;
+import com.qualifies.app.util.AsyncHttpCilentUtil;
+import com.qualifies.app.util.RSAHelper;
 import org.apache.http.Header;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.crypto.Cipher;
-import java.io.DataInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
-import java.security.KeyFactory;
 import java.security.PublicKey;
-import java.security.spec.X509EncodedKeySpec;
-
 
 public class LoginManager {
     private Handler handler;
@@ -36,21 +35,11 @@ public class LoginManager {
     public void login(String username, String password, Handler handler, Context context) {
         this.username = username;
         try {
-            InputStream f = context.getAssets().open("public.der");
-            DataInputStream dis = new DataInputStream(f);
-            byte[] keyByte = new byte[(int)f.available()];
-            dis.readFully(keyByte);
-            dis.close();
-
-            X509EncodedKeySpec spec = new X509EncodedKeySpec(keyByte);
-            KeyFactory kf = KeyFactory.getInstance("RSA");
-            PublicKey pk = kf.generatePublic(spec);
-
-            final Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, pk);
-            byte[] cipherText = cipher.doFinal(password.getBytes());
-            this.password = new String(Base64.encode(cipherText, Base64.DEFAULT));
-        } catch (Exception e) {
+            InputStream publickKeyIn = context.getAssets().open("public.der");
+            PublicKey pk = RSAHelper.loadPublicKey(publickKeyIn);
+            this.password = RSAHelper.encrypy(password, pk);
+//            Log.e("password", URLEncoder.encode(this.password));
+        } catch (IOException e) {
             e.printStackTrace();
         }
         this.handler = handler;
@@ -64,7 +53,9 @@ public class LoginManager {
 
         @Override
         public void run() {
-            SyncHttpClient client = new SyncHttpClient();
+            AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
+            PersistentCookieStore myCookieStore = new PersistentCookieStore(context);
+            client.setCookieStore(myCookieStore);
             RequestParams requestParams = new RequestParams();
             final Message msg = handler.obtainMessage();
             requestParams.put("_type", "log");
@@ -80,6 +71,16 @@ public class LoginManager {
                 public void onSuccess(int statusCode, Header[] headers,
                                       JSONObject response) {
                     Api.dealSuccessRes(response, msg);
+                    if(response.has("token")){
+                        try {
+                            SharedPreferences sp = context.getSharedPreferences("user", context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putString("token",response.getString("token"));
+                            editor.apply();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     handler.sendMessage(msg);
                 }
 
