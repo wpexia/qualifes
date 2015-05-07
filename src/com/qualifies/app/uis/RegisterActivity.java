@@ -13,7 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.qualifies.app.R;
+import com.qualifies.app.manager.LoginManager;
 import com.qualifies.app.manager.RegisterManager;
+import com.qualifies.app.uis.personal.PersonalActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -152,12 +154,33 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    LoginManager loginManager = LoginManager.getInstance();
+                    loginManager.login(username.getText().toString(), password.getText().toString(), loginHandle, RegisterActivity.this);
+                }
+                break;
+                case 1: {
+                    Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    };
+
+
+
+    Handler loginHandle = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0: {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("username", username.getText().toString());
+                    Toast.makeText(getApplicationContext(), "登陆成功", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RegisterActivity.this, PersonalActivity.class);
                     startActivity(intent);
                 }
                 break;
                 case 1: {
                     Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                    break;
                 }
             }
         }

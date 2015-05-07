@@ -24,7 +24,7 @@ public class PositionActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.position);
-        sp = getSharedPreferences("User", MODE_PRIVATE);
+        sp = getSharedPreferences("user", MODE_PRIVATE);
         manager = getFragmentManager();
         initView();
     }

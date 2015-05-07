@@ -23,7 +23,7 @@ public class RealNameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.realname);
         manager = getFragmentManager();
-        sp = getSharedPreferences("User", MODE_PRIVATE);
+        sp = getSharedPreferences("user", MODE_PRIVATE);
         initView();
     }
 

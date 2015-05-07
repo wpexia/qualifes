@@ -29,6 +29,11 @@ public class PersonalActivity extends Activity implements View.OnClickListener {
         initView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateView();
+    }
 
     private void initView() {
         updateView();

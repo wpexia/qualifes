@@ -1,6 +1,7 @@
 package com.qualifies.app.uis.personal;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +17,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting);
-        sp = getSharedPreferences("User", MODE_PRIVATE);
+        sp = getSharedPreferences("user", MODE_PRIVATE);
         initView();
     }
 
@@ -55,6 +56,8 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 SharedPreferences.Editor editor = sp.edit();
                 editor.remove("token");
                 editor.apply();
+                Intent intent = new Intent(SettingActivity.this, PersonalActivity.class);
+                startActivity(intent);
             }
             break;
         }
