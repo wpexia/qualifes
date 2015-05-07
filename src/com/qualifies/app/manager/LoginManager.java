@@ -1,23 +1,23 @@
 package com.qualifies.app.manager;
 
-
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
+import android.util.Base64;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.SyncHttpClient;
 import com.qualifies.app.config.Api;
-import com.qualifies.app.util.Base64Helper;
-import com.qualifies.app.util.RsaHelper;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
+import javax.crypto.Cipher;
+import java.io.DataInputStream;
 import java.io.InputStream;
 import java.net.URLEncoder;
-import java.security.PrivateKey;
+import java.security.KeyFactory;
 import java.security.PublicKey;
+import java.security.spec.X509EncodedKeySpec;
 
 
 public class LoginManager {
@@ -36,22 +36,45 @@ public class LoginManager {
     public void login(String username, String password, Handler handler, Context context) {
         this.username = username;
         try {
-            Log.e("raw", password);
-            InputStream publicKeyIn = context.getAssets().open("rsa_public_key.pem");
-            PublicKey publicKey = RsaHelper.loadPublicKey(publicKeyIn);
-            this.password = RsaHelper.encryptDataFromStr(password, publicKey);
-            this.password = URLEncoder.encode(this.password, "UTF-8");
-            Log.e("password", this.password);
+            InputStream f = context.getAssets().open("public.der");
+            DataInputStream dis = new DataInputStream(f);
+            byte[] keyByte = new byte[(int)f.available()];
+            dis.readFully(keyByte);
+            dis.close();
 
+            X509EncodedKeySpec spec = new X509EncodedKeySpec(keyByte);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            PublicKey pk = kf.generatePublic(spec);
 
-            InputStream privateKeyIn = context.getAssets().open("pkcs8_rsa_private_key.pem");
-            PrivateKey privateKey = RsaHelper.loadPrivateKey(privateKeyIn);
-            Log.e("decode", new String(RsaHelper.decryptData(Base64Helper.decode(this.password),privateKey)));
+            final Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, pk);
+            byte[] cipherText = cipher.doFinal(password.getBytes());
+            this.password = new String(Base64.encode(cipherText, Base64.DEFAULT));
         } catch (Exception e) {
             e.printStackTrace();
         }
         this.handler = handler;
         this.context = context;
+
+
+//        try {
+//            InputStream inPublickey = context.getAssets().open("rsa_public_key.pem");
+//            PublicKey publickey = RSAUtils.loadPublicKey(inPublickey);
+//            byte[] encrytbate = RSAUtils.encryptData(password.getBytes("UTF-8"), publickey);
+//            String afterEncry = new String(Base64.encode(encrytbate, Base64.DEFAULT));
+//            this.password = afterEncry;
+//            Log.e("encry", afterEncry);
+//
+//            InputStream inPrivateKey = context.getAssets().open("pkcs8_rsa_private_key.pem");
+//            PrivateKey privateKey = RSAUtils.loadPrivateKey(inPrivateKey);
+//            byte[] decryByte = RSAUtils.decryptData(Base64.decode(this.password, Base64.DEFAULT), privateKey);
+//            String decrypystr = new String(decryByte);
+//            Log.e("decry", decrypystr);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
         Thread loginThread = new Thread(new LoginThread());
         loginThread.start();
     }
@@ -66,7 +89,7 @@ public class LoginManager {
             requestParams.put("_type", "log");
             requestParams.put("phone", username);
             try {
-                requestParams.put("pwd", password);
+                requestParams.put("pwd", URLEncoder.encode(password, "utf-8"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
