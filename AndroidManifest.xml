@@ -17,14 +17,17 @@
             android:theme="@android:style/Theme.NoTitleBar">
         <activity
                 android:name=".uis.RegisterActivity"
+                android:launchMode="singleTask"
                 android:label="@string/register_name">
         </activity>
         <activity
                 android:name=".uis.ProtocolActivity"
+                android:launchMode="singleTask"
                 android:label="@string/protocol_name">
         </activity>
         <activity
                 android:name=".uis.personal.PersonalActivity"
+                android:launchMode="singleTask"
                 android:label="@string/wo_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -37,7 +40,7 @@
                   android:label="@string/app_name">
 
         </activity>
-        <activity android:name=".uis.LoginActivity"/>
+        <activity android:name=".uis.LoginActivity" android:launchMode="singleTask"/>
         <activity android:name=".uis.personal.HistoryActivity"/>
         <activity android:name=".uis.personal.FollowActivity"/>
         <activity android:name=".uis.personal.SettingActivity"/>
