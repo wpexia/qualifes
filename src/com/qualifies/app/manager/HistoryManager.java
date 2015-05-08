@@ -92,7 +92,7 @@ public class HistoryManager {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     Api.dealSuccessRes(response, msg);
-                    //Log.e("delete", response.toString());
+//                    Log.e("delete", response.toString());
                 }
 
                 @Override

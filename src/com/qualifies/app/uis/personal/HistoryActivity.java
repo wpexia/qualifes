@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.widget.TextView;
 import com.qualifies.app.R;
 import com.qualifies.app.manager.HistoryManager;
@@ -19,7 +20,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class HistoryActivity extends Activity {
+public class HistoryActivity extends Activity  implements View.OnClickListener{
 
     private SharedPreferences sp;
 
@@ -38,9 +39,9 @@ public class HistoryActivity extends Activity {
     }
 
     private void initView() {
-        TextView title;
-        title = (TextView) findViewById(R.id.title);
-        title.setText("浏览历史");
+        ((TextView) findViewById(R.id.title)).setText("浏览历史");
+        findViewById(R.id.clear).setOnClickListener(this);
+        findViewById(R.id.back_button).setOnClickListener(this);
         changeFragment(false);
     }
     public void changeFragment(boolean isNull){
@@ -73,6 +74,24 @@ public class HistoryActivity extends Activity {
         }
         if (productListNullFragment != null) {
             transaction.hide(productListNullFragment);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        final int id = v.getId();
+        switch (id) {
+            case R.id.clear: {
+                if (!productListNotNullFragment.equals(null)) {
+                    productListNotNullFragment.clear();
+                }
+                changeFragment(true);
+            }
+            break;
+            case R.id.back_button: {
+                finish();
+            }
+            break;
         }
     }
 

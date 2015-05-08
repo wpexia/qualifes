@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import com.qualifies.app.R;
 import com.qualifies.app.manager.FollowManager;
@@ -23,7 +24,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class FollowActivity extends Activity {
+public class FollowActivity extends Activity implements View.OnClickListener{
 
     private SharedPreferences sp;
 
@@ -44,7 +45,27 @@ public class FollowActivity extends Activity {
     private void initView() {
         TextView title = (TextView) findViewById(R.id.title);
         title.setText("我的收藏");
+        findViewById(R.id.clear).setOnClickListener(this);
+        findViewById(R.id.back_button).setOnClickListener(this);
         changeFragment(false);
+    }
+
+    @Override
+    public void onClick(View v) {
+        final int id = v.getId();
+        switch (id) {
+            case R.id.clear:{
+                if(!productListNotNullFragment.equals(null)){
+                    productListNotNullFragment.clear();
+                }
+                changeFragment(true);
+            }
+            break;
+            case R.id.back_button: {
+                finish();
+            }
+            break;
+        }
     }
 
     public void changeFragment(boolean isNull) {

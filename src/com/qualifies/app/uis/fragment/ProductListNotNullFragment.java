@@ -2,6 +2,7 @@ package com.qualifies.app.uis.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -41,6 +42,8 @@ public class ProductListNotNullFragment extends Fragment {
     private LinkedList<HashMap<String, Object>> mData;
     private int managerId;
     private boolean hasMore = true;
+    private SharedPreferences sp;
+
 
     public void setStar(boolean star) {
         hasStar = star;
@@ -59,6 +62,16 @@ public class ProductListNotNullFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.history_notnull, container, false);
         return mView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        try {
+            sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -91,7 +104,6 @@ public class ProductListNotNullFragment extends Fragment {
                 new GetDataTask(true).execute();
             }
         });
-
         listView.setOnBottomListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +113,11 @@ public class ProductListNotNullFragment extends Fragment {
         productListAdapter = new ProductListAdapter(mData, hasStar);
         listView.setAdapter(productListAdapter);
         listView.setDividerHeight(0);
-        productListAdapter.setContent(getActivity());
+        try {
+            productListAdapter.setContent(getActivity());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     private void createSwipeMenu() {
@@ -109,43 +125,50 @@ public class ProductListNotNullFragment extends Fragment {
 
             @Override
             public void create(SwipeMenu menu) {
-                SwipeMenuItem deleteItem = new SwipeMenuItem(
-                        getActivity().getApplicationContext());
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xFF, 0x33,
-                        0x00)));
-                deleteItem.setWidth(140);
-                deleteItem.setTitle("删除");
-                deleteItem.setTitleSize(18);
-                deleteItem.setTitleColor(Color.WHITE);
-                menu.addMenuItem(deleteItem);
+                try {
+                    SwipeMenuItem deleteItem = new SwipeMenuItem(
+                            getActivity().getApplicationContext());
+                    deleteItem.setBackground(new ColorDrawable(Color.rgb(0xFF, 0x33,
+                            0x00)));
+                    deleteItem.setWidth(140);
+                    deleteItem.setTitle("删除");
+                    deleteItem.setTitleSize(18);
+                    deleteItem.setTitleColor(Color.WHITE);
+                    menu.addMenuItem(deleteItem);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
             }
         };
         listView.setMenuCreator(creator);
         listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                Log.w("SwipeMenuListView", "OnClick" + String.valueOf(position) + "    " + String.valueOf(index));
-                switch (managerId) {
-                    case 0: {
-                        HistoryManager historyManager = HistoryManager.getInstance();
-                        SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
-                        //Log.e("position", String.valueOf(position));
-                        historyManager.delete(sp.getString("token", ""), mData.get(position).get("history_id").toString(),getActivity());
+                try {
+                    Log.w("SwipeMenuListView", "OnClick" + String.valueOf(position) + "    " + String.valueOf(index));
+                    switch (managerId) {
+                        case 0: {
+                            HistoryManager historyManager = HistoryManager.getInstance();
+                            //Log.e("position", String.valueOf(position));
+                            historyManager.delete(sp.getString("token", ""), mData.get(position).get("history_id").toString(), getActivity());
+                            if (mData.size() == 0) {
+                                ((HistoryActivity) getActivity()).changeFragment(true);
+                            }
+                        }
+                        break;
+                        case 1: {
+                            FollowManager followManager = FollowManager.getInstance();
+                            followManager.delete(sp.getString("token", ""), mData.get(position).get("rec_id").toString(), getActivity());
+                        }
                         if (mData.size() == 0) {
-                            ((HistoryActivity) getActivity()).changeFragment(true);
+                            ((FollowActivity) getActivity()).changeFragment(true);
                         }
                     }
-                    break;
-                    case 1: {
-                        FollowManager followManager = FollowManager.getInstance();
-                        SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
-                        followManager.delete(sp.getString("token",""), mData.get(position).get("rec_id").toString(),getActivity());
-                    }
-                    if (mData.size() == 0) {
-                        ((FollowActivity) getActivity()).changeFragment(true);
-                    }
+                    productListAdapter.delete(position);
+                    return true;// false : not close the menu; true : close the menu
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    return true;
                 }
-                productListAdapter.delete(position);
-                return true;// false : not close the menu; true : close the menu
             }
         });
     }
@@ -174,16 +197,21 @@ public class ProductListNotNullFragment extends Fragment {
         protected void onPostExecute(String[] result) {
 
             if (isDropDown) {
-                switch (managerId) {
-                    case 0: {
-                        mData = ((HistoryActivity) getActivity()).getData();
-                        listView.resetBottom();
+                try {
+
+                    switch (managerId) {
+                        case 0: {
+                            mData = ((HistoryActivity) getActivity()).getData();
+                            listView.resetBottom();
+                        }
+                        break;
+                        case 1: {
+                            mData = ((FollowActivity) getActivity()).getData();
+                            listView.resetBottom();
+                        }
                     }
-                    break;
-                    case 1: {
-                        mData = ((FollowActivity) getActivity()).getData();
-                        listView.resetBottom();
-                    }
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
                 productListAdapter.notifyDataSetChanged();
                 // should call onDropDownComplete function of DropDownListView at end of drop down complete.
@@ -195,7 +223,6 @@ public class ProductListNotNullFragment extends Fragment {
                     case 0: {
                         HistoryManager historyManager = HistoryManager.getInstance();
                         try {
-                            SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
                             historyManager.getHistory(sp.getString("token", ""), bottomHandler, getActivity(), mData.size());
                         } catch (NullPointerException e) {
                             e.printStackTrace();
@@ -206,7 +233,6 @@ public class ProductListNotNullFragment extends Fragment {
                     case 1: {
                         FollowManager followManager = FollowManager.getInstance();
                         try {
-                            SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
                             followManager.getFollow(sp.getString("token", ""), bottomHandler, getActivity(), mData.size());
                         } catch (NullPointerException e) {
                             e.printStackTrace();
@@ -268,4 +294,45 @@ public class ProductListNotNullFragment extends Fragment {
         };
     }
 
+
+    public void clear() {
+        String id = "";
+        String id_name = "";
+        switch (managerId) {
+            case 0: {
+                id_name = "history_id";
+            }
+            break;
+            case 1: {
+                id_name = "rec_id";
+            }
+            break;
+        }
+        for (int i = 0; i < mData.size(); i++) {
+            if (id.equals("")) {
+                id = mData.get(i).get(id_name).toString();
+            } else {
+                id = id + "," + mData.get(i).get(id_name).toString();
+            }
+            productListAdapter.delete(i);
+        }
+        productListAdapter.notifyDataSetChanged();
+        try {
+            switch (managerId) {
+                case 0: {
+                    HistoryManager historyManager = HistoryManager.getInstance();
+//                Log.e("ids", id);
+                    historyManager.delete(sp.getString("token", ""), id, getActivity());
+                }
+                break;
+                case 1: {
+                    FollowManager followManager = FollowManager.getInstance();
+                    followManager.delete(sp.getString("token", ""), id, getActivity());
+                }
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
