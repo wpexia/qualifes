@@ -1,5 +1,6 @@
 package com.qualifies.app.uis.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -18,8 +19,10 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.qualifies.app.R;
+import com.qualifies.app.manager.FollowManager;
 import com.qualifies.app.manager.HistoryManager;
 import com.qualifies.app.uis.adapter.ProductListAdapter;
+import com.qualifies.app.uis.personal.FollowActivity;
 import com.qualifies.app.uis.personal.HistoryActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,7 +72,7 @@ public class ProductListNotNullFragment extends Fragment {
             e.printStackTrace();
         }
         listView.setSelection(1);
-        if(!hasMore) {
+        if (!hasMore) {
             listView.setHasMore(false);
             listView.onBottomComplete();
         }
@@ -121,14 +124,27 @@ public class ProductListNotNullFragment extends Fragment {
         listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 Log.w("SwipeMenuListView", "OnClick" + String.valueOf(position) + "    " + String.valueOf(index));
-                HistoryManager historyManager = HistoryManager.getInstance();
-                SharedPreferences sp = getActivity().getSharedPreferences("user", getActivity().MODE_PRIVATE);
-                Log.e("position",String.valueOf(position));
-                historyManager.delete(sp.getString("token", ""), mData.get(position).get("history_id").toString(), null, getActivity());
-                productListAdapter.delete(position);
-                if(mData.size() == 0) {
-                    ((HistoryActivity) getActivity()).changeFragment(true);
+                switch (managerId) {
+                    case 0: {
+                        HistoryManager historyManager = HistoryManager.getInstance();
+                        SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
+                        //Log.e("position", String.valueOf(position));
+                        historyManager.delete(sp.getString("token", ""), mData.get(position).get("history_id").toString(),getActivity());
+                        if (mData.size() == 0) {
+                            ((HistoryActivity) getActivity()).changeFragment(true);
+                        }
+                    }
+                    break;
+                    case 1: {
+                        FollowManager followManager = FollowManager.getInstance();
+                        SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
+                        followManager.delete(sp.getString("token",""), mData.get(position).get("rec_id").toString(),getActivity());
+                    }
+                    if (mData.size() == 0) {
+                        ((FollowActivity) getActivity()).changeFragment(true);
+                    }
                 }
+                productListAdapter.delete(position);
                 return true;// false : not close the menu; true : close the menu
             }
         });
@@ -158,9 +174,16 @@ public class ProductListNotNullFragment extends Fragment {
         protected void onPostExecute(String[] result) {
 
             if (isDropDown) {
-                if(managerId == 0) {
-                    mData = ((HistoryActivity) getActivity()).getData();
-                    listView.resetBottom();
+                switch (managerId) {
+                    case 0: {
+                        mData = ((HistoryActivity) getActivity()).getData();
+                        listView.resetBottom();
+                    }
+                    break;
+                    case 1: {
+                        mData = ((FollowActivity) getActivity()).getData();
+                        listView.resetBottom();
+                    }
                 }
                 productListAdapter.notifyDataSetChanged();
                 // should call onDropDownComplete function of DropDownListView at end of drop down complete.
@@ -172,8 +195,19 @@ public class ProductListNotNullFragment extends Fragment {
                     case 0: {
                         HistoryManager historyManager = HistoryManager.getInstance();
                         try {
-                            SharedPreferences sp = getActivity().getSharedPreferences("user", getActivity().MODE_PRIVATE);
+                            SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
                             historyManager.getHistory(sp.getString("token", ""), bottomHandler, getActivity(), mData.size());
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                            return;
+                        }
+                    }
+                    break;
+                    case 1: {
+                        FollowManager followManager = FollowManager.getInstance();
+                        try {
+                            SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
+                            followManager.getFollow(sp.getString("token", ""), bottomHandler, getActivity(), mData.size());
                         } catch (NullPointerException e) {
                             e.printStackTrace();
                             return;
@@ -208,12 +242,20 @@ public class ProductListNotNullFragment extends Fragment {
                             map.put("price", "￥" + price);
                             double oldPrice = good.getDouble("market_price");
                             map.put("oldPrice", "￥" + oldPrice);
-                            map.put("history_id",good.getString("id"));
-                            map.put("goods_id",good.getString("goods_id"));
+                            switch (managerId) {
+                                case 0: {
+                                    map.put("history_id", good.getString("id"));
+                                }
+                                break;
+                                case 1: {
+                                    map.put("rec_id", good.getString("rec_id"));
+                                }
+                            }
+                            map.put("goods_id", good.getString("goods_id"));
                             map.put("discount", (int) ((1 - (price / oldPrice)) * 100) + "% 折扣");
                             mData.add(map);
                         }
-                        if(goods.length() < 10) {
+                        if (goods.length() < 10) {
                             listView.setHasMore(false);
                             listView.onBottomComplete();
                         }

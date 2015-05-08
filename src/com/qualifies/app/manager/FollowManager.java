@@ -13,30 +13,30 @@ import com.qualifies.app.util.AsyncHttpCilentUtil;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
-public class HistoryManager {
+public class FollowManager {
     private Handler handler;
     private String token;
     private Context context;
     private String id;
     private int start;
 
-    private static HistoryManager inst = new HistoryManager();
+    private static FollowManager inst = new FollowManager();
 
-    public static HistoryManager getInstance() {
+    public static FollowManager getInstance() {
         return inst;
     }
 
-    public void getHistory(String token, Handler handler, Context context, int start) {
+    public void getFollow(String token, Handler handler, Context context, int start) {
         this.token = token;
         this.handler = handler;
         this.context = context;
         this.start = start;
-        Thread historyThread = new Thread(new GetHistoryThread());
-        historyThread.start();
+
+        Thread getFollowThread = new Thread(new GetFollowThread());
+        getFollowThread.start();
     }
 
-
-    class GetHistoryThread implements Runnable {
+    class GetFollowThread implements Runnable {
         @Override
         public void run() {
             AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
@@ -47,13 +47,13 @@ public class HistoryManager {
             requestParams.put("token", token);
             requestParams.put("data[limit][m]", String.valueOf(start));
             requestParams.put("data[limit][n]", "10");
-            client.post(Api.url("get_browse"), requestParams, new JsonHttpResponseHandler() {
+            client.post(Api.url("get_ct_gs"), requestParams, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     Api.dealSuccessRes(response, msg);
                     msg.obj = response;
-//                    Log.e("history", response.toString());
+                    Log.e("follow", response.toString());
                     handler.sendMessage(msg);
                 }
 
@@ -65,19 +65,17 @@ public class HistoryManager {
                 }
             });
         }
-
     }
 
-
-    public void delete(String token, String id, Context context) {
+    public void delete(String token, String rec_id, Context context) {
         this.token = token;
-        this.id = id;
+        this.id = rec_id;
         this.context = context;
-        Thread deleteHistory = new Thread(new DeleteHistory());
-        deleteHistory.start();
+        Thread deleteFollow = new Thread(new DeleteFollow());
+        deleteFollow.start();
     }
 
-    class DeleteHistory implements Runnable {
+    class DeleteFollow implements Runnable {
         @Override
         public void run() {
             AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
@@ -86,13 +84,13 @@ public class HistoryManager {
             RequestParams requestParams = new RequestParams();
             final Message msg = handler.obtainMessage();
             requestParams.put("token", token);
-            requestParams.put("data[id]", id);
-            client.post(Api.url("del_browse"), requestParams, new JsonHttpResponseHandler() {
+            requestParams.put("data[rec_id]", id);
+            client.post(Api.url("del_collect"), requestParams, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     Api.dealSuccessRes(response, msg);
-                    //Log.e("delete", response.toString());
+                    Log.e("delete", response.toString());
                 }
 
                 @Override
@@ -102,5 +100,4 @@ public class HistoryManager {
             });
         }
     }
-
 }

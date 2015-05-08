@@ -6,10 +6,17 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.widget.TextView;
 import com.qualifies.app.R;
+import com.qualifies.app.manager.FollowManager;
 import com.qualifies.app.uis.fragment.ProductListNotNullFragment;
 import com.qualifies.app.uis.fragment.ProductListNullFragment;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +30,7 @@ public class FollowActivity extends Activity {
     private FragmentManager fragmentManager;
     private ProductListNotNullFragment productListNotNullFragment;
     private ProductListNullFragment productListNullFragment;
+    private LinkedList<HashMap<String, Object>> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +44,17 @@ public class FollowActivity extends Activity {
     private void initView() {
         TextView title = (TextView) findViewById(R.id.title);
         title.setText("我的收藏");
+        changeFragment(false);
+    }
+
+    public void changeFragment(boolean isNull) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         hideFragment(transaction);
-        if (sp.contains("follow")) {
+        if (!isNull) {
             if (productListNotNullFragment == null) {
                 productListNotNullFragment = new ProductListNotNullFragment();
                 productListNotNullFragment.setStar(true);
-                productListNotNullFragment.setData(getData(),1);
+                productListNotNullFragment.setData(getData(), 1);
                 transaction.add(R.id.fragment, productListNotNullFragment);
             } else {
                 transaction.show(productListNullFragment);
@@ -68,19 +80,52 @@ public class FollowActivity extends Activity {
         }
     }
 
-    private LinkedList<HashMap<String, Object>> getData() {
-        LinkedList<HashMap<String, Object>> list = new LinkedList<HashMap<String, Object>>();
-        for (int i = 1; i <= 40; i++) {
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("title", "婴儿神仙水 Mommy bilss gripe 缓解 胀气 吐奶等");
-            map.put("image", "http://test.qualifes.com/images/201410/thumb_img/90_thumb_G_1414501935478.jpg");
-            map.put("place", "产地 美国" + String.valueOf(i));
-            map.put("discount", "55% 折扣");
-            map.put("price", "￥298.00");
-            map.put("oldPrice", "￥589.00");
-            list.add(map);
+
+    public LinkedList<HashMap<String, Object>> getData() {
+        list = new LinkedList<HashMap<String, Object>>();
+        String token = sp.getString("token", "");
+        if (!token.equals("")) {
+            FollowManager followManager = FollowManager.getInstance();
+            followManager.getFollow(token, handler, this, 0);
         }
         return list;
     }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 0) {
+                JSONObject resp = (JSONObject) msg.obj;
+                try {
+                    JSONObject data = resp.getJSONObject("data");
+                    JSONArray goods = data.getJSONArray("data");
+                    for (int i = 0; i < goods.length(); i++) {
+                        JSONObject good = goods.getJSONObject(i);
+                        HashMap<String, Object> map = new HashMap<String, Object>();
+                        map.put("title", good.getString("goods_name"));
+                        map.put("image", good.getString("goods_thumb"));
+                        map.put("place", "产地 " + good.getString("origin"));
+                        double price = good.getDouble("shop_price");
+                        map.put("price", "￥" + price);
+                        double oldPrice = good.getDouble("market_price");
+                        map.put("oldPrice", "￥" + oldPrice);
+                        map.put("rec_id", good.getString("rec_id"));
+                        map.put("goods_id", good.getString("goods_id"));
+                        map.put("discount", (int) ((1 - (price / oldPrice)) * 100) + "% 折扣");
+                        list.add(map);
+                    }
+                    if (goods.length() == 0) {
+                        changeFragment(true);
+                    }
+                    if (goods.length() < 10) {
+                        productListNotNullFragment.setHasMore(false);
+                    }
+                } catch (JSONException e) {
+                    changeFragment(true);
+                }
+            }
+        }
+    };
 
 }

@@ -92,15 +92,4 @@ public class ProductListAdapter extends BaseAdapter {
         mData.remove(position);
         notifyDataSetChanged();
     }
-
-    static class Holder {
-        ImageView image;
-        TextView title;
-        TextView place;
-        TextView discount;
-        TextView price;
-        TextView oldPrice;
-        ImageView star;
-    }
-
 }
