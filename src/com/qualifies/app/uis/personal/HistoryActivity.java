@@ -41,9 +41,12 @@ public class HistoryActivity extends Activity {
         TextView title;
         title = (TextView) findViewById(R.id.title);
         title.setText("浏览历史");
+        changeFragment(false);
+    }
+    public void changeFragment(boolean isNull){
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         hideFragment(transaction);
-        if (!sp.contains("history")) {
+        if (!isNull) {
             if (productListNotNullFragment == null) {
                 productListNotNullFragment = new ProductListNotNullFragment();
                 productListNotNullFragment.setStar(false);
@@ -73,7 +76,7 @@ public class HistoryActivity extends Activity {
         }
     }
 
-    private LinkedList<HashMap<String, Object>> getData() {
+    public LinkedList<HashMap<String, Object>> getData() {
         list = new LinkedList<HashMap<String, Object>>();
         String token = sp.getString("token", "");
         if (!token.equals("")) {
@@ -100,13 +103,21 @@ public class HistoryActivity extends Activity {
                         map.put("place", "产地 "+ good.getString("origin"));
                         double price = good.getDouble("shop_price");
                         map.put("price", "￥" + price);
+                        map.put("history_id",good.getString("id"));
+                        map.put("goods_id",good.getString("goods_id"));
                         double oldPrice = good.getDouble("market_price");
                         map.put("oldPrice", "￥" + oldPrice);
                         map.put("discount", (int) ((1 - (price/oldPrice)) * 100) + "% 折扣");
                         list.add(map);
                     }
+                    if(goods.length() == 0) {
+                        changeFragment(true);
+                    }
+                    if(goods.length() < 10) {
+                        productListNotNullFragment.setHasMore(false);
+                    }
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    changeFragment(true);
                 }
             }
         }

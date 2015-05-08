@@ -559,6 +559,14 @@ public class DropDownListView extends SwipeMenuListView implements OnScrollListe
         }
     }
 
+
+    public void resetBottom() {
+        hasMore = true;
+        footerButton.setText(footerDefaultText);
+        footerButton.setEnabled(true);
+        addFooterView(footerLayout);
+    }
+
     /**
      * on bottom load complete, restore view status
      */
