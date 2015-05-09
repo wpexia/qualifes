@@ -25,19 +25,18 @@
                 android:launchMode="singleTask"
                 android:label="@string/protocol_name">
         </activity>
-        <activity
-                android:name=".uis.personal.PersonalActivity"
-                android:launchMode="singleTask"
-                android:label="@string/wo_name">
+        <activity android:name=".uis.HomeActivity" android:launchMode="singleTask" android:label="品制生活">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
-        <activity android:name="com.qualifies.app.qualifieslife.MainActivity"
-                  android:label="@string/app_name">
+        <activity
+                android:name=".uis.personal.PersonalActivity"
+                android:launchMode="singleTask"
+                android:label="@string/wo_name">
+
 
         </activity>
         <activity android:name=".uis.LoginActivity" android:launchMode="singleTask"/>
@@ -48,20 +47,6 @@
         <activity android:name=".uis.personal.PositionActivity"/>
         <activity android:name=".uis.personal.AddPositionActivity"/>
         <activity android:name=".uis.personal.MoneyActivity"/>
-        <activity
-                android:name="com.qualifies.app.qualifieslife.HomePageActivity"
-                android:label="@string/title_activity_home_page"/>
-        <activity android:name="com.qualifies.app.qualifieslife.GoodDetailActivity"/>
-        <activity
-                android:name="com.qualifies.app.qualifieslife.GoodSpecActivity"
-                android:label="@string/title_activity_good_spec">
-        </activity>
-        <activity
-                android:name="com.qualifies.app.qualifieslife.HomeSearchActivity"
-                android:label="@string/title_activity_home_search"/>
-        <activity
-                android:name="com.qualifies.app.qualifieslife.HomeSearchResultActivity"
-                android:label="@string/title_activity_home_search_result"/>
     </application>
 
 </manifest>

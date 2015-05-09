@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <LinearLayout
+            android:background="#ffffff"
+            android:id="@+id/tab"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp" android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+        <Button
+                android:background="#eeeeee"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:id="@+id/home"/>
+        <Button
+                android:background="#eeeeee"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:id="@+id/button2"/>
+        <Button
+                android:background="#eeeeee"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:id="@+id/button3"/>
+        <Button
+                android:background="#eeeeee"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:id="@+id/personal"/>
+    </LinearLayout>
+    <FrameLayout
+            android:background="#999999"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/main"
+            android:layout_above="@+id/tab"
+            />
+</RelativeLayout>

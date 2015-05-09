@@ -53,7 +53,7 @@ public class FollowManager {
                     super.onSuccess(statusCode, headers, response);
                     Api.dealSuccessRes(response, msg);
                     msg.obj = response;
-                    Log.e("follow", response.toString());
+//                    Log.e("follow", response.toString());
                     handler.sendMessage(msg);
                 }
 
@@ -90,7 +90,7 @@ public class FollowManager {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     Api.dealSuccessRes(response, msg);
-                    Log.e("delete", response.toString());
+//                    Log.e("delete", response.toString());
                 }
 
                 @Override
