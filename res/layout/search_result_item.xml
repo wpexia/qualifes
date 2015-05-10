@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:minHeight="200px"
+    android:background="@drawable/item_stroke" android:layout_height="match_parent">
+	<ImageView 
+	    android:id="@+id/search_info_image"
+	    android:layout_width="140px"
+	    android:layout_height="140px"
+	    android:layout_marginLeft="30px"
+	    android:layout_marginRight="48px"
+	    android:scaleType="fitXY"
+	    />
+
+	<TextView 
+	    android:id="@+id/search_info_goods_name"
+	    android:layout_width="600px"
+	    android:layout_height="wrap_content"
+	    android:lines="3"
+	    android:textColor="#6e6e6e"
+	    android:textSize="11sp"
+	    android:layout_toRightOf="@+id/search_info_image"
+	    android:layout_marginTop="24px"
+	    />
+	<TextView
+	    android:id="@+id/search_info_shop_price"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textColor="#ff3300"
+	    android:textSize="16sp"
+	    android:layout_below="@+id/search_info_goods_name"
+	    android:layout_toRightOf="@+id/search_info_image"
+	    android:layout_marginTop="24px"
+	    android:text="￥198.00"
+	    />
+	<TextView 
+	    android:id="@+id/search_info_market_price"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textColor="#6e6e6e"
+	    android:textSize="9sp"
+	    android:layout_toRightOf="@+id/search_info_shop_price"
+	    android:layout_marginLeft="10px"
+	    android:layout_alignBottom ="@+id/search_info_shop_price"
+	    android:text="￥598.00"
+	    />
+	<TextView
+	    android:id="@+id/search_info_discount"
+	    android:layout_width="76px"
+	    android:layout_height="28px"
+	    android:textColor="#ff3300"
+	    android:textSize="9sp"
+	    android:layout_below="@+id/search_info_shop_price"
+	    android:layout_alignLeft="@+id/search_info_shop_price"
+	    android:layout_marginTop="8px"
+	    android:gravity="center"
+	    android:text="9.3折"
+	    android:background="@drawable/textview_border"
+	    />
+	<TextView
+	    android:id="@+id/search_info_origin"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textColor="#6e6e6e"
+	    android:textSize="9sp"
+	    android:layout_below="@+id/search_info_discount"
+	    android:layout_toRightOf="@+id/search_info_image"
+	    android:layout_marginTop="10px"
+	    android:text="产地 美国" />
+</RelativeLayout>

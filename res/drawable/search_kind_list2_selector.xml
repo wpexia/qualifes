@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_pressed="true" android:color="#dedede">  
+        <shape android:shape="rectangle">
+    		<!-- 边框色 -->
+    		<stroke android:width="2dip" android:color="#dedede" />
+		</shape>
+    </item>
+    <item android:color="#f4f4f4">
+		<shape android:shape="rectangle">
+		    <!-- 边框色 -->
+		    <stroke android:width="2dip" android:color="#dedede" />
+		</shape>
+    </item> 
+</selector>

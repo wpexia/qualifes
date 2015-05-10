@@ -1,4 +1,4 @@
-package com.qualifies.app.uis;
+package com.qualifies.app.uis.fragment;
 
 
 import android.app.Fragment;
@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.*;
 import com.qualifies.app.R;
 import com.qualifies.app.manager.HomeManger;
+import com.qualifies.app.uis.HomeActivity;
 import com.qualifies.app.uis.adapter.HomeBottomAdapter;
 import com.qualifies.app.uis.adapter.HomeGridViewAdapter;
 import com.qualifies.app.util.AsyncImageLoader;
@@ -79,6 +79,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         gridView2.setOnItemClickListener(this);
         listView = (ListView) getActivity().findViewById(R.id.bottom);
         listView.setOnItemClickListener(this);
+
+
+        editText = (EditText) getActivity().findViewById(R.id.input);
+        editText.setOnTouchListener((HomeActivity) getActivity());
 
         HomeManger homeManger = HomeManger.getInstance();
         homeManger.getLogo("home_top_slide", viewFlipperHandler, getActivity());
