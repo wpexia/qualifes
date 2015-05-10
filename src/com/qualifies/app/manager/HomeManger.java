@@ -16,6 +16,8 @@ import org.json.JSONObject;
 
 public class HomeManger {
 
+    final private String service = "get_visual";
+
     private static HomeManger inst = new HomeManger();
 
     public static HomeManger getInstance() {
@@ -47,7 +49,7 @@ public class HomeManger {
             RequestParams requestParams = new RequestParams();
             requestParams.put("type", "activity");
             requestParams.put("logo", logo);
-            client.get(Api.url("get_visual"), requestParams, new JsonHttpResponseHandler() {
+            client.get(Api.url(service), requestParams, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
@@ -96,7 +98,7 @@ public class HomeManger {
             RequestParams requestParams = new RequestParams();
             requestParams.put("type", "goods");
             requestParams.put("logo", logo);
-            client.get(Api.url("get_visual"), requestParams, new JsonHttpResponseHandler() {
+            client.get(Api.url(service), requestParams, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     Api.dealSuccessRes(response, msg);

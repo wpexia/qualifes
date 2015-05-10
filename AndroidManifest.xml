@@ -47,6 +47,7 @@
         <activity android:name=".uis.personal.PositionActivity"/>
         <activity android:name=".uis.personal.AddPositionActivity"/>
         <activity android:name=".uis.personal.MoneyActivity"/>
+        <activity android:name=".uis.SearchResultActivity"/>
     </application>
 
 </manifest>

@@ -13,6 +13,7 @@ import android.widget.*;
 import com.qualifies.app.R;
 import com.qualifies.app.manager.SearchManager;
 import com.qualifies.app.uis.HomeActivity;
+import com.qualifies.app.uis.SearchResultActivity;
 import com.qualifies.app.uis.adapter.SearchHotAdapter;
 import com.qualifies.app.util.SearchRecordDbHelper;
 import org.json.JSONArray;
@@ -87,10 +88,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.home_search_back: {
-
-            }
-            break;
             case R.id.home_search_search: {
                 if (home_search_input.getText().toString().isEmpty()) {
                     Toast.makeText(getActivity(), "请输入搜索的商品信息", Toast.LENGTH_SHORT).show();
@@ -102,11 +99,11 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                         daList.add(input);
                         db.insert(input);
                     }
-//                    Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("searchKeyWord", input);
-//                    intent.putExtras(bundle);
-//                    startActivity(intent);
+                    Intent intent = new Intent(getActivity(), SearchResultActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("searchKeyWord", input);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
 
                 }
             }
@@ -117,7 +114,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             }
             break;
         }
-
         home_search_history_items.invalidateViews();
         if (daList.isEmpty()) {
             home_search_history_clear.setVisibility(View.GONE);
