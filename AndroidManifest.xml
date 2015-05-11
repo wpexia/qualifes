@@ -32,13 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-                android:name=".uis.personal.PersonalActivity"
-                android:launchMode="singleTask"
-                android:label="@string/wo_name">
-
-
-        </activity>
         <activity android:name=".uis.LoginActivity" android:launchMode="singleTask"/>
         <activity android:name=".uis.personal.HistoryActivity"/>
         <activity android:name=".uis.personal.FollowActivity"/>
@@ -46,7 +39,10 @@
         <activity android:name=".uis.personal.RealNameActivity"/>
         <activity android:name=".uis.personal.PositionActivity"/>
         <activity android:name=".uis.personal.AddPositionActivity"/>
-        <activity android:name=".uis.personal.MoneyActivity"/>
+        <activity android:name=".uis.personal.MoneyActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:windowSoftInputMode="stateHidden"
+                />
         <activity android:name=".uis.SearchResultActivity"/>
     </application>
 

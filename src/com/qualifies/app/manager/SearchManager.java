@@ -49,7 +49,7 @@ public class SearchManager {
                     super.onSuccess(statusCode, headers, response);
                     try {
                         Api.dealSuccessRes(response, msg);
-                        Log.e("getSearchHot", response.toString());
+                        //Log.e("getSearchHot", response.toString());
                         msg.obj = response.getJSONArray("data");
                         handler.sendMessage(msg);
                     } catch (JSONException e) {

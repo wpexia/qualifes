@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import com.qualifies.app.uis.personal.PersonalActivity;
 
 public class LoginActivity extends Activity implements OnClickListener {
     private EditText userNameText;
@@ -75,7 +74,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                     Bundle bundle = new Bundle();
                     bundle.putString("username", userNameText.getText().toString());
                     Toast.makeText(getApplicationContext(), "登陆成功", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, PersonalActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
                 break;

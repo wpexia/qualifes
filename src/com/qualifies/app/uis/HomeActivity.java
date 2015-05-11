@@ -3,6 +3,7 @@ package com.qualifies.app.uis;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,14 +11,18 @@ import android.widget.LinearLayout;
 import com.qualifies.app.R;
 import com.qualifies.app.uis.fragment.HomeFragment;
 import com.qualifies.app.uis.fragment.SearchFragment;
+import com.qualifies.app.uis.personal.PersonalFragment;
+import com.qualifies.app.uis.personal.SettingActivity;
 
 public class HomeActivity extends Activity implements View.OnClickListener, View.OnTouchListener {
 
     private FragmentManager manager;
     private int fragmentId;
+    private LinearLayout tab;
+
     private HomeFragment homeFragment;
     private SearchFragment searchFragment;
-    private LinearLayout tab;
+    private PersonalFragment personalFragment;
 
 
     @Override
@@ -32,6 +37,8 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         fragmentId = 0;
         tab = (LinearLayout) findViewById(R.id.tab);
         changeFragment();
+        findViewById(R.id.home).setOnClickListener(this);
+        findViewById(R.id.personal).setOnClickListener(this);
     }
 
 
@@ -56,6 +63,22 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                 fragmentId = 0;
                 changeFragment();
             }
+            break;
+            case R.id.home: {
+                fragmentId = 0;
+                changeFragment();
+            }
+            break;
+            case R.id.personal: {
+                fragmentId = 3;
+                changeFragment();
+            }
+            break;
+            case R.id.personal_setting: {
+                Intent intent = new Intent(this, SettingActivity.class);
+                startActivity(intent);
+            }
+            break;
         }
     }
 
@@ -73,6 +96,16 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                 tab.setVisibility(View.VISIBLE);
             }
             break;
+            case 3: {
+                if (personalFragment == null) {
+                    personalFragment = new PersonalFragment();
+                    transaction.add(R.id.main, personalFragment);
+                } else {
+                    transaction.show(personalFragment);
+                    tab.setVisibility(View.VISIBLE);
+                }
+            }
+            break;
             case 4: {
                 if (searchFragment == null) {
                     searchFragment = new SearchFragment();
@@ -82,6 +115,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                 }
                 tab.setVisibility(View.GONE);
             }
+            break;
         }
         transaction.commit();
     }
@@ -92,6 +126,9 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         }
         if (searchFragment != null) {
             transaction.hide(searchFragment);
+        }
+        if (personalFragment != null) {
+            transaction.hide(personalFragment);
         }
     }
 

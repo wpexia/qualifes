@@ -107,7 +107,12 @@ public class FollowActivity extends Activity implements View.OnClickListener{
         String token = sp.getString("token", "");
         if (!token.equals("")) {
             FollowManager followManager = FollowManager.getInstance();
-            followManager.getFollow(token, handler, this, 0);
+            try {
+                followManager.getFollow(token, handler, this, 0);
+            } catch (NullPointerException e){
+                e.printStackTrace();
+            }
+
         }
         return list;
     }

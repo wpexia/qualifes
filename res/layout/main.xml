@@ -10,33 +10,33 @@
             android:layout_width="fill_parent"
             android:layout_height="48dp" android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true">
-        <Button
+        <ImageButton
                 android:background="#eeeeee"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="New Button"
+                android:src="@drawable/home_home"
                 android:id="@+id/home"/>
-        <Button
+        <ImageButton
                 android:background="#eeeeee"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="New Button"
-                android:id="@+id/button2"/>
-        <Button
+                android:src="@drawable/home_list"
+                android:id="@+id/list"/>
+        <ImageButton
                 android:background="#eeeeee"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="New Button"
-                android:id="@+id/button3"/>
-        <Button
+                android:src="@drawable/home_shoppingcart"
+                android:id="@+id/shoppingcart"/>
+        <ImageButton
                 android:background="#eeeeee"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="New Button"
+                android:src="@drawable/home_me"
                 android:id="@+id/personal"/>
     </LinearLayout>
     <FrameLayout

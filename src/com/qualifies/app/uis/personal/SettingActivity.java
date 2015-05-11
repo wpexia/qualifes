@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.qualifies.app.R;
+import com.qualifies.app.uis.HomeActivity;
 
 public class SettingActivity extends Activity implements View.OnClickListener {
     private SharedPreferences sp;
@@ -56,7 +57,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 SharedPreferences.Editor editor = sp.edit();
                 editor.remove("token");
                 editor.apply();
-                Intent intent = new Intent(SettingActivity.this, PersonalActivity.class);
+                Intent intent = new Intent(SettingActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
             break;

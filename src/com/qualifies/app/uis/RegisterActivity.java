@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.qualifies.app.R;
 import com.qualifies.app.manager.LoginManager;
 import com.qualifies.app.manager.RegisterManager;
-import com.qualifies.app.uis.personal.PersonalActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -173,7 +172,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                     Bundle bundle = new Bundle();
                     bundle.putString("username", username.getText().toString());
                     Toast.makeText(getApplicationContext(), "登陆成功", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegisterActivity.this, PersonalActivity.class);
+                    Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
                 break;

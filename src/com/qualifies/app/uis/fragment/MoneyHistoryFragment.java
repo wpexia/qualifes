@@ -1,19 +1,28 @@
 package com.qualifies.app.uis.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import com.qualifies.app.R;
+import com.qualifies.app.manager.MoneyManager;
 import com.qualifies.app.uis.adapter.MoneyAdapter;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class MoneyHistoryFragment extends Fragment {
+    private SharedPreferences sp;
+
     private ListView listView;
     private View mView;
 
@@ -26,20 +35,30 @@ public class MoneyHistoryFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
+
         listView = (ListView) mView.findViewById(R.id.listView);
-        MoneyAdapter adapter = new MoneyAdapter();
-        adapter.setContent(getActivity(), getData(), true);
-        listView.setAdapter(adapter);
         listView.setDividerHeight(0);
+
+        MoneyManager moneyManager = MoneyManager.getInstance();
+        moneyManager.getHistory(sp.getString("token", ""), historyHandler, getActivity());
     }
 
-
-    private List<HashMap<String, Object>> getData() {
-        ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-        for (int i = 1; i <= 3; i++) {
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            list.add(map);
+    Handler historyHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                try {
+                    JSONArray data = (JSONArray) msg.obj;
+//                    Log.e("moneyHistory", data.toString());
+                    MoneyAdapter adapter = new MoneyAdapter();
+                    adapter.setContent(getActivity(), data, true);
+                    listView.setAdapter(adapter);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        return list;
-    }
+    };
+
 }

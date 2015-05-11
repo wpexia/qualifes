@@ -27,7 +27,7 @@ public class HomeBottomAdapter extends BaseAdapter {
     public HomeBottomAdapter(Context context, JSONArray data) {
         mInflater = LayoutInflater.from(context);
         mData = data;
-        Log.e("number", String.valueOf(data.length()));
+        //Log.e("number", String.valueOf(data.length()));
     }
 
     @Override

@@ -14,28 +14,34 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class HomeManger {
+public class MoneyManager {
 
-    final private String service = "get_visual";
+    private static MoneyManager inst = new MoneyManager();
 
-    private static HomeManger inst = new HomeManger();
-
-    public static HomeManger getInstance() {
+    public static MoneyManager getInstance() {
         return inst;
     }
 
-    public void getLogo(String logo, Handler handler, Context context) {
-        Thread getLogoThread = new Thread(new GetLogoThread(logo, handler, context));
-        getLogoThread.start();
+    public void getNow(String token, Handler handler, Context context) {
+        Thread getNowThread = new Thread(new GetBonusThread(token, "1", handler, context));
+        getNowThread.start();
     }
 
-    class GetLogoThread implements Runnable {
-        Handler handler;
-        Context context;
-        String logo;
+    public void getHistory(String token, Handler handler, Context context) {
+        Thread getHistoryThread = new Thread(new GetBonusThread(token, "4", handler, context));
+        getHistoryThread.start();
+    }
 
-        public GetLogoThread(String logo, Handler handler, Context context) {
-            this.logo = logo;
+    class GetBonusThread implements Runnable {
+
+        private String token;
+        private String type;
+        private Handler handler;
+        private Context context;
+
+        public GetBonusThread(String token, String type, Handler handler, Context context) {
+            this.token = token;
+            this.type = type;
             this.handler = handler;
             this.context = context;
         }
@@ -47,16 +53,17 @@ public class HomeManger {
             client.setCookieStore(myCookieStore);
             final Message msg = handler.obtainMessage();
             RequestParams requestParams = new RequestParams();
-            requestParams.put("type", "activity");
-            requestParams.put("logo", logo);
-            client.get(Api.url(service), requestParams, new JsonHttpResponseHandler() {
+            requestParams.put("token", token);
+            requestParams.put("data[limit][m]", 0);
+            requestParams.put("data[limit][n]", 1000);
+            requestParams.put("data[type]", type);
+            client.post(Api.url("get_bonus"), requestParams, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
                     try {
                         Api.dealSuccessRes(response, msg);
+//                        Log.e("get_bonus", response.toString());
                         msg.obj = response.getJSONArray("data");
-//                        Log.e("get_visual", response.toString());
                         handler.sendMessage(msg);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -65,7 +72,6 @@ public class HomeManger {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    super.onFailure(statusCode, headers, throwable, errorResponse);
                     Api.dealFailRes(msg);
                     handler.sendMessage(msg);
                 }
@@ -73,18 +79,20 @@ public class HomeManger {
         }
     }
 
-    public void getGoodsInfo(String logo, Handler handler, Context context) {
-        Thread getGoodInfoThread = new Thread(new GetGoodInfoThread(logo, handler, context));
-        getGoodInfoThread.start();
+    public void addMoney(String sn, String token, Handler handler, Context context) {
+        Thread addMoneyThread = new Thread(new AddMoneyHandler(sn, token, handler, context));
+        addMoneyThread.start();
     }
 
-    class GetGoodInfoThread implements Runnable {
-        private String logo;
+    class AddMoneyHandler implements Runnable {
+        private String sn;
+        private String token;
         private Handler handler;
         private Context context;
 
-        public GetGoodInfoThread(String logo, Handler handler, Context context) {
-            this.logo = logo;
+        public AddMoneyHandler(String sn, String token, Handler handler, Context context) {
+            this.sn = sn;
+            this.token = token;
             this.handler = handler;
             this.context = context;
         }
@@ -96,20 +104,17 @@ public class HomeManger {
             client.setCookieStore(myCookieStore);
             final Message msg = handler.obtainMessage();
             RequestParams requestParams = new RequestParams();
-            requestParams.put("type", "goods");
-            requestParams.put("logo", logo);
-            client.get(Api.url(service), requestParams, new JsonHttpResponseHandler() {
+            requestParams.put("token", token);
+            requestParams.put("data[bonus_sn]", sn);
+            client.post(Api.url("add_code_bonus"), requestParams, new JsonHttpResponseHandler() {
+
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     Api.dealSuccessRes(response, msg);
-                    try {
-                        msg.obj = response.getJSONObject("data").getJSONArray("goods");
-//                        Log.e("goods",msg.obj.toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    //Log.e("addMoney", response.toString());
                     handler.sendMessage(msg);
                 }
+
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
@@ -118,6 +123,5 @@ public class HomeManger {
                 }
             });
         }
-
     }
 }

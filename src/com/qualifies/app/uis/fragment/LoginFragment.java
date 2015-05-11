@@ -1,5 +1,6 @@
 package com.qualifies.app.uis.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.qualifies.app.R;
-import com.qualifies.app.uis.personal.PersonalActivity;
+import com.qualifies.app.uis.HomeActivity;
 
 
 public class LoginFragment extends Fragment {
@@ -21,8 +22,8 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().findViewById(R.id.personal_setting).setOnClickListener((PersonalActivity) getActivity());
-        SharedPreferences sp = getActivity().getSharedPreferences("user", ((PersonalActivity) getActivity()).MODE_PRIVATE);
+        getActivity().findViewById(R.id.personal_setting).setOnClickListener((HomeActivity) getActivity());
+        SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
         String username = sp.getString("username","00000000000");
         username = username.substring(0,3) + "****" + username.substring(7,11);
         ((TextView) getActivity().findViewById(R.id.username)).setText(username);

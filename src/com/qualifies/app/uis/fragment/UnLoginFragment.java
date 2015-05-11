@@ -7,10 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.qualifies.app.R;
+import com.qualifies.app.uis.HomeActivity;
 import com.qualifies.app.uis.LoginActivity;
 import com.qualifies.app.uis.RegisterActivity;
-import com.qualifies.app.uis.personal.PersonalActivity;
-
 
 public class UnLoginFragment extends Fragment implements View.OnClickListener {
     @Override
@@ -24,7 +23,7 @@ public class UnLoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().findViewById(R.id.personal_setting).setOnClickListener((PersonalActivity) getActivity());
+        getActivity().findViewById(R.id.personal_setting).setOnClickListener((HomeActivity) getActivity());
     }
 
     @Override

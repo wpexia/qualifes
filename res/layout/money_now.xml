@@ -16,9 +16,10 @@
                 android:layout_height="34dp"
                 android:id="@+id/editText"
                 android:background="@drawable/money_edit"
+                android:lines="1"
                 android:paddingLeft="8dp"
                 android:layout_marginLeft="10dp"
-                android:layout_toLeftOf="@+id/textView11"
+                android:layout_toLeftOf="@+id/addMoney"
                 android:layout_marginRight="20dp"
                 android:hint="请输入红包号"
                 android:textSize="14sp"
@@ -32,7 +33,7 @@
                 android:background="#e9e9e9"
                 android:layout_marginRight="18dp"
                 android:textColor="#bebebe"
-                android:id="@+id/textView11"
+                android:id="@+id/addMoney"
                 android:layout_centerVertical="true" android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"/>
     </RelativeLayout>
