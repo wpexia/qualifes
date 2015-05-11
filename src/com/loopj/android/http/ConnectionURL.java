@@ -27,7 +27,7 @@ public class ConnectionURL {
 		return baseURL + hotGoods;
 	}
 	/** 
-     * 获取网落图片资源  
+     * 鑾峰彇缃戣惤鍥剧墖璧勬簮  
      * @param url 
      * @return Bitmap 
      */   

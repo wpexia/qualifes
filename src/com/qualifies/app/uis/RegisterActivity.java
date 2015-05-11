@@ -150,7 +150,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 case 0: {
                     try {
                         Thread.sleep(1000);
-                        Toast.makeText(getApplicationContext(), msg.obj.toString() , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -164,7 +164,6 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
             }
         }
     };
-
 
 
     Handler loginHandle = new Handler() {
