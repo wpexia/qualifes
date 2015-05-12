@@ -56,7 +56,7 @@
                     />
 
             <EditText
-                    android:id="@+id/old_pwd"
+                    android:id="@+id/consignee"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="18dp"
@@ -93,13 +93,13 @@
                     />
 
             <EditText
-                    android:id="@+id/new_pwd"
+                    android:id="@+id/phone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="18dp"
                     android:layout_toRightOf="@id/icon_new"
                     android:background="@null"
-                    android:inputType="textPassword"
+                    android:inputType="phone"
                     android:hint="请输入手机号码"
                     android:textColorHint="#b1b1b1"
                     android:textSize="14sp"/>
@@ -110,6 +110,7 @@
         <View
                 android:layout_width="fill_parent"
                 android:layout_height="0.5dp"
+                android:layout_marginLeft="15dp"
                 android:background="#b1b1b1"/>
         <RelativeLayout
                 android:layout_width="match_parent"
@@ -128,13 +129,13 @@
                     />
 
             <EditText
-                    android:id="@+id/phone"
+                    android:id="@+id/tel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="18dp"
                     android:layout_toRightOf="@id/icon_phone"
                     android:background="@null"
-                    android:inputType="textPassword"
+                    android:inputType="phone"
                     android:hint="选填"
                     android:textColorHint="#b1b1b1"
                     android:textSize="14sp"/>
@@ -161,6 +162,7 @@
                 android:background="#b1b1b1"/>
 
         <RelativeLayout
+                android:id="@+id/choose"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -170,6 +172,7 @@
                     android:id="@+id/icon_position"
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
+                    android:clickable="true"
                     android:layout_alignParentLeft="true"
                     android:textColor="#6e6e6e"
                     android:gravity="center"

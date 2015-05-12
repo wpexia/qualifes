@@ -13,6 +13,7 @@ import com.qualifies.app.uis.fragment.HomeFragment;
 import com.qualifies.app.uis.fragment.SearchFragment;
 import com.qualifies.app.uis.personal.PersonalFragment;
 import com.qualifies.app.uis.personal.SettingActivity;
+import com.qualifies.app.util.PlistHelper;
 
 public class HomeActivity extends Activity implements View.OnClickListener, View.OnTouchListener {
 

@@ -16,9 +16,6 @@ import com.qualifies.app.manager.MoneyManager;
 import com.qualifies.app.uis.adapter.MoneyAdapter;
 import org.json.JSONArray;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class MoneyHistoryFragment extends Fragment {
     private SharedPreferences sp;
