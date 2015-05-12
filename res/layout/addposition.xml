@@ -19,6 +19,7 @@
                 android:src="@drawable/icon_back"/>
 
         <TextView
+                android:id="@+id/title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="新增收货地址"

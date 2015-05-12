@@ -17,7 +17,6 @@ public class PositionActivity extends Activity implements View.OnClickListener {
     private SharedPreferences sp;
     private PositionNullFragment positionNullFragment;
     private PositionOKFragment positionOKFragment;
-    private PositionChoseFragment positionChoseFragment;
     private FragmentManager manager;
 
     @Override
@@ -57,9 +56,6 @@ public class PositionActivity extends Activity implements View.OnClickListener {
         if (positionOKFragment != null) {
             transaction.hide(positionOKFragment);
         }
-        if (positionChoseFragment != null) {
-            transaction.hide(positionChoseFragment);
-        }
     }
 
     @Override
@@ -72,15 +68,7 @@ public class PositionActivity extends Activity implements View.OnClickListener {
             }
             break;
             case R.id.icon_in: {
-                FragmentTransaction transaction = manager.beginTransaction();
-                hideFragment(transaction);
-                if(positionChoseFragment == null) {
-                    positionChoseFragment = new PositionChoseFragment();
-                    transaction.add(R.id.content, positionChoseFragment);
-                } else {
-                    transaction.show(positionChoseFragment);
-                }
-                transaction.commit();
+                
             }
             break;
         }

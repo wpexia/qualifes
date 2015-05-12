@@ -6,7 +6,8 @@
                 android:layout_height="match_parent">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:orientation="vertical"
-                    android:id="@+id/moren"
+                    android:id="@+id/defaultposition"
+                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:background="@color/white"
                     android:layout_height="100dp">
@@ -17,18 +18,16 @@
                 android:paddingTop="35dp"
                 android:paddingLeft="15dp"
                 android:textColor="#6e6e6e"
-                android:text="曹冰冰"
-                android:id="@+id/textView6" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+                android:id="@+id/defaultname" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#6e6e6e"
-                android:text="上海市闵行区浦江镇三路公路3585号6号楼"
-                android:id="@+id/textView7"
+                android:id="@+id/defaultaddress"
                 android:paddingLeft="15dp"
                 android:paddingTop="15dp"
-                android:layout_below="@+id/textView6" android:layout_alignParentLeft="true"
+                android:layout_below="@+id/defaultname" android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"/>
         <ImageView
                 android:layout_width="wrap_content"
@@ -55,16 +54,15 @@
                 android:textSize="16sp"
                 android:paddingTop="14dp"
                 android:paddingRight="17dp"
-                android:text="18964959647"
                 android:layout_below="@+id/textView8"
-                android:id="@+id/textView9" android:layout_toLeftOf="@+id/icon_in"
+                android:id="@+id/defaultphone" android:layout_toLeftOf="@+id/icon_in"
                 android:layout_toStartOf="@+id/icon_in"/>
     </RelativeLayout>
     <ListView android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:id="@+id/listView"
               android:layout_marginTop="10dp"
-              android:layout_below="@+id/moren"/>
+              android:layout_below="@+id/defaultposition"/>
     <Button
             android:layout_width="fill_parent"
             android:layout_height="50dp"

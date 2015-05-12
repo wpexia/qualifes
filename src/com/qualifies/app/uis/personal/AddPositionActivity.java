@@ -2,6 +2,7 @@ package com.qualifies.app.uis.personal;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,8 @@ import com.qualifies.app.util.PlistHelper;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.ArrayWheelAdapter;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class AddPositionActivity extends Activity implements View.OnClickListener {
 
@@ -26,12 +29,50 @@ public class AddPositionActivity extends Activity implements View.OnClickListene
     private SharedPreferences sp;
     private TextView position;
     private Position result;
+    private String addressId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addposition);
         initView();
+        Intent intent = getIntent();
+        if (intent.hasExtra("position")) {
+            try {
+                ((TextView) findViewById(R.id.title)).setText("编辑收货地址");
+                JSONObject obj = new JSONObject(intent.getStringExtra("position"));
+                ((EditText) findViewById(R.id.consignee)).setText(obj.getString("consignee"));
+                ((EditText) findViewById(R.id.phone)).setText(obj.getString("mobile"));
+                ((EditText) findViewById(R.id.position)).setText(obj.getString("address"));
+                ((EditText) findViewById(R.id.tel)).setText(obj.getString("tel"));
+
+                final PlistHelper plistHelper = PlistHelper.getInstance(this);
+                final WheelView city = (WheelView) d.findViewById(R.id.city);
+                final WheelView province = (WheelView) d.findViewById(R.id.province);
+                final WheelView town = (WheelView) d.findViewById(R.id.town);
+
+                String provinceId = obj.getString("province");
+                String cityId = obj.getString("city");
+                String townId = obj.getString("district");
+                int provinceIndex = plistHelper.getProvinceIndex(provinceId);
+                int cityIndex = plistHelper.getCityIndex(provinceId, cityId);
+                int townIndex = plistHelper.getTownIndex(provinceId, cityId, townId);
+                result = new Position(provinceIndex, cityIndex, townIndex, plistHelper);
+
+                String positionStr = plistHelper.getPosition(provinceIndex, cityIndex, townIndex);
+                position.setText(positionStr);
+                province.setCurrentItem(provinceIndex);
+                city.setCurrentItem(cityIndex);
+                town.setCurrentItem(townIndex);
+
+                addressId = obj.getString("address_id");
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     private void initView() {
@@ -179,7 +220,7 @@ public class AddPositionActivity extends Activity implements View.OnClickListene
         }
 
         PositionManager positionManager = PositionManager.getInstance();
-        positionManager.addPosition(token, consignee, phone, province, city, district, tel, defa, address, addPositionHandler, this);
+        positionManager.addPosition(token, consignee, phone, province, city, district, tel, defa, address,addressId, addPositionHandler, this);
 
     }
 

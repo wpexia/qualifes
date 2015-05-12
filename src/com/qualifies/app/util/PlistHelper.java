@@ -90,4 +90,70 @@ public class PlistHelper {
         return ((NSString) dist.objectForKey("id")).toString();
     }
 
+
+    public int getProvinceIndex(String province) {
+        for (int i = 0; i < data.count(); i++) {
+            NSDictionary d = (NSDictionary) data.objectAtIndex(i);
+            NSString id = (NSString) d.objectForKey("id");
+            if (id.toString().equals(province)) {
+                return i;
+            }
+        }
+        return 2;
+    }
+
+    public int getCityIndex(String province, String city) {
+        NSArray cityD = (NSArray) ((NSDictionary) data.objectAtIndex(0)).objectForKey("all");
+        for (int i = 0; i < data.count(); i++) {
+            NSDictionary d = (NSDictionary) data.objectAtIndex(i);
+            NSString id = (NSString) d.objectForKey("id");
+            if (id.toString().equals(province)) {
+                cityD = (NSArray) d.objectForKey("all");
+                break;
+            }
+        }
+
+        for (int i = 0; i < cityD.count(); i++) {
+            NSDictionary d = (NSDictionary) cityD.objectAtIndex(i);
+            NSString id = (NSString) d.objectForKey("id");
+            if (id.toString().equals(city)) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    public int getTownIndex(String province, String city, String town) {
+        NSArray cityD = (NSArray) ((NSDictionary) data.objectAtIndex(0)).objectForKey("all");
+        for (int i = 0; i < data.count(); i++) {
+            NSDictionary d = (NSDictionary) data.objectAtIndex(i);
+            NSString id = (NSString) d.objectForKey("id");
+            if (id.toString().equals(province)) {
+                cityD = (NSArray) d.objectForKey("all");
+                break;
+            }
+        }
+
+        NSArray townD = (NSArray) ((NSDictionary) cityD.objectAtIndex(0)).objectForKey("arr");
+        for (int i = 0; i < cityD.count(); i++) {
+            NSDictionary d = (NSDictionary) cityD.objectAtIndex(i);
+            NSString id = (NSString) d.objectForKey("id");
+            if (id.toString().equals(city)) {
+                townD = (NSArray) d.objectForKey("arr");
+                break;
+            }
+        }
+
+
+        for (int i = 0; i < townD.count(); i++) {
+            NSDictionary d = (NSDictionary) townD.objectAtIndex(i);
+            NSString id = (NSString) d.objectForKey("id");
+            if (id.toString().equals(town)) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+
 }

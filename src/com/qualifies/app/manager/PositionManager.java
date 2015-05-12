@@ -12,6 +12,7 @@ import com.loopj.android.http.RequestParams;
 import com.qualifies.app.config.Api;
 import com.qualifies.app.util.AsyncHttpCilentUtil;
 import org.apache.http.Header;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PositionManager {
@@ -21,8 +22,8 @@ public class PositionManager {
         return inst;
     }
 
-    public void addPosition(String token, String consignee, String phone, String province, String city, String district, String tel, String defa, String address, Handler handler, Context context) {
-        Thread addPositionThread = new Thread(new AddPositionThread(token, consignee, phone, province, city, district, tel, defa, address, handler, context));
+    public void addPosition(String token, String consignee, String phone, String province, String city, String district, String tel, String defa, String address, String addressId, Handler handler, Context context) {
+        Thread addPositionThread = new Thread(new AddPositionThread(token, consignee, phone, province, city, district, tel, defa, address, addressId, handler, context));
         addPositionThread.start();
     }
 
@@ -38,9 +39,9 @@ public class PositionManager {
         private String address;
         private Handler handler;
         private Context context;
+        private String addressId;
 
-
-        public AddPositionThread(String token, String consignee, String phone, String province, String city, String district, String tel, String defa, String address, Handler handler, Context context) {
+        public AddPositionThread(String token, String consignee, String phone, String province, String city, String district, String tel, String defa, String address, String addressId, Handler handler, Context context) {
             this.token = token;
             this.consignee = consignee;
             this.phone = phone;
@@ -52,6 +53,7 @@ public class PositionManager {
             this.address = address;
             this.handler = handler;
             this.context = context;
+            this.addressId = addressId;
         }
 
         @Override
@@ -73,12 +75,62 @@ public class PositionManager {
             if (!tel.trim().equals("")) {
                 requestParams.put("data[tel]", tel);
             }
+            if(!addressId.trim().equals("")) {
+                requestParams.put("data[address_id]", addressId);
+            }
             client.post(Api.url("add_address"), requestParams, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     Api.dealSuccessRes(response, msg);
                     Log.e("addPosition", response.toString());
                     handler.sendMessage(msg);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    Api.dealFailRes(msg);
+                    handler.sendMessage(msg);
+                }
+            });
+        }
+    }
+
+
+    public void getPosition(String token, Handler handler, Context context) {
+        Thread getPositionThread = new Thread(new GetPositionThread(token, handler, context));
+        getPositionThread.start();
+    }
+
+    class GetPositionThread implements Runnable {
+        private String token;
+        private Handler handler;
+        private Context context;
+
+        public GetPositionThread(String token, Handler handler, Context context) {
+            this.token = token;
+            this.handler = handler;
+            this.context = context;
+        }
+
+        @Override
+        public void run() {
+            AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
+            PersistentCookieStore myCookieStore = new PersistentCookieStore(context);
+            client.setCookieStore(myCookieStore);
+            final Message msg = handler.obtainMessage();
+            RequestParams requestParams = new RequestParams();
+            requestParams.put("token", token);
+            client.post(Api.url("get_address"), requestParams, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    try {
+                        Api.dealSuccessRes(response, msg);
+                        msg.obj = response.getJSONArray("data");
+                        handler.sendMessage(msg);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
 
                 @Override
