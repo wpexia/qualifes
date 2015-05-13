@@ -49,8 +49,6 @@ public class MoneyManager {
         @Override
         public void run() {
             AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
-            PersistentCookieStore myCookieStore = new PersistentCookieStore(context);
-            client.setCookieStore(myCookieStore);
             final Message msg = handler.obtainMessage();
             RequestParams requestParams = new RequestParams();
             requestParams.put("token", token);
@@ -100,8 +98,6 @@ public class MoneyManager {
         @Override
         public void run() {
             AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
-            PersistentCookieStore myCookieStore = new PersistentCookieStore(context);
-            client.setCookieStore(myCookieStore);
             final Message msg = handler.obtainMessage();
             RequestParams requestParams = new RequestParams();
             requestParams.put("token", token);

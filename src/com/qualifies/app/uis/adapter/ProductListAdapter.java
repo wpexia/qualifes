@@ -1,8 +1,11 @@
 package com.qualifies.app.uis.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +13,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.qualifies.app.R;
+import com.qualifies.app.uis.GoodDetailActivity;
 import com.qualifies.app.util.AsyncImageLoader;
+import com.qualifies.app.util.ImageCacheHelper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,19 +26,17 @@ public class ProductListAdapter extends BaseAdapter {
     private List<HashMap<String, Object>> mData;
     private boolean hasStar = false;
     private AsyncImageLoader imageLoader = new AsyncImageLoader();
-    private Context context;
+    final private Context context;
 
     private Map<Integer, View> viewMap = new HashMap<Integer, View>();
 
-    public ProductListAdapter(List<HashMap<String, Object>> data, boolean star) {
+    public ProductListAdapter(List<HashMap<String, Object>> data, boolean star, Context context) {
+        this.context = context;
         mData = data;
         hasStar = star;
-    }
-
-    public void setContent(Context context) {
-        this.context = context;
         mInflater = LayoutInflater.from(context);
     }
+
 
     @Override
     public Object getItem(int position) {
@@ -46,7 +49,7 @@ public class ProductListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.history_item, null);
         }
@@ -67,17 +70,29 @@ public class ProductListAdapter extends BaseAdapter {
             price.setText(mData.get(position).get("price").toString());
             oldPrice.setText(mData.get(position).get("oldPrice").toString());
             oldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.FAKE_BOLD_TEXT_FLAG);
+            title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, GoodDetailActivity.class);
+                    Bundle bundle = new Bundle();
+//                    Log.e("goodsId", mData.get(position).get("goods_id").toString());
+                    bundle.putInt("goods_id", Integer.parseInt(mData.get(position).get("goods_id").toString()));
+                    intent.putExtra("goods_id", bundle);
+                    parent.getContext().startActivity(intent);
+                }
+            });
             //if (context.getSharedPreferences("user", context.MODE_PRIVATE).getBoolean("loadImage", false)) {
-            Drawable cachedImage = imageLoader.loadDrawable(mData.get(position).get("image").toString(), image,
-                    new AsyncImageLoader.ImageCallback() {
-                        public void imageLoaded(Drawable imageDrawable,
-                                                ImageView imageView, String imageUrl) {
-                            imageView.setImageDrawable(imageDrawable);
-                        }
-                    });
-            if (cachedImage != null) {
-                image.setImageDrawable(cachedImage);
-            }//}
+//            Drawable cachedImage = imageLoader.loadDrawable(mData.get(position).get("image").toString(), image,
+//                    new AsyncImageLoader.ImageCallback() {
+//                        public void imageLoaded(Drawable imageDrawable,
+//                                                ImageView imageView, String imageUrl) {
+//                            imageView.setImageDrawable(imageDrawable);
+//                        }
+//                    });
+//            if (cachedImage != null) {
+//                image.setImageDrawable(cachedImage);
+//            }//}
+            ImageCacheHelper.getImageCache().get(mData.get(position).get("image").toString(), image);
         }
         return convertView;
     }

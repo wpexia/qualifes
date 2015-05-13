@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class FollowActivity extends Activity implements View.OnClickListener{
+public class FollowActivity extends Activity implements View.OnClickListener {
 
     private SharedPreferences sp;
 
@@ -54,8 +54,8 @@ public class FollowActivity extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         final int id = v.getId();
         switch (id) {
-            case R.id.clear:{
-                if(!productListNotNullFragment.equals(null)){
+            case R.id.clear: {
+                if (!productListNotNullFragment.equals(null)) {
                     productListNotNullFragment.clear();
                 }
                 changeFragment(true);
@@ -109,7 +109,7 @@ public class FollowActivity extends Activity implements View.OnClickListener{
             FollowManager followManager = FollowManager.getInstance();
             try {
                 followManager.getFollow(token, handler, this, 0);
-            } catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
 
@@ -126,6 +126,7 @@ public class FollowActivity extends Activity implements View.OnClickListener{
                 try {
                     JSONObject data = resp.getJSONObject("data");
                     JSONArray goods = data.getJSONArray("data");
+//                    Log.e("goods", goods.toString());
                     for (int i = 0; i < goods.length(); i++) {
                         JSONObject good = goods.getJSONObject(i);
                         HashMap<String, Object> map = new HashMap<String, Object>();

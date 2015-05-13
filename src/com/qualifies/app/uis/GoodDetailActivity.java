@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
 import com.qualifies.app.R;
+import com.qualifies.app.util.ImageCacheHelper;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -123,9 +124,7 @@ public class GoodDetailActivity extends Activity implements OnClickListener {
                     detail_good_name.setText(dataObject.getString("goods_name"));
                     JSONArray imgsArray = dataObject.getJSONArray("goods_img");
 
-                    for (int i = 0; i < imgsArray.length(); i++) {
-                        imgStrs.add(imgsArray.getString(i));
-                    }
+
                     if (dataObject.getInt("is_coll") != 0) {
                         detail_star.setBackgroundResource(R.drawable.star_red);
                     }
@@ -140,8 +139,24 @@ public class GoodDetailActivity extends Activity implements OnClickListener {
 
                     detail_origin.setText("产地  " + dataObject.getString("origin"));
 
-                    MyThread thread = new MyThread(1, imgStrs);
-                    thread.start();
+                    for (int i = 0; i < imgsArray.length(); i++) {
+                        ImageView iv = new ImageView(getApplicationContext());
+                        ImageCacheHelper.getImageCache().get(imgsArray.getString(i), iv);
+                        iv.setScaleType(ImageView.ScaleType.FIT_XY);
+                        detail_imgs.addView(iv, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
+                        detail_imgs.setAutoStart(true);
+                        detail_imgs.setFlipInterval(1500);
+                        if (detail_imgs.isAutoStart() && imgsArray.length() > 1 && !detail_imgs.isFlipping()) {
+                            Animation lInAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_left_in);        // 向左滑动左侧进入的渐变效果（alpha 0.1  -> 1.0）
+                            Animation lOutAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_left_out);    // 向左滑动右侧滑出的渐变效果（alpha 1.0  -> 0.1）
+
+                            detail_imgs.setInAnimation(lInAnim);
+                            detail_imgs.setOutAnimation(lOutAnim);
+                            detail_imgs.startFlipping();
+                        }
+                    }
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -161,7 +176,7 @@ public class GoodDetailActivity extends Activity implements OnClickListener {
     @Override
     public void onClick(View v) {
 
-        Intent intent2 = new Intent(GoodDetailActivity.this,GoodSpecActivity.class);
+        Intent intent2 = new Intent(GoodDetailActivity.this, GoodSpecActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("goods_id", goods_id);
         intent2.putExtras(bundle);
@@ -192,63 +207,6 @@ public class GoodDetailActivity extends Activity implements OnClickListener {
                 break;
             default:
                 break;
-        }
-    }
-
-
-    Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-
-            if (msg.what == 1) {
-                List<Bitmap> imgBitmaps = (List<Bitmap>) msg.obj;
-                for (int i = 0; i < imgBitmaps.size(); i++) {
-                    ImageView iv = new ImageView(getApplicationContext());
-                    iv.setImageBitmap(imgBitmaps.get(i));
-                    iv.setScaleType(ImageView.ScaleType.FIT_XY);
-                    detail_imgs.addView(iv, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-
-                    detail_imgs.setAutoStart(true);
-                    detail_imgs.setFlipInterval(1500);
-                    if (detail_imgs.isAutoStart() && imgBitmaps.size() > 1 && !detail_imgs.isFlipping()) {
-                        Animation lInAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_left_in);        // 向左滑动左侧进入的渐变效果（alpha 0.1  -> 1.0）
-                        Animation lOutAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_left_out);    // 向左滑动右侧滑出的渐变效果（alpha 1.0  -> 0.1）
-
-                        detail_imgs.setInAnimation(lInAnim);
-                        detail_imgs.setOutAnimation(lOutAnim);
-                        detail_imgs.startFlipping();
-                    }
-                }
-
-
-            }
-
-        }
-
-        ;
-    };
-
-    class MyThread extends Thread {
-        int what;
-        List<String> dataList;
-        List<Bitmap> dataBitmaps;
-
-        public MyThread(int what, List<String> list) {
-            this.what = what;
-            dataList = list;
-        }
-
-        @Override
-        public void run() {
-            super.run();
-            dataBitmaps = new ArrayList<Bitmap>();
-            for (int i = 0; i < dataList.size(); i++) {
-                dataBitmaps.add(ConnectionURL.getHttpBitmap(dataList.get(i)));
-            }
-
-            Message message = mHandler.obtainMessage();
-            message.what = this.what;
-            message.obj = dataBitmaps;
-            mHandler.sendMessage(message);
         }
     }
 }

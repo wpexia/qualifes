@@ -49,7 +49,7 @@ public class AsyncImageLoader {
                         if (size == 1) {
                             Process.setThreadPriority(Process.THREAD_PRIORITY_DISPLAY);
                         } else {
-                            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+                            Process.setThreadPriority(Process.THREAD_PRIORITY_LOWEST);
                         }
                         Drawable drawable = null;
                         try {

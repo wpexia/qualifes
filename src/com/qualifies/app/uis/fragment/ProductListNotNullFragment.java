@@ -110,14 +110,9 @@ public class ProductListNotNullFragment extends Fragment {
                 new GetDataTask(false).execute();
             }
         });
-        productListAdapter = new ProductListAdapter(mData, hasStar);
+        productListAdapter = new ProductListAdapter(mData, hasStar, getActivity());
         listView.setAdapter(productListAdapter);
         listView.setDividerHeight(0);
-        try {
-            productListAdapter.setContent(getActivity());
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
     }
 
     private void createSwipeMenu() {

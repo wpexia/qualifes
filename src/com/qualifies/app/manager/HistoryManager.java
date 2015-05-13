@@ -39,8 +39,6 @@ public class HistoryManager {
         @Override
         public void run() {
             AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
-            PersistentCookieStore myCookieStore = new PersistentCookieStore(context);
-            client.setCookieStore(myCookieStore);
             RequestParams requestParams = new RequestParams();
             final Message msg = handler.obtainMessage();
             requestParams.put("token", token);
@@ -80,8 +78,6 @@ public class HistoryManager {
         @Override
         public void run() {
             AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
-            PersistentCookieStore myCookieStore = new PersistentCookieStore(context);
-            client.setCookieStore(myCookieStore);
             RequestParams requestParams = new RequestParams();
             final Message msg = handler.obtainMessage();
             requestParams.put("token", token);

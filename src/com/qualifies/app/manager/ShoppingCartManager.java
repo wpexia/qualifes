@@ -6,12 +6,11 @@ import android.os.Message;
 import android.util.Log;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.qualifies.app.config.Api;
 import com.qualifies.app.util.AsyncHttpCilentUtil;
 import org.apache.http.Header;
-import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ShoppingCartManager {
@@ -46,8 +45,6 @@ public class ShoppingCartManager {
         @Override
         public void run() {
             AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
-            PersistentCookieStore myCookieStore = new PersistentCookieStore(context);
-            client.setCookieStore(myCookieStore);
             RequestParams requestParams = new RequestParams();
             final Message msg = handler.obtainMessage();
             requestParams.put("token", token);
@@ -69,6 +66,47 @@ public class ShoppingCartManager {
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     Api.dealFailRes(msg);
                     handler.sendMessage(msg);
+                }
+            });
+        }
+    }
+
+
+    public void getShoppingCart(String token, Handler handler, Context context) {
+        Thread getShoppingCartThread = new Thread(new GetShoppingCartThread(token, handler, context));
+        getShoppingCartThread.start();
+    }
+
+    class GetShoppingCartThread implements Runnable {
+        private String token;
+        private Handler handler;
+        private Context context;
+
+        public GetShoppingCartThread(String token, Handler handler, Context context) {
+            this.context = context;
+            this.token = token;
+            this.handler = handler;
+        }
+
+        @Override
+        public void run() {
+            AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
+            final Message msg = handler.obtainMessage();
+            RequestParams params = new RequestParams();
+            params.put("token", token);
+            params.put("data[limit][m]", "0");
+            params.put("data[limit][n]", "100");
+            client.get(Api.url("get_cart"), params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Api.dealSuccessRes(response, msg);
+                    Log.e("get_cart", response.toString());
+                    try {
+                        msg.obj = response.getJSONObject("data").getJSONArray("data");
+                        handler.sendMessage(msg);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }

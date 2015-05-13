@@ -10,6 +10,8 @@ import com.qualifies.app.R;
 import com.qualifies.app.manager.ShoppingCartManager;
 import com.qualifies.app.uis.adapter.SpecListViewAdapter;
 import com.qualifies.app.util.AsyncHttpCilentUtil;
+import com.qualifies.app.util.ImageCacheHelper;
+import com.qualifies.app.util.OfflineCartDbHelper;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -98,14 +100,6 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
         accessServer();
     }
 
-    Handler handler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            spec_img.setImageBitmap((Bitmap) msg.obj);
-        }
-
-        ;
-    };
-
     private void accessServer() {
         RequestParams params = new RequestParams();
         params.put("data[goods_id]", goods_id);
@@ -125,7 +119,8 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
                     if (max_sale_number > 0) {
                         spec_count_num.setText(String.valueOf(max_sale_number));
                     }
-                    new MyThread(dataObject.getString("goods_img")).start();
+
+                    ImageCacheHelper.getImageCache().get(dataObject.getString("goods_img"), spec_img);
 
                     JSONObject attribute = dataObject.getJSONObject("attribute");
                     specArray = attribute.getJSONArray("spe");
@@ -146,23 +141,6 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
         });
     }
 
-    class MyThread extends Thread {
-        String imgURL;
-
-        public MyThread(String _imgURL) {
-            imgURL = _imgURL;
-        }
-
-        @Override
-        public void run() {
-            super.run();
-            Bitmap temp = ConnectionURL.getHttpBitmap(imgURL);
-            Message message = handler.obtainMessage();
-            message.obj = temp;
-            handler.sendMessage(message);
-        }
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -172,7 +150,7 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
             case R.id.spec_count_sub:
                 int numSub = Integer.parseInt(spec_count_num.getText().toString());
                 if (numSub == 1 || numSub == max_sale_number) {
-                    Toast.makeText(getApplicationContext(), "不能再少了哦", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "亲，不能再少了哦", Toast.LENGTH_SHORT).show();
                 } else {
                     spec_count_num.setText(String.valueOf(--numSub));
                 }
@@ -185,11 +163,16 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
                 break;
             case R.id.spec_addto_shoppingcart:
                 if (goodsAttrIDs() != null) {
-                    String[] goodsNum = {spec_count_num.getText().toString()};
-                    String[] goodsId = {String.valueOf(goods_id)};
-                    String[] goodsAttr = {goodsAttrIDs()};
-                    ShoppingCartManager manager = ShoppingCartManager.getInstance();
-                    manager.addShoppingCart(sp.getString("token", ""), goodsId, goodsAttr, goodsNum, addGoodsHandler, getApplicationContext());
+                    if (sp.contains("token")) {
+                        String[] goodsNum = {spec_count_num.getText().toString()};
+                        String[] goodsId = {String.valueOf(goods_id)};
+                        String[] goodsAttr = {goodsAttrIDs()};
+                        ShoppingCartManager manager = ShoppingCartManager.getInstance();
+                        manager.addShoppingCart(sp.getString("token", ""), goodsId, goodsAttr, goodsNum, addGoodsHandler, getApplicationContext());
+                    } else {
+                        OfflineCartDbHelper dbHelper = OfflineCartDbHelper.getInstance(getApplicationContext());
+                        dbHelper.insert(String.valueOf(goods_id), goodsAttrIDs(), spec_count_num.getText().toString());
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), "亲，请选择商品属性哦", Toast.LENGTH_SHORT).show();
                 }
@@ -203,8 +186,8 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
     Handler addGoodsHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            Toast.makeText(GoodSpecActivity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
             if (msg.what == 0) {
-                Toast.makeText(GoodSpecActivity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
                 GoodSpecActivity.this.finish();
             }
         }
@@ -213,6 +196,9 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
     private String goodsAttrIDs() {
         List<Integer> goodsAttrIDs = new ArrayList<Integer>();
         String result = "";
+        if (specArray == null) {
+            return result;
+        }
         for (int i = 0; i < specArray.length(); i++) {
             RelativeLayout layout = (RelativeLayout) spec_listView.getChildAt(i);
             GridView gridView = (GridView) layout.getChildAt(1);
@@ -238,7 +224,7 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
                 }
             }
         }
-        Log.e("goodsAttr", result);
+//        Log.e("goodsAttr", result);
         return result;
     }
 }

@@ -11,6 +11,8 @@ import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
+import cn.trinea.android.common.service.impl.ImageCache;
+import cn.trinea.android.common.util.CacheManager;
 import com.qualifies.app.R;
 import com.qualifies.app.manager.HomeManger;
 import com.qualifies.app.uis.GoodDetailActivity;
@@ -18,6 +20,7 @@ import com.qualifies.app.uis.HomeActivity;
 import com.qualifies.app.uis.adapter.HomeBottomAdapter;
 import com.qualifies.app.uis.adapter.HomeGridViewAdapter;
 import com.qualifies.app.util.AsyncImageLoader;
+import com.qualifies.app.util.ImageCacheHelper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,12 +55,19 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onStart() {
+        super.onStart();
+        initView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         initView();
     }
 
     private void initView() {
+
         editText = (EditText) getActivity().findViewById(R.id.input);
         editText.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -112,16 +122,17 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                         JSONObject obj = data.getJSONObject(i);
 //                        Log.e("obj", obj.toString());
                         ImageView image = new ImageView(getActivity());
-                        Drawable cachedImage = imageLoader.loadDrawable(obj.get("img").toString(), image,
-                                new AsyncImageLoader.ImageCallback() {
-                                    public void imageLoaded(Drawable imageDrawable,
-                                                            ImageView imageView, String imageUrl) {
-                                        imageView.setImageDrawable(imageDrawable);
-                                    }
-                                });
-                        if (cachedImage != null) {
-                            image.setImageDrawable(cachedImage);
-                        }
+//                        Drawable cachedImage = imageLoader.loadDrawable(obj.get("img").toString(), image,
+//                                new AsyncImageLoader.ImageCallback() {
+//                                    public void imageLoaded(Drawable imageDrawable,
+//                                                            ImageView imageView, String imageUrl) {
+//                                        imageView.setImageDrawable(imageDrawable);
+//                                    }
+//                                });
+//                        if (cachedImage != null) {
+//                            image.setImageDrawable(cachedImage);
+//                        }
+                        ImageCacheHelper.getImageSdCache().get(obj.get("img").toString(), image);
                         image.setScaleType(ImageView.ScaleType.FIT_XY);
                         viewFlipper.addView(image, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                     }
@@ -154,29 +165,29 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                         specialMiddleData = data;
                     }
                     JSONObject buttonL = data.getJSONObject(0);
-                    Drawable cachedImageL = imageLoader.loadDrawable(buttonL.get("img").toString(), imageButtonL,
-                            new AsyncImageLoader.ImageCallback() {
-                                public void imageLoaded(Drawable imageDrawable,
-                                                        ImageView imageView, String imageUrl) {
-                                    imageView.setImageDrawable(imageDrawable);
-                                }
-                            });
-                    if (cachedImageL != null) {
-                        imageButtonL.setImageDrawable(cachedImageL);
-                    }
-
+//                    Drawable cachedImageL = imageLoader.loadDrawable(buttonL.get("img").toString(), imageButtonL,
+//                            new AsyncImageLoader.ImageCallback() {
+//                                public void imageLoaded(Drawable imageDrawable,
+//                                                        ImageView imageView, String imageUrl) {
+//                                    imageView.setImageDrawable(imageDrawable);
+//                                }
+//                            });
+//                    if (cachedImageL != null) {
+//                        imageButtonL.setImageDrawable(cachedImageL);
+//                    }
+                    ImageCacheHelper.getImageSdCache().get(buttonL.get("img").toString(), imageButtonL);
                     JSONObject buttonR = data.getJSONObject(1);
-                    Drawable cachedImageR = imageLoader.loadDrawable(buttonR.get("img").toString(), imageButtonR,
-                            new AsyncImageLoader.ImageCallback() {
-                                public void imageLoaded(Drawable imageDrawable,
-                                                        ImageView imageView, String imageUrl) {
-                                    imageView.setImageDrawable(imageDrawable);
-                                }
-                            });
-                    if (cachedImageR != null) {
-                        imageButtonR.setImageDrawable(cachedImageR);
-                    }
-
+//                    Drawable cachedImageR = imageLoader.loadDrawable(buttonR.get("img").toString(), imageButtonR,
+//                            new AsyncImageLoader.ImageCallback() {
+//                                public void imageLoaded(Drawable imageDrawable,
+//                                                        ImageView imageView, String imageUrl) {
+//                                    imageView.setImageDrawable(imageDrawable);
+//                                }
+//                            });
+//                    if (cachedImageR != null) {
+//                        imageButtonR.setImageDrawable(cachedImageR);
+//                    }
+                    ImageCacheHelper.getImageSdCache().get(buttonR.get("img").toString(), imageButtonR);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (NullPointerException e) {

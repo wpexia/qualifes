@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.qualifies.app.R;
 import com.qualifies.app.util.AsyncImageLoader;
+import com.qualifies.app.util.ImageCacheHelper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,10 +70,11 @@ public class HomeGridViewAdapter extends BaseAdapter {
                                                 ImageView imageView, String imageUrl) {
                             imageView.setImageDrawable(imageDrawable);
                         }
-                    }, 4);
+                    }, 5);
             if (cachedImage != null) {
                 image.setImageDrawable(cachedImage);
             }
+//            ImageCacheHelper.getImageCache().get(good.get("goods_img").toString(), image);
         } catch (JSONException e) {
             e.printStackTrace();
         }

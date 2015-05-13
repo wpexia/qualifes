@@ -59,8 +59,6 @@ public class PositionManager {
         @Override
         public void run() {
             AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
-            PersistentCookieStore myCookieStore = new PersistentCookieStore(context);
-            client.setCookieStore(myCookieStore);
             final Message msg = handler.obtainMessage();
             RequestParams requestParams = new RequestParams();
             requestParams.put("token", token);
@@ -71,7 +69,7 @@ public class PositionManager {
             requestParams.put("data[city]", city);
             requestParams.put("data[address]", address);
             requestParams.put("data[district]", district);
-            Log.e("addAddressParams", requestParams.toString());
+//            Log.e("addAddressParams", requestParams.toString());
             if (!tel.trim().equals("")) {
                 requestParams.put("data[tel]", tel);
             }
@@ -82,7 +80,7 @@ public class PositionManager {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     Api.dealSuccessRes(response, msg);
-                    Log.e("addPosition", response.toString());
+//                    Log.e("addPosition", response.toString());
                     handler.sendMessage(msg);
                 }
 
@@ -115,8 +113,6 @@ public class PositionManager {
         @Override
         public void run() {
             AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
-            PersistentCookieStore myCookieStore = new PersistentCookieStore(context);
-            client.setCookieStore(myCookieStore);
             final Message msg = handler.obtainMessage();
             RequestParams requestParams = new RequestParams();
             requestParams.put("token", token);

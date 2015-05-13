@@ -1,8 +1,8 @@
 package com.qualifies.app.manager;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
+import android.os.*;
+import android.os.Process;
 import android.util.Log;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -35,6 +35,7 @@ public class HomeManger {
         String logo;
 
         public GetLogoThread(String logo, Handler handler, Context context) {
+            android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_DISPLAY);
             this.logo = logo;
             this.handler = handler;
             this.context = context;
@@ -43,8 +44,6 @@ public class HomeManger {
         @Override
         public void run() {
             AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
-            PersistentCookieStore myCookieStore = new PersistentCookieStore(context);
-            client.setCookieStore(myCookieStore);
             final Message msg = handler.obtainMessage();
             RequestParams requestParams = new RequestParams();
             requestParams.put("type", "activity");
@@ -56,7 +55,7 @@ public class HomeManger {
                     try {
                         Api.dealSuccessRes(response, msg);
                         msg.obj = response.getJSONArray("data");
-                        Log.e("get_visual", response.toString());
+//                        Log.e("get_visual", response.toString());
                         handler.sendMessage(msg);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -92,8 +91,6 @@ public class HomeManger {
         @Override
         public void run() {
             AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
-            PersistentCookieStore myCookieStore = new PersistentCookieStore(context);
-            client.setCookieStore(myCookieStore);
             final Message msg = handler.obtainMessage();
             RequestParams requestParams = new RequestParams();
             requestParams.put("type", "goods");

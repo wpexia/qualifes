@@ -40,8 +40,6 @@ public class SearchManager {
         @Override
         public void run() {
             AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
-            PersistentCookieStore myCookieStore = new PersistentCookieStore(context);
-            client.setCookieStore(myCookieStore);
             final Message msg = handler.obtainMessage();
             client.get(Api.url("get_hot"), new JsonHttpResponseHandler() {
                 @Override
