@@ -8,32 +8,27 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class OfflineCartDbHelper extends SQLiteOpenHelper {
 
-    private final static String DATABASE_NAME = "qualifies";
+    private final static String DATABASE_NAME = "qualifies_offline_cart";
     private final static int DATABASE_VERSION = 1;
     private final static String TABLE_NAME = "offline_cart";
     public final static String FIELD_ID = "_id";
     public final static String FIELD_ITEM1 = "goodsId";
     public final static String FIELD_ITEM2 = "goodsAttr";
     public final static String FIELD_ITEM3 = "goodsNum";
-    private static OfflineCartDbHelper inst;
-
-    public static OfflineCartDbHelper getInstance(Context context) {
-        if (inst == null) {
-            inst = new OfflineCartDbHelper(context);
-        }
-        return inst;
-    }
+    public final static String FIELD_ITEM4 = "goodAttrName";
 
     public OfflineCartDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String sql = "Create table " + TABLE_NAME + "(" + FIELD_ID + " integer primary key autoincrement,"
                 + FIELD_ITEM1 + " text,"
-                + FIELD_ITEM2 + "text,"
-                + FIELD_ITEM3 + "text );";
+                + FIELD_ITEM2 + " text,"
+                + FIELD_ITEM3 + " text,"
+                + FIELD_ITEM4 + " text );";
         db.execSQL(sql);
     }
 
@@ -50,12 +45,13 @@ public class OfflineCartDbHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public long insert(String goodsId, String goodsAttr, String goodNum) {
+    public long insert(String goodsId, String goodsAttr, String goodNum, String goodsAttrName) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(FIELD_ITEM1, goodsId);
         cv.put(FIELD_ITEM2, goodsAttr);
         cv.put(FIELD_ITEM3, goodNum);
+        cv.put(FIELD_ITEM4, goodsAttrName);
         long row = db.insert(TABLE_NAME, null, cv);
         return row;
     }
@@ -73,7 +69,7 @@ public class OfflineCartDbHelper extends SQLiteOpenHelper {
         db.execSQL(sqlString);
     }
 
-    public void update(int id, String goodsId, String goodsAttr, String goodNum) {
+    public void update(int id, String goodsId, String goodsAttr, String goodNum, String goodsAttrName) {
         SQLiteDatabase db = this.getWritableDatabase();
         String where = FIELD_ID + "=?";
         String[] whereValue = {Integer.toString(id)};
@@ -81,6 +77,7 @@ public class OfflineCartDbHelper extends SQLiteOpenHelper {
         cv.put(FIELD_ITEM1, goodsId);
         cv.put(FIELD_ITEM2, goodsAttr);
         cv.put(FIELD_ITEM3, goodNum);
+        cv.put(FIELD_ITEM4, goodsAttrName);
         db.update(TABLE_NAME, cv, where, whereValue);
     }
 

@@ -18,6 +18,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private JSONArray mData;
+    public boolean flag = false;
 
     public ShoppingCartAdapter(Context context, JSONArray data) {
         this.context = context;
@@ -52,6 +53,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
                 obj.remove("goods_number");
                 obj.put("goods_number", obj.getString("goods_inventory"));
             }
+            flag = false;
             number.setText(obj.getString("goods_number"));
             number.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
@@ -170,6 +172,9 @@ public class ShoppingCartAdapter extends BaseAdapter {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     try {
+                        flag = true;
+                        obj.remove("checked");
+                        obj.put("checked", isChecked);
                         double money = obj.getDouble("goods_price") * Integer.parseInt(number.getText().toString());
                         TextView total = (TextView) ((HomeActivity) parent.getContext()).findViewById(R.id.total);
                         if (!isChecked) {
@@ -181,8 +186,12 @@ public class ShoppingCartAdapter extends BaseAdapter {
                             totalMoney -= money;
                             total.setText(String.valueOf(totalMoney));
                         } else {
+                            CheckBox totalCheck = (CheckBox) ((HomeActivity) parent.getContext()).findViewById(R.id.totalcheckBox);
                             double totalMoney = Double.parseDouble(total.getText().toString());
                             totalMoney += money;
+                            if (allChecked()) {
+                                totalCheck.setChecked(true);
+                            }
                             total.setText(String.valueOf(totalMoney));
                         }
                     } catch (JSONException e) {
@@ -220,6 +229,18 @@ public class ShoppingCartAdapter extends BaseAdapter {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    private boolean allChecked() {
+        try {
+            for (int i = 0; i < mData.length(); i++) {
+                JSONObject obj = mData.getJSONObject(i);
+                if (!obj.getBoolean("checked")) return false;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     public void selectNone() {

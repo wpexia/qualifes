@@ -170,8 +170,10 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
                         ShoppingCartManager manager = ShoppingCartManager.getInstance();
                         manager.addShoppingCart(sp.getString("token", ""), goodsId, goodsAttr, goodsNum, addGoodsHandler, getApplicationContext());
                     } else {
-                        OfflineCartDbHelper dbHelper = OfflineCartDbHelper.getInstance(getApplicationContext());
-                        dbHelper.insert(String.valueOf(goods_id), goodsAttrIDs(), spec_count_num.getText().toString());
+                        OfflineCartDbHelper dbHelper = new OfflineCartDbHelper(getApplicationContext());
+                        dbHelper.insert(String.valueOf(goods_id), goodsAttrIDs(), spec_count_num.getText().toString(), goodsAttrNames());
+                        Toast.makeText(GoodSpecActivity.this, "添加离线购物车成功", Toast.LENGTH_SHORT).show();
+                        GoodSpecActivity.this.finish();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "亲，请选择商品属性哦", Toast.LENGTH_SHORT).show();
@@ -193,11 +195,40 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
         }
     };
 
-    private String goodsAttrIDs() {
-        List<Integer> goodsAttrIDs = new ArrayList<Integer>();
+
+    private String goodsAttrNames() {
         String result = "";
         if (specArray == null) {
-            return result;
+            return "null";
+        }
+        for (int i = 0; i < specArray.length(); i++) {
+            RelativeLayout layout = (RelativeLayout) spec_listView.getChildAt(i);
+            GridView gridView = (GridView) layout.getChildAt(1);
+            int select = -1;
+            for (int j = 0; j < gridView.getChildCount(); j++) {
+                if (((RelativeLayout) gridView.getChildAt(j)).getChildAt(0).isSelected())
+                    select = j;
+            }
+            if (select == -1)
+                return null;
+            else {
+                String id = null;
+                try {
+                    id = specArray.getJSONObject(i).getString("name") + specArray.getJSONObject(i).getJSONArray("values").getJSONObject(select).getString("label");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                result += id;
+            }
+        }
+//        Log.e("goodsAttr", result);
+        return result;
+    }
+
+    private String goodsAttrIDs() {
+        String result = "";
+        if (specArray == null) {
+            return "null";
         }
         for (int i = 0; i < specArray.length(); i++) {
             RelativeLayout layout = (RelativeLayout) spec_listView.getChildAt(i);
@@ -216,7 +247,6 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                goodsAttrIDs.add(Integer.valueOf(id));
                 if (result.equals("")) {
                     result = id;
                 } else {

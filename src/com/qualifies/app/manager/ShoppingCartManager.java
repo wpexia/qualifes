@@ -72,18 +72,16 @@ public class ShoppingCartManager {
     }
 
 
-    public void getShoppingCart(String token, Handler handler, Context context) {
-        Thread getShoppingCartThread = new Thread(new GetShoppingCartThread(token, handler, context));
+    public void getShoppingCart(String token, Handler handler) {
+        Thread getShoppingCartThread = new Thread(new GetShoppingCartThread(token, handler));
         getShoppingCartThread.start();
     }
 
     class GetShoppingCartThread implements Runnable {
         private String token;
         private Handler handler;
-        private Context context;
 
-        public GetShoppingCartThread(String token, Handler handler, Context context) {
-            this.context = context;
+        public GetShoppingCartThread(String token, Handler handler) {
             this.token = token;
             this.handler = handler;
         }
@@ -107,6 +105,50 @@ public class ShoppingCartManager {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }
+            });
+        }
+    }
+
+    public void getOfflineCart(String goodsId, Handler handler) {
+        Thread getOfflineCartThread = new Thread(new GetOfflineCartThread(goodsId, handler));
+        getOfflineCartThread.start();
+    }
+
+    class GetOfflineCartThread implements Runnable {
+        private String goodsId;
+        private Handler handler;
+
+        public GetOfflineCartThread(String goodsId, Handler handler) {
+            this.goodsId = goodsId;
+            this.handler = handler;
+        }
+
+        @Override
+        public void run() {
+            AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
+            final Message msg = handler.obtainMessage();
+            RequestParams params = new RequestParams();
+            params.put("goods[0][goods_id]", goodsId);
+            client.post(Api.url("get_off_cart"), params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    try {
+                        Api.dealSuccessRes(response, msg);
+                        Log.e("get_off_cart", response.toString());
+                        msg.obj = response.getJSONObject("data").getJSONArray("data");
+                        handler.sendMessage(msg);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    Api.dealFailRes(msg);
+                    handler.sendMessage(msg);
                 }
             });
         }

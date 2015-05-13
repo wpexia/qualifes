@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class SearchRecordDbHelper extends SQLiteOpenHelper {
 
-    private final static String DATABASE_NAME = "qualifies";
+    private final static String DATABASE_NAME = "qualifies_search_history";
     private final static int DATABASE_VERSION = 1;
     private final static String TABLE_NAME = "search_history";
     public final static String FIELD_ID = "_id";
@@ -17,6 +17,7 @@ public class SearchRecordDbHelper extends SQLiteOpenHelper {
 
     public SearchRecordDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
