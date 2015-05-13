@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/item_stroke_gray">
+    <TextView
+            android:id="@+id/spec_model_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#6e6e6e"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="18dp"/>
+    <com.qualifies.app.uis.view.GoodSpecGridView
+            android:id="@+id/spec_model_gridView"
+            android:layout_below="@+id/spec_model_name"
+            android:layout_marginTop="14dp"
+            android:columnWidth="75dp"
+            android:layout_marginBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_alignLeft="@+id/spec_model_name"
+            android:scrollbarSize="0dp"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="15dp"
+            android:gravity="left"
+            android:layout_height="wrap_content">
+    </com.qualifies.app.uis.view.GoodSpecGridView>
+</RelativeLayout>

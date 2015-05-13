@@ -2,19 +2,18 @@ package com.qualifies.app.uis.fragment;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
 import com.qualifies.app.R;
 import com.qualifies.app.manager.HomeManger;
+import com.qualifies.app.uis.GoodDetailActivity;
 import com.qualifies.app.uis.HomeActivity;
 import com.qualifies.app.uis.adapter.HomeBottomAdapter;
 import com.qualifies.app.uis.adapter.HomeGridViewAdapter;
@@ -23,22 +22,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener, GestureDetector.OnGestureListener, View.OnTouchListener {
 
-    JSONArray viewFlipperData;
-    JSONArray specialMiddleData;
-    JSONArray goodsRedData;
-    JSONArray goodsBlueData;
-    JSONArray goodsBottomData;
+    private JSONArray viewFlipperData;
+    private JSONArray specialMiddleData;
+    private JSONArray goodsRedData;
+    private JSONArray goodsBlueData;
+    private JSONArray goodsBottomData;
 
-    EditText editText;
-    ScrollView scrollView;
-    ViewFlipper viewFlipper;
-    ImageView imageButtonL;
-    ImageView imageButtonR;
-    GridView gridView1;
-    GridView gridView2;
-    ListView listView;
+    private EditText editText;
+    private ScrollView scrollView;
+    private ViewFlipper viewFlipper;
+    private ImageView imageButtonL;
+    private ImageView imageButtonR;
+    private GridView gridView1;
+    private GridView gridView2;
+    private ListView listView;
+
+    private GestureDetector gestureDetector = null;
+
 
     private AsyncImageLoader imageLoader = new AsyncImageLoader();
 
@@ -68,6 +70,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
         viewFlipper = (ViewFlipper) getActivity().findViewById(R.id.viewFlipper);
 
+
         imageButtonL = (ImageView) getActivity().findViewById(R.id.secondPic);
         imageButtonL.setOnClickListener(this);
         imageButtonR = (ImageView) getActivity().findViewById(R.id.thirdPic);
@@ -83,6 +86,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
         editText = (EditText) getActivity().findViewById(R.id.input);
         editText.setOnTouchListener((HomeActivity) getActivity());
+
+        gestureDetector = new GestureDetector(getActivity(), this);
+        viewFlipper.setOnTouchListener(this);
 
         HomeManger homeManger = HomeManger.getInstance();
         homeManger.getLogo("home_top_slide", viewFlipperHandler, getActivity());
@@ -249,11 +255,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                     listView.setDividerHeight(1);
                     ViewGroup.LayoutParams params = listView.getLayoutParams();
                     int totalHeight = 0;
-                    for (int i = 0; i < adapter.getCount(); i++) {
-                        View listItem = adapter.getView(i, null, listView);
-                        listItem.measure(0, 0);
-                        totalHeight += listItem.getMeasuredHeight();
-                    }
+                    View listItem = adapter.getView(0, null, listView);
+                    listItem.measure(0, 0);
+                    totalHeight += listItem.getMeasuredHeight() * adapter.getCount();
                     params.height = totalHeight + listView.getDividerHeight() * (data.length() - 1);
                     listView.setLayoutParams(params);
                 } catch (NullPointerException e) {
@@ -263,11 +267,112 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         }
     };
 
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        final int id = v.getId();
+        switch (id) {
+            case R.id.viewFlipper: {
+                viewFlipper.stopFlipping();                // 点击事件后，停止自动播放
+                viewFlipper.setAutoStart(false);
+                return gestureDetector.onTouchEvent(event);
+            }
+        }
+        return false;
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(getActivity(), GoodDetailActivity.class);
+        Bundle bundle = new Bundle();
+
+        switch (parent.getId()) {
+            case R.id.gridView1: {
+                try {
+                    JSONObject obj = goodsRedData.getJSONObject(position);
+                    bundle.putInt("goods_id", obj.getInt("goods_id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            break;
+            case R.id.gridView2: {
+                try {
+                    JSONObject obj = goodsBlueData.getJSONObject(position);
+                    bundle.putInt("goods_id", obj.getInt("goods_id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            break;
+            case R.id.bottom: {
+                try {
+                    JSONObject obj = goodsBottomData.getJSONObject(position);
+                    bundle.putInt("goods_id", obj.getInt("goods_id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            break;
+            default:
+                break;
+        }
+
+        intent.putExtra("goods_id", bundle);
+        startActivity(intent);
+    }
+
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
 
     }
 
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        if (e2.getX() - e1.getX() > 500) {             // 从左向右滑动（左进右出）
+            viewFlipper.stopFlipping();                // 点击事件后，停止自动播放
+            viewFlipper.setAutoStart(false);
+            Animation rInAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.push_right_in);    // 向右滑动左侧进入的渐变效果（alpha  0.1 -> 1.0）
+            Animation rOutAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.push_right_out); // 向右滑动右侧滑出的渐变效果（alpha 1.0  -> 0.1）
+
+            viewFlipper.setInAnimation(rInAnim);
+            viewFlipper.setOutAnimation(rOutAnim);
+            viewFlipper.showPrevious();
+            return true;
+        } else if (e2.getX() - e1.getX() < -500) {         // 从右向左滑动（右进左出）
+            viewFlipper.stopFlipping();                // 点击事件后，停止自动播放
+            viewFlipper.setAutoStart(false);
+            Animation lInAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.push_left_in);        // 向左滑动左侧进入的渐变效果（alpha 0.1  -> 1.0）
+            Animation lOutAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.push_left_out);    // 向左滑动右侧滑出的渐变效果（alpha 1.0  -> 0.1）
+
+            viewFlipper.setInAnimation(lInAnim);
+            viewFlipper.setOutAnimation(lOutAnim);
+            viewFlipper.showNext();
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public void onClick(View v) {

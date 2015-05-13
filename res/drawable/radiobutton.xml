@@ -5,8 +5,8 @@
             android:state_enabled="true"
             >
         <layer-list>
-            <item android:drawable="@drawable/circle"/>
             <item android:drawable="@drawable/circle_selected_red"/>
+            <item android:drawable="@drawable/circle"/>
         </layer-list>
     </item>
     <item

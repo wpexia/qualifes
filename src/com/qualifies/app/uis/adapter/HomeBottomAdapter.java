@@ -47,7 +47,8 @@ public class HomeBottomAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null) {
+        Log.e("Bottom", String.valueOf(position));
+        if (convertView == null) {
             convertView = mInflater.inflate(R.layout.home_page_list_item, null);
         }
         try {
@@ -55,7 +56,7 @@ public class HomeBottomAdapter extends BaseAdapter {
             ((TextView) convertView.findViewById(R.id.info_goods_name)).setText(good.getString("goods_name"));
             BigDecimal shopPrice = new BigDecimal(good.getString("shop_price"));
             BigDecimal marketPrice = new BigDecimal(good.getString("market_price"));
-            BigDecimal result =shopPrice.divide(marketPrice, new MathContext(2)).multiply(new BigDecimal(10));
+            BigDecimal result = shopPrice.divide(marketPrice, new MathContext(2)).multiply(new BigDecimal(10));
             ((TextView) convertView.findViewById(R.id.info_shop_price)).setText("￥" + shopPrice);
             ((TextView) convertView.findViewById(R.id.info_market_price)).setText("￥" + marketPrice);
             ((TextView) convertView.findViewById(R.id.info_discount)).setText(result + "折");

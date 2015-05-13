@@ -56,7 +56,7 @@ public class HomeManger {
                     try {
                         Api.dealSuccessRes(response, msg);
                         msg.obj = response.getJSONArray("data");
-//                        Log.e("get_visual", response.toString());
+                        Log.e("get_visual", response.toString());
                         handler.sendMessage(msg);
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import com.qualifies.app.R;
-import com.qualifies.app.uis.fragment.PositionChoseFragment;
 import com.qualifies.app.uis.fragment.PositionNullFragment;
 import com.qualifies.app.uis.fragment.PositionOKFragment;
 

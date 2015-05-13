@@ -25,7 +25,9 @@
                 android:launchMode="singleTask"
                 android:label="@string/protocol_name">
         </activity>
-        <activity android:name=".uis.HomeActivity" android:launchMode="singleTask" android:label="品制生活">
+        <activity android:name=".uis.HomeActivity"
+                  android:windowSoftInputMode="adjustPan"
+                  android:launchMode="singleTask" android:label="品制生活">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -44,6 +46,8 @@
                   android:windowSoftInputMode="stateHidden"
                 />
         <activity android:name=".uis.SearchResultActivity"/>
+        <activity android:name=".uis.GoodDetailActivity"/>
+        <activity android:name=".uis.GoodSpecActivity"/>
     </application>
 
 </manifest>

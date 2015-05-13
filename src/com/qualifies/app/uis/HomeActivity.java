@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.qualifies.app.R;
 import com.qualifies.app.uis.fragment.HomeFragment;
 import com.qualifies.app.uis.fragment.SearchFragment;
+import com.qualifies.app.uis.fragment.ShoppingCartFragment;
 import com.qualifies.app.uis.personal.PersonalFragment;
 import com.qualifies.app.uis.personal.SettingActivity;
 import com.qualifies.app.util.PlistHelper;
@@ -23,6 +24,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
 
     private HomeFragment homeFragment;
     private SearchFragment searchFragment;
+    private ShoppingCartFragment shoppingCartFragment;
     private PersonalFragment personalFragment;
 
 
@@ -40,6 +42,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         changeFragment();
         findViewById(R.id.home).setOnClickListener(this);
         findViewById(R.id.personal).setOnClickListener(this);
+        findViewById(R.id.shoppingcart).setOnClickListener(this);
     }
 
 
@@ -80,6 +83,10 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                 startActivity(intent);
             }
             break;
+            case R.id.shoppingcart: {
+                fragmentId = 2;
+                changeFragment();
+            }
         }
     }
 
@@ -95,6 +102,16 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                     transaction.show(homeFragment);
                 }
                 tab.setVisibility(View.VISIBLE);
+            }
+            break;
+            case 2: {
+                if (shoppingCartFragment == null) {
+                    shoppingCartFragment = new ShoppingCartFragment();
+                    transaction.add(R.id.main, shoppingCartFragment);
+                } else {
+                    transaction.show(shoppingCartFragment);
+                    tab.setVisibility(View.VISIBLE);
+                }
             }
             break;
             case 3: {
@@ -131,6 +148,9 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         if (personalFragment != null) {
             transaction.hide(personalFragment);
         }
+        if (shoppingCartFragment != null) {
+            transaction.hide(shoppingCartFragment);
+        }
     }
 
     @Override
@@ -146,4 +166,5 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
             }
         }
     }
+
 }

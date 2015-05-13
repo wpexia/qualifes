@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_height="120dp">
+    <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:id="@+id/checkBox"
+            android:button="@drawable/checkbutton"
+            />
+    <ImageView
+            android:src="@drawable/img_empty"
+            android:layout_width="60dp" android:layout_height="60dp"
+               android:layout_toRightOf="@+id/checkBox"
+               android:layout_marginLeft="15dp"
+               android:id="@+id/image"
+               android:layout_marginTop="15dp"
+            />
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:lines="2"
+              android:id="@id/name"
+              android:textColor="#6e6e6e"
+              android:text="sdasdsada"
+              android:layout_toRightOf="@+id/image"
+              android:layout_marginLeft="15dp"
+              android:layout_marginRight="40dp"
+              android:layout_marginTop="15dp"
+            />
+    <Button android:layout_width="25dp" android:layout_height="25dp"
+            android:text="-"
+            android:id="@+id/minus"
+            android:background="#bebebe"
+            android:textColor="#6e6e6e"
+            android:layout_alignLeft="@id/name"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            />
+    <EditText android:layout_width="48dp" android:layout_height="25dp"
+              android:layout_toRightOf="@+id/minus"
+              android:id="@+id/number"
+              android:text="1"
+              android:gravity="center"
+              android:lines="1"
+              android:inputType="phone"
+              android:layout_alignBottom="@+id/minus"
+              android:textColor="#6e6e6e"
+              android:background="@drawable/item_stroke"
+            />
+    <Button android:layout_width="25dp" android:layout_height="25dp"
+            android:text="+"
+            android:id="@+id/add"
+            android:background="#bebebe"
+            android:textColor="#6e6e6e"
+            android:layout_toRightOf="@+id/number"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            />
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:layout_alignLeft="@+id/name"
+              android:textColor="#6e6e6e"
+              android:text="sdadsa"
+              android:layout_above="@+id/minus"
+              android:layout_marginBottom="13dp"
+            />
+    <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/icon_in"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:id="@+id/icon_in" android:layout_centerVertical="true" android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+    <View android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="#dedede"
+          android:layout_alignParentBottom="true"
+            />
+</RelativeLayout>
