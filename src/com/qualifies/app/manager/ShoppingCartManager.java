@@ -98,7 +98,7 @@ public class ShoppingCartManager {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     Api.dealSuccessRes(response, msg);
-                    Log.e("get_cart", response.toString());
+//                    Log.e("get_cart", response.toString());
                     try {
                         msg.obj = response.getJSONObject("data").getJSONArray("data");
                         handler.sendMessage(msg);

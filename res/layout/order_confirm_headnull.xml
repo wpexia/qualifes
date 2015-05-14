@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:background="@drawable/xustork"
+                android:layout_width="match_parent"
+                android:minHeight="81dp"
+                android:id="@+id/chooseposition"
+                android:layout_height="69dp">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/settingRed"
+            android:text="请先设置收货地址"
+            android:id="@+id/textView14" android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/add"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView7" android:layout_centerVertical="true" android:layout_toLeftOf="@+id/textView14"
+            android:layout_toStartOf="@+id/textView14"/>
+
+</RelativeLayout>

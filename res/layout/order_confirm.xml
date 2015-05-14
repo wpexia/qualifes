@@ -69,8 +69,8 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="节假日工作日均可"
                     android:textColor="#6e6e6e"
+                    android:id="@+id/timeContent"
                     android:textSize="16sp" android:layout_centerVertical="true"
                     android:layout_marginLeft="100dp"/>
             <TextView
@@ -121,7 +121,7 @@
                     android:textColor="#6e6e6e"
                     android:textSize="12sp" android:layout_alignBottom="@id/sunfeng"
                     android:layout_toRightOf="@id/sunfeng"/>
-            <Button
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="查看价目"
@@ -146,7 +146,7 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="配送方式"
+                    android:text="支付方式"
                     android:textColor="#6e6e6e"
                     android:textSize="16sp" android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"/>
@@ -154,15 +154,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/paylogo"
-                    android:src="@drawable/pay_wechat"
                     android:textColor="#6e6e6e"
                     android:textSize="16sp" android:layout_centerVertical="true"
                     android:layout_marginLeft="100dp"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="微信支付"
                     android:textColor="#6e6e6e"
+                    android:id="@+id/paycontent"
                     android:layout_marginLeft="8dp"
                     android:textSize="16sp" android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/paylogo"/>
@@ -198,6 +197,15 @@
                     android:textColor="#6e6e6e"
                     android:textSize="16sp" android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/havered"
+                    android:text="有可用红包"
+                    android:visibility="invisible"
+                    android:textColor="#e3223f"
+                    android:textSize="16sp" android:layout_centerVertical="true"
+                    android:layout_marginLeft="100dp"/>
             <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -228,41 +236,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/jifenpay"
-                    android:text="3500"
-                    android:textColor="#e3223f"
-                    android:textSize="16sp" android:layout_centerVertical="true"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
+                    android:text="不可用"
+                    android:background="#e3223f"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" android:layout_centerVertical="true"
                     android:layout_marginLeft="100dp"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/point"
-                    android:text="分"
-                    android:textColor="#6e6e6e"
-                    android:textSize="16sp" android:layout_alignBottom="@id/jifenpay"
-                    android:layout_toRightOf="@id/jifenpay"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/dikoufront"
-                    android:text="（可抵扣"
-                    android:textColor="#6e6e6e"
-                    android:textSize="12sp" android:layout_alignBottom="@id/point"
-                    android:layout_toRightOf="@id/point"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3.5"
-                    android:id="@+id/dikou"
-                    android:textColor="#e3223f"
-                    android:textSize="12sp" android:layout_alignBottom="@id/dikoufront"
-                    android:layout_toRightOf="@id/dikoufront"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="元）"
-                    android:textColor="#6e6e6e"
-                    android:textSize="12sp" android:layout_alignBottom="@id/dikou"
-                    android:layout_toRightOf="@id/dikou"/>
             <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -271,7 +251,7 @@
                     android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
         </RelativeLayout>
     </LinearLayout>
-    <ListView android:layout_width="match_parent" android:layout_height="wrap_content"
+    <ListView android:layout_marginTop="19dp" android:layout_width="match_parent" android:layout_height="wrap_content"
               android:layout_below="@id/third"/>
     <RelativeLayout
             android:orientation="vertical"
@@ -298,11 +278,12 @@
                 android:background="@color/white"
                 >
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="￥10000.00"
+                      android:id="@+id/total"
+                      android:text=""
                       android:layout_marginLeft="15dp"
                       android:textColor="@color/settingRed"
                       android:textSize="18sp"
-                    android:layout_centerVertical="true"
+                      android:layout_centerVertical="true"
                     />
             <Button android:layout_width="136dp" android:layout_height="fill_parent"
                     android:layout_alignParentRight="true"

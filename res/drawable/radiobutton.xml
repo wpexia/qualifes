@@ -3,12 +3,8 @@
     <item
             android:state_checked="true"
             android:state_enabled="true"
-            >
-        <layer-list>
-            <item android:drawable="@drawable/circle_selected_red"/>
-            <item android:drawable="@drawable/circle"/>
-        </layer-list>
-    </item>
+            android:drawable="@drawable/radiochecked"
+            />
     <item
             android:state_checked="false"
             android:state_enabled="true"

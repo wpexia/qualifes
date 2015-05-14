@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@color/f4f4f4"
+                android:minHeight="80dp">
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:layout_height="fill_parent">
+        <View
+                android:layout_width="4dp"
+                android:id="@+id/left"
+                android:layout_height="fill_parent"
+                android:background="#e3223f"/>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="fill_parent">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="#e3223f"
+                    android:textSize="18sp"
+                    android:layout_marginTop="16dp"
+                    android:paddingLeft="13dp"
+                    android:id="@+id/rmb" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/money"
+                    android:paddingTop="5dp"
+                    android:textSize="30sp"
+                    android:textColor="#e3223f"
+                    android:layout_alignBottom="@+id/rmb"
+                    android:layout_toRightOf="@+id/rmb"
+                    />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/where"
+                      android:textSize="10sp"
+                      android:textColor="#6e6e6e"
+                      android:layout_below="@+id/rmb"
+                      android:layout_alignParentLeft="true"
+                      android:layout_alignParentStart="true"
+                      android:paddingLeft="13dp"
+                      android:layout_marginTop="12dp"
+                    />
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="线上红包"
+                    android:id="@+id/type"
+                    android:layout_marginTop="25dp"
+                    android:textColor="#6e6e6e"
+                    android:textSize="14sp"
+                    android:layout_marginRight="16dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/radio"
+                    />
+            <TextView android:layout_width="wrap_content"
+                      android:id="@+id/deadline"
+                      android:layout_height="wrap_content"
+                      android:layout_below="@+id/type"
+                      android:layout_marginTop="12dp"
+                      android:textSize="10sp"
+                      android:textColor="#6e6e6e"
+                      android:layout_alignRight="@+id/type"
+                    />
+            <RadioButton
+                    android:id="@+id/radio"
+                    android:paddingRight="13dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:button="@drawable/radiobutton"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

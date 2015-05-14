@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/f4f4f4"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:background="#00aaff"
+            >
+
+        <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="15dp"
+                android:background="@null"
+                android:src="@drawable/icon_back"/>
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="收货时间"
+                android:gravity="center_horizontal"
+                android:textColor="#ffffff"
+                android:textSize="18sp" android:id="@+id/title">
+        </TextView>
+    </RelativeLayout>
+    <RelativeLayout
+            android:id="@+id/time1"
+            android:background="@color/white" android:layout_width="match_parent" android:layout_height="50dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="节假日工作日均可"
+                android:textColor="#6e6e6e"
+                android:textSize="16sp"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/textView24"
+                android:layout_centerVertical="true" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/icon_right"
+                android:visibility="invisible"
+                android:id="@+id/timechoose1" android:layout_centerVertical="true" android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"/>
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+              android:background="#dedede"
+              android:layout_marginLeft="15dp"
+              android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+            android:id="@+id/time2"
+            android:background="@color/white" android:layout_width="match_parent" android:layout_height="50dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="仅工作日"
+                android:textColor="#6e6e6e"
+                android:textSize="16sp"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/textView25"
+                android:layout_centerVertical="true" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/icon_right"
+                android:visibility="invisible"
+                android:id="@+id/timechoose2" android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"/>
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+              android:background="#dedede"
+              android:layout_marginLeft="15dp"
+              android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+            android:id="@+id/time3"
+            android:background="@color/white" android:layout_width="match_parent" android:layout_height="50dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="仅节假日"
+                android:textColor="#6e6e6e"
+                android:textSize="16sp"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/textView26"
+                android:layout_centerVertical="true" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/icon_right"
+                android:visibility="invisible"
+                android:id="@+id/timechoose3" android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"/>
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+              android:background="#dedede"
+              android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+</LinearLayout>

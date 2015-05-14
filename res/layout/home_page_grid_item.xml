@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:minHeight="200px"
+    android:minHeight="90dp"
     android:background="@drawable/item_stroke" android:layout_height="match_parent">
     
     <ImageView 
         android:id="@+id/image"
         android:layout_width="144px"
         android:layout_height="140px"
+        android:scaleType="fitXY"
         android:layout_marginTop="10px"
         android:layout_centerHorizontal="true"/>
 	<TextView 

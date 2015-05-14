@@ -73,7 +73,7 @@ public class PositionManager {
             if (!tel.trim().equals("")) {
                 requestParams.put("data[tel]", tel);
             }
-            if(!addressId.trim().equals("")) {
+            if (!addressId.trim().equals("")) {
                 requestParams.put("data[address_id]", addressId);
             }
             client.post(Api.url("add_address"), requestParams, new JsonHttpResponseHandler() {
@@ -121,6 +121,7 @@ public class PositionManager {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     try {
                         Api.dealSuccessRes(response, msg);
+                        Log.e("get_address", response.toString());
                         msg.obj = response.getJSONArray("data");
                         handler.sendMessage(msg);
                     } catch (JSONException e) {

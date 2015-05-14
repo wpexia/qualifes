@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/f4f4f4"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="48sp"
+            android:background="#00aaff"
+            >
+        <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="15dp"
+                android:background="@null"
+                android:src="@drawable/icon_back"/>
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="支付方式"
+                android:gravity="center_horizontal"
+                android:textColor="#ffffff"
+                android:textSize="18sp" android:id="@+id/title">
+        </TextView>
+    </RelativeLayout>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请选择支付方式:"
+            android:textSize="16sp"
+            android:textColor="#6e6e6e"
+            android:paddingTop="50dp"
+            android:paddingLeft="15dp"
+            android:paddingBottom="12dp"
+            android:id="@+id/textView27"/>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:id="@+id/pay1"
+                    android:background="@drawable/payfunction"
+                    android:layout_height="50dp">
+
+        <ImageView
+                android:src="@drawable/pay_zfb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView12"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/imageView12"
+                  android:textSize="16sp"
+                  android:textColor="#6e6e6e"
+                  android:layout_marginLeft="15dp"
+                  android:layout_centerVertical="true"
+                android:text="支付宝"
+                />
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="#dedede"
+              android:layout_alignParentBottom="true"
+                />
+    </RelativeLayout>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:id="@+id/pay2"
+                    android:background="@drawable/payfunction"
+                    android:layout_height="50dp">
+
+        <ImageView
+                android:src="@drawable/pay_wechat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView13"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_toRightOf="@id/imageView13"
+                  android:textSize="16sp"
+                  android:textColor="#6e6e6e"
+                  android:layout_marginLeft="15dp"
+                  android:layout_centerVertical="true"
+                  android:text="微信支付"
+                />
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+              android:background="#dedede"
+              android:layout_alignParentBottom="true"
+                />
+    </RelativeLayout>
+</LinearLayout>
