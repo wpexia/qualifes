@@ -42,7 +42,17 @@ public class OrderConfirmOkFragment extends Fragment {
     private void refresh() {
         try {
             ((TextView) mView.findViewById(R.id.name)).setText(position.getString("consignee"));
-            String positionStr = position.getString("province_name") + "省" + position.getString("city_name") + "市" + position.getString("district_name") + position.getString("address");
+            String positionStr = "";
+            if (position.has("province_name")) {
+                positionStr += position.getString("province_name");
+            }
+            if (position.has("city_name")) {
+                positionStr += position.getString("city_name");
+            }
+            if (position.has("district_name")) {
+                positionStr += position.getString("district_name");
+            }
+            positionStr += position.getString("address");
             if (positionStr.length() > 21) {
                 positionStr = positionStr.substring(0, 20) + "…";
             }

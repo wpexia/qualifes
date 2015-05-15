@@ -1,15 +1,24 @@
 package com.qualifies.app.config;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Message;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Api {
 
+    private static Context mContext;
+
     private static String url = "http://www.qualifes.com:80/app_api/v_1.03/api.php?service=";
 
     public static String url(String service) {
         return url + service;
+    }
+
+    public static void setContext(Context context) {
+        mContext = context;
     }
 
     public static void dealSuccessRes(JSONObject response, Message msg) {
@@ -18,6 +27,10 @@ public class Api {
             msg.obj = "连接服务器失败";
         } else {
             try {
+                if (response.getInt("status") == 401) {
+                    SharedPreferences sp = mContext.getSharedPreferences("user", Activity.MODE_PRIVATE);
+                    sp.edit().remove("token").apply();
+                }
                 if (response.getInt("status") < 200 || response.getInt("status") >= 300)
                     msg.what = 1;
                 else

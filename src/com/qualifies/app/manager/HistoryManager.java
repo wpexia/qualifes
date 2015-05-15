@@ -3,6 +3,7 @@ package com.qualifies.app.manager;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.PersistentCookieStore;
@@ -15,7 +16,6 @@ import org.json.JSONObject;
 public class HistoryManager {
     private Handler handler;
     private String token;
-    private Context context;
     private String id;
     private int start;
 
@@ -28,7 +28,6 @@ public class HistoryManager {
     public void getHistory(String token, Handler handler, Context context, int start) {
         this.token = token;
         this.handler = handler;
-        this.context = context;
         this.start = start;
         Thread historyThread = new Thread(new GetHistoryThread());
         historyThread.start();
@@ -50,7 +49,7 @@ public class HistoryManager {
                     super.onSuccess(statusCode, headers, response);
                     Api.dealSuccessRes(response, msg);
                     msg.obj = response;
-//                    Log.e("history", response.toString());
+                    Log.e("history", response.toString());
                     handler.sendMessage(msg);
                 }
 
@@ -69,7 +68,6 @@ public class HistoryManager {
     public void delete(String token, String id, Context context) {
         this.token = token;
         this.id = id;
-        this.context = context;
         Thread deleteHistory = new Thread(new DeleteHistory());
         deleteHistory.start();
     }

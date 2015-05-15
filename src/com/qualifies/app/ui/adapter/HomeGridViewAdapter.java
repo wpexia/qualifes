@@ -1,7 +1,9 @@
 package com.qualifies.app.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +18,14 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.HashMap;
 
 public class HomeGridViewAdapter extends BaseAdapter {
     private JSONArray data;
     private AsyncImageLoader imageLoader = new AsyncImageLoader();
     private LayoutInflater mInflater;
+
+    HashMap<Integer, Bitmap> bitCache = new HashMap<>();
 
     public HomeGridViewAdapter(Context context, JSONArray data) {
         this.mInflater = LayoutInflater.from(context);
@@ -35,23 +40,23 @@ public class HomeGridViewAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position) {
         try {
-            return data.get(position);
+            JSONObject good = data.getJSONObject(position);
+            return good;
         } catch (JSONException e) {
             e.printStackTrace();
-            return null;
         }
+        return null;
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.home_page_grid_item, null);
-        }
+    public View getView(final int position, View convertView, ViewGroup parent) {
+//        Log.e("getViewH_HomeGrid", String.valueOf(position));
+        convertView = mInflater.inflate(R.layout.home_page_grid_item, parent, false);
         try {
             JSONObject good = data.getJSONObject(position);
             BigDecimal result = null;
@@ -63,16 +68,24 @@ public class HomeGridViewAdapter extends BaseAdapter {
             ((TextView) convertView.findViewById(R.id.discount)).setText(result + "折");
             ((TextView) convertView.findViewById(R.id.price)).setText("￥" + shopPrice);
             ImageView image = (ImageView) convertView.findViewById(R.id.image);
-//            Drawable cachedImage = imageLoader.loadDrawable(good.get("goods_img").toString(), image,
-//                    new AsyncImageLoader.ImageCallback() {
-//                        public void imageLoaded(Drawable imageDrawable,
-//                                                ImageView imageView, String imageUrl) {
-//                            imageView.setImageDrawable(imageDrawable);
-//                        }
-//                    }, 5);
-//            if (cachedImage != null) {
-//                image.setImageDrawable(cachedImage);
-//            }
+
+            if (!bitCache.containsKey(position)) {
+                Bitmap cachedImage = imageLoader.loadDrawable(good.get("goods_img").toString(), image,
+                        new AsyncImageLoader.ImageCallback() {
+                            public void imageLoaded(Bitmap imageDrawable,
+                                                    ImageView imageView, String imageUrl) {
+                                bitCache.put(position, imageDrawable);
+                                imageView.setImageBitmap(imageDrawable);
+                            }
+                        }, 5);
+                if (cachedImage != null) {
+                    bitCache.put(position, cachedImage);
+                    image.setImageBitmap(cachedImage);
+                }
+            } else {
+                image.setImageBitmap(bitCache.get(position));
+            }
+
 //            ImageCacheHelper.getImageCache().get(good.get("goods_img").toString(), image);
         } catch (JSONException e) {
             e.printStackTrace();

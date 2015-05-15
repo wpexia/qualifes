@@ -48,7 +48,7 @@ public class MoneyHistoryFragment extends Fragment {
                     JSONArray data = (JSONArray) msg.obj;
 //                    Log.e("moneyHistory", data.toString());
                     MoneyAdapter adapter = new MoneyAdapter();
-                    adapter.setContent(getActivity(), data, true);
+                    adapter.setContent(getActivity().getApplicationContext(), data, true);
                     listView.setAdapter(adapter);
                 } catch (NullPointerException e) {
                     e.printStackTrace();

@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.qualifies.app.R;
+import com.qualifies.app.config.Api;
 import com.qualifies.app.ui.fragment.HomeFragment;
 import com.qualifies.app.ui.fragment.SearchFragment;
 import com.qualifies.app.ui.fragment.ShoppingCartFragment;
@@ -29,6 +30,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        Api.setContext(getApplicationContext());
         initView();
     }
 
@@ -160,13 +162,17 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                     changeFragment();
                     return false;
                 }
-                default: {
-                    moveTaskToBack(false);
-                }
-                return true;
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if(fragmentId == 0){
+            if(homeFragment.onTouchEvent(ev)) return true;
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override

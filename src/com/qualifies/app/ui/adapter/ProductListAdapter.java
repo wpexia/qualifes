@@ -26,7 +26,7 @@ public class ProductListAdapter extends BaseAdapter {
     private AsyncImageLoader imageLoader = new AsyncImageLoader();
     final private Context context;
 
-    private Map<Integer, View> viewMap = new HashMap<Integer, View>();
+    private Map<Integer, Bitmap> bitCache = new HashMap<>();
 
     public ProductListAdapter(List<HashMap<String, Object>> data, boolean star, Context context) {
         this.context = context;
@@ -48,9 +48,7 @@ public class ProductListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
-        if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.history_item, null);
-        }
+        convertView = mInflater.inflate(R.layout.history_item, null);
         ImageView image = (ImageView) convertView.findViewById(R.id.imageView);
         TextView title = (TextView) convertView.findViewById(R.id.title);
         TextView place = (TextView) convertView.findViewById(R.id.place);
@@ -80,16 +78,24 @@ public class ProductListAdapter extends BaseAdapter {
                 }
             });
             //if (context.getSharedPreferences("user", context.MODE_PRIVATE).getBoolean("loadImage", false)) {
-            Bitmap cachedImage = imageLoader.loadDrawable(mData.get(position).get("image").toString(), image,
-                    new AsyncImageLoader.ImageCallback() {
-                        public void imageLoaded(Bitmap imageDrawable,
-                                                ImageView imageView, String imageUrl) {
-                            imageView.setImageBitmap(imageDrawable);
-                        }
-                    },5);
-            if (cachedImage != null) {
-                image.setImageBitmap(cachedImage);
-            }//}
+            if (!bitCache.containsKey(position)) {
+                Bitmap cachedImage = imageLoader.loadDrawable(mData.get(position).get("image").toString(), image,
+                        new AsyncImageLoader.ImageCallback() {
+                            public void imageLoaded(Bitmap imageDrawable,
+                                                    ImageView imageView, String imageUrl) {
+                                bitCache.put(position, imageDrawable);
+                                imageView.setImageBitmap(imageDrawable);
+                            }
+                        }, 1);
+                if (cachedImage != null) {
+                    bitCache.put(position, cachedImage);
+                    image.setImageBitmap(cachedImage);
+                }
+            } else {
+                image.setImageBitmap(bitCache.get(position));
+            }
+
+            //}
 //            ImageCacheHelper.getImageCache().get(mData.get(position).get("image").toString(), image);
         }
         return convertView;

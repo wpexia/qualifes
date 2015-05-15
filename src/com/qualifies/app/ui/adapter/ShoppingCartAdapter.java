@@ -1,21 +1,29 @@
 package com.qualifies.app.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.qualifies.app.R;
 import com.qualifies.app.ui.HomeActivity;
+import com.qualifies.app.util.AsyncImageLoader;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ShoppingCartAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private JSONArray mData;
+    private AsyncImageLoader imageLoader = new AsyncImageLoader();
     public boolean flag = false;
+
+    Map<String, Bitmap> bitCache = new HashMap<>();
 
     public ShoppingCartAdapter(Context context, JSONArray data) {
         this.context = context;
@@ -39,7 +47,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, final ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         convertView = inflater.inflate(R.layout.shopping_cart_item, parent, false);
         try {
             final JSONObject obj = mData.getJSONObject(position);
@@ -97,6 +105,22 @@ public class ShoppingCartAdapter extends BaseAdapter {
             });
             ImageView image = (ImageView) convertView.findViewById(R.id.image);
 //            ImageCacheHelper.getImageCache().get(obj.getString("goods_thumb"), image);
+            if (!bitCache.containsKey(obj.getString("goods_thumb"))) {
+                Bitmap imgaeCache = imageLoader.loadDrawable(obj.getString("goods_thumb"), image,
+                        new AsyncImageLoader.ImageCallback() {
+                            public void imageLoaded(Bitmap imageDrawable,
+                                                    ImageView imageView, String imageUrl) {
+                                bitCache.put(imageUrl, imageDrawable);
+                                imageView.setImageBitmap(imageDrawable);
+                            }
+                        }, 1);
+                if (imgaeCache != null) {
+                    image.setImageBitmap(imgaeCache);
+                }
+            } else {
+                image.setImageBitmap(bitCache.get(obj.getString("goods_thumb")));
+            }
+
             final CheckBox check = (CheckBox) convertView.findViewById(R.id.checkBox);
             check.setChecked(obj.getBoolean("checked"));
             convertView.findViewById(R.id.minus).setOnClickListener(new View.OnClickListener() {

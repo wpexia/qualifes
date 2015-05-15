@@ -2,6 +2,7 @@ package com.qualifies.app.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.qualifies.app.R;
 import com.qualifies.app.ui.GoodDetailActivity;
+import com.qualifies.app.util.AsyncImageLoader;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 public class OrderDetailAdapter extends BaseAdapter {
+
+    private AsyncImageLoader imageLoader = new AsyncImageLoader();
+    HashMap<Integer, Bitmap> bitCache = new HashMap<>();
 
     JSONArray mData;
     Context context;
@@ -41,7 +48,7 @@ public class OrderDetailAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.orderdetailitem, parent, false);
         }
@@ -51,6 +58,23 @@ public class OrderDetailAdapter extends BaseAdapter {
             ((TextView) convertView.findViewById(R.id.num)).setText("数量 ×" + obj.getString("goods_number"));
             ImageView image = (ImageView) convertView.findViewById(R.id.image);
 //            ImageCacheHelper.getImageSdCache().get(obj.getString("goods_thumb"), image);
+            if (!bitCache.containsKey(position)) {
+                Bitmap cachedImage = imageLoader.loadDrawable(obj.getString("goods_thumb"), image,
+                        new AsyncImageLoader.ImageCallback() {
+                            public void imageLoaded(Bitmap imageDrawable,
+                                                    ImageView imageView, String imageUrl) {
+                                bitCache.put(position, imageDrawable);
+                                imageView.setImageBitmap(imageDrawable);
+                            }
+                        }, 1);
+                if (cachedImage != null) {
+                    bitCache.put(position, cachedImage);
+                    image.setImageBitmap(cachedImage);
+                }
+            } else {
+                image.setImageBitmap(bitCache.get(position));
+            }
+
             convertView.findViewById(R.id.good).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

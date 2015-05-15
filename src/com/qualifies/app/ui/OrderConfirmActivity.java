@@ -4,21 +4,36 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.qualifies.app.R;
+import com.qualifies.app.manager.OrderManager;
+import com.qualifies.app.ui.adapter.OrderAmountAdapter;
 import com.qualifies.app.ui.fragment.OrderConfirmNullFragment;
 import com.qualifies.app.ui.fragment.OrderConfirmOkFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class OrderConfirmActivity extends Activity implements View.OnClickListener {
 
     private FragmentManager manager;
+    private SharedPreferences sp;
 
     private OrderConfirmNullFragment nullFragment;
     private OrderConfirmOkFragment okFragment;
@@ -27,8 +42,10 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
 
     private JSONObject position;
     private JSONArray goods;
-    private int receiveTime = 0;
+    private int receiveTime = -1;
     private int payFunction = 0;
+    private String moneyId = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +62,47 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
     }
 
     private void initView() {
+        sp = getSharedPreferences("user", MODE_PRIVATE);
         findViewById(R.id.goods_detail).setOnClickListener(this);
         findViewById(R.id.receive_time).setOnClickListener(this);
+        findViewById(R.id.pay_function).setOnClickListener(OrderConfirmActivity.this);
         findViewById(R.id.send_function).setOnClickListener(this);
-        findViewById(R.id.pay_function).setOnClickListener(this);
-        findViewById(R.id.redmoney).setOnClickListener(this);
+        findViewById(R.id.confirm).setOnClickListener(this);
+
+
         changeFragment();
+
+        OrderManager manager = OrderManager.getInstance();
+        manager.initOrder(sp.getString("token", ""), goods, initOrderHander);
+
+
     }
+
+
+    Handler initOrderHander = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                try {
+                    JSONObject data = (JSONObject) msg.obj;
+                    if (!data.getString("address").equals("")) {
+                        position = data.getJSONObject("address");
+                        position.put("consignee", position.getString("name"));
+                        fragmentId = 1;
+                        changeFragment();
+//                    Log.e("position", position.toString());
+                        changeView();
+                    }
+                    if (data.getString("bonus").equals("yes")) {
+                        findViewById(R.id.havered).setVisibility(View.VISIBLE);
+                        findViewById(R.id.redmoney).setOnClickListener(OrderConfirmActivity.this);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
 
     @Override
     public void onClick(View v) {
@@ -86,7 +137,20 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
             break;
             case R.id.redmoney: {
                 Intent intent = new Intent(this, MoneyChooseActivity.class);
+                intent.putExtra("money", moneyId);
+                intent.putExtra("goods", goods.toString());
                 startActivityForResult(intent, 4);
+            }
+            case R.id.confirm: {
+                if (receiveTime == -1) {
+                    Toast.makeText(getApplicationContext(), "请选择收货时间", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (payFunction == 0) {
+                    Toast.makeText(getApplicationContext(), "支付方式", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
             }
         }
     }
@@ -100,10 +164,11 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
             case 1: {
                 try {
                     position = new JSONObject(data.getStringExtra("position"));
+                    Log.e("position", position.toString());
                     fragmentId = 1;
                     changeFragment();
 //                    Log.e("position", position.toString());
-                    okFragment.changeView(position);
+                    changeView();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -125,6 +190,18 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
                     ((TextView) findViewById(R.id.paycontent)).setText("微信支付");
                 }
                 payFunction = resultCode;
+            }
+            break;
+            case 4: {
+                if (resultCode == 1) {
+                    moneyId = data.getStringExtra("moneyId");
+                    String moneyStr = data.getStringExtra("moneyName");
+                    if (moneyStr.length() > 13) {
+                        moneyStr = moneyStr.substring(0, 12) + "…";
+                    }
+                    ((TextView) findViewById(R.id.havered)).setText(moneyStr);
+                    changeView();
+                }
             }
         }
     }
@@ -149,6 +226,64 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
         }
         transaction.commit();
     }
+
+    private void changeView() {
+        okFragment.changeView(position);
+        OrderManager manager = OrderManager.getInstance();
+        try {
+            String addressId = position.getString("address_id");
+            manager.getOrderPrice(sp.getString("token", ""), addressId, goods, moneyId, changViewHandler);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    Handler changViewHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                JSONObject data = (JSONObject) msg.obj;
+                try {
+                    ((TextView) findViewById(R.id.total)).setText("￥" + data.getDouble("order_amount"));
+                    JSONArray print = new JSONArray();
+                    JSONObject obj = new JSONObject();
+                    obj.put("name", "商品金额");
+                    obj.put("data", data.getDouble("goods_amount"));
+                    print.put(obj);
+                    obj = new JSONObject();
+                    obj.put("name", "运费");
+                    obj.put("data", data.getDouble("direct_fee") + data.getDouble("trade_fee"));
+                    print.put(obj);
+                    if (data.getDouble("first_reduction") > 0) {
+                        obj = new JSONObject();
+                        obj.put("name", "首单立减");
+                        obj.put("data", -data.getDouble("first_reduction"));
+                        print.put(obj);
+                    }
+                    if (data.getDouble("bonus_money") > 0) {
+                        obj = new JSONObject();
+                        obj.put("name", "红包抵扣");
+                        obj.put("data", -data.getDouble("bonus_money"));
+                        print.put(obj);
+                    }
+                    ListView listView = (ListView) findViewById(R.id.amount);
+                    listView.setDividerHeight(0);
+                    OrderAmountAdapter adapter = new OrderAmountAdapter(getApplicationContext(), print);
+                    listView.setAdapter(adapter);
+                    ViewGroup.LayoutParams params = listView.getLayoutParams();
+                    int totalHeight = 0;
+                    View listItem = adapter.getView(0, null, listView);
+                    listItem.measure(0, 0);
+                    totalHeight += listItem.getMeasuredHeight() * adapter.getCount();
+                    params.height = totalHeight + listView.getDividerHeight() * (print.length() - 1);
+                    listView.setLayoutParams(params);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
 
     private void hideFragment(FragmentTransaction transaction) {
         if (nullFragment != null) {

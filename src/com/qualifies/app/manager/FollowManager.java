@@ -16,7 +16,6 @@ import org.json.JSONObject;
 public class FollowManager {
     private Handler handler;
     private String token;
-    private Context context;
     private String id;
     private int start;
 
@@ -29,7 +28,6 @@ public class FollowManager {
     public void getFollow(String token, Handler handler, Context context, int start) {
         this.token = token;
         this.handler = handler;
-        this.context = context;
         this.start = start;
 
         Thread getFollowThread = new Thread(new GetFollowThread());
@@ -68,7 +66,6 @@ public class FollowManager {
     public void delete(String token, String rec_id, Context context) {
         this.token = token;
         this.id = rec_id;
-        this.context = context;
         Thread deleteFollow = new Thread(new DeleteFollow());
         deleteFollow.start();
     }

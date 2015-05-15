@@ -218,43 +218,6 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
                     android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:background="#dedede"
-                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
-        </RelativeLayout>
-        <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="51dp"
-                android:id="@+id/personal_realname"
-                android:clickable="true"
-                android:background="@drawable/presonal_press_line">
-
-            <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/personal_icon_realname"
-                    android:src="@drawable/icon_realname" android:background="#ffffff"
-                    android:layout_centerVertical="true" android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="实名认证"
-                    android:textColor="#6e6e6e"
-                    android:textSize="16sp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/personal_icon_realname"
-                    android:layout_toEndOf="@+id/personal_icon_realname"
-                    android:layout_marginLeft="18dp"/>
-            <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
-                    android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

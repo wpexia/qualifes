@@ -24,6 +24,8 @@ import com.qualifies.app.manager.HistoryManager;
 import com.qualifies.app.ui.adapter.ProductListAdapter;
 import com.qualifies.app.ui.FollowActivity;
 import com.qualifies.app.ui.HistoryActivity;
+import com.qualifies.app.util.DisplayParams;
+import com.qualifies.app.util.DisplayUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,17 +79,6 @@ public class ProductListNotNullFragment extends Fragment {
     public void onResume() {
         super.onResume();
         initView();
-        listView.onDropDown();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        listView.setSelection(1);
-        if (!hasMore) {
-            listView.setHasMore(false);
-            listView.onBottomComplete();
-        }
     }
 
     private void initView() {
@@ -109,7 +100,7 @@ public class ProductListNotNullFragment extends Fragment {
                 new GetDataTask(false).execute();
             }
         });
-        productListAdapter = new ProductListAdapter(mData, hasStar, getActivity());
+        productListAdapter = new ProductListAdapter(mData, hasStar, getActivity().getApplication());
         listView.setAdapter(productListAdapter);
         listView.setDividerHeight(0);
     }
@@ -196,6 +187,8 @@ public class ProductListNotNullFragment extends Fragment {
                     switch (managerId) {
                         case 0: {
                             mData = ((HistoryActivity) getActivity()).getData();
+                            productListAdapter = new ProductListAdapter(mData, hasStar, getActivity().getApplication());
+                            listView.setAdapter(productListAdapter);
                             listView.resetBottom();
                         }
                         break;
@@ -207,7 +200,6 @@ public class ProductListNotNullFragment extends Fragment {
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
-                productListAdapter.notifyDataSetChanged();
                 // should call onDropDownComplete function of DropDownListView at end of drop down complete.
                 SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
                 listView.onDropDownComplete(getString(R.string.update_at)
@@ -288,6 +280,14 @@ public class ProductListNotNullFragment extends Fragment {
         };
     }
 
+
+    public void nofity() {
+        if (productListAdapter != null) {
+            productListAdapter.notifyDataSetChanged();
+            listView.smoothScrollBy(1, 0);
+            listView.onDropDownComplete();
+        }
+    }
 
     public void clear() {
         String id = "";

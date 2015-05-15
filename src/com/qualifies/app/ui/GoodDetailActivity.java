@@ -4,7 +4,10 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.*;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
@@ -29,7 +32,7 @@ import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 
-public class GoodDetailActivity extends Activity implements OnClickListener {
+public class GoodDetailActivity extends Activity implements OnClickListener, GestureDetector.OnGestureListener {
 
     private AsyncHttpClient client;
     private ImageButton detail_back;
@@ -46,6 +49,8 @@ public class GoodDetailActivity extends Activity implements OnClickListener {
     private ImageButton detail_good_info_press;
     private ImageButton detail_spec_press;
     private ImageButton detail_gooddata_press;
+
+    private GestureDetector gestureDetector = null;
 
     private ImageView detail_icon_shoppingcart;
     private Button detail_addto_shoppingcart;
@@ -107,6 +112,8 @@ public class GoodDetailActivity extends Activity implements OnClickListener {
 
         detail_addto_shoppingcart = (Button) findViewById(R.id.detail_addto_shoppingcart);
         detail_addto_shoppingcart.setOnClickListener(this);
+
+        gestureDetector = new GestureDetector(getApplicationContext(), this);
         accessServer();
     }
 
@@ -114,6 +121,10 @@ public class GoodDetailActivity extends Activity implements OnClickListener {
         RequestParams params = new RequestParams();
         params.put("data[goods_id]", goods_id);
         params.put("data[type]", "j");
+        SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
+        if (sp.contains("token")) {
+            params.put("token", sp.getString("token", ""));
+        }
         client.get(ConnectionURL.getGoodsInfoURL(), params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers,
@@ -127,7 +138,7 @@ public class GoodDetailActivity extends Activity implements OnClickListener {
 
 
                     if (dataObject.getInt("is_coll") != 0) {
-                        detail_star.setBackgroundResource(R.drawable.star_red);
+                        detail_star.setImageDrawable(getResources().getDrawable(R.drawable.stat_red_circle));
                     }
                     detail_goods_name.setText(dataObject.getString("goods_name"));
                     BigDecimal shopPrice = new BigDecimal(dataObject.getString("shop_price"));
@@ -232,5 +243,62 @@ public class GoodDetailActivity extends Activity implements OnClickListener {
             default:
                 break;
         }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (gestureDetector.onTouchEvent(ev)) return true;
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        if (e2.getX() - e1.getX() > 200) {             // 从左向右滑动（左进右出）
+            detail_imgs.stopFlipping();                // 点击事件后，停止自动播放
+            detail_imgs.setAutoStart(false);
+            Animation rInAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_right_in);    // 向右滑动左侧进入的渐变效果（alpha  0.1 -> 1.0）
+            Animation rOutAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_right_out); // 向右滑动右侧滑出的渐变效果（alpha 1.0  -> 0.1）
+
+            detail_imgs.setInAnimation(rInAnim);
+            detail_imgs.setOutAnimation(rOutAnim);
+            detail_imgs.showPrevious();
+            return true;
+        } else if (e2.getX() - e1.getX() < -200) {         // 从右向左滑动（右进左出）
+            detail_imgs.stopFlipping();                // 点击事件后，停止自动播放
+            detail_imgs.setAutoStart(false);
+            Animation lInAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_left_in);        // 向左滑动左侧进入的渐变效果（alpha 0.1  -> 1.0）
+            Animation lOutAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_left_out);    // 向左滑动右侧滑出的渐变效果（alpha 1.0  -> 0.1）
+
+            detail_imgs.setInAnimation(lInAnim);
+            detail_imgs.setOutAnimation(lOutAnim);
+            detail_imgs.showNext();
+            return true;
+        }
+        return false;
     }
 }

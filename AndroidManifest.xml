@@ -39,7 +39,6 @@
         <activity android:name=".ui.HistoryActivity"/>
         <activity android:name=".ui.FollowActivity"/>
         <activity android:name=".ui.SettingActivity"/>
-        <activity android:name=".ui.RealNameActivity"/>
         <activity android:name=".ui.PositionActivity"/>
         <activity android:name=".ui.AddPositionActivity"/>
         <activity android:name=".ui.MoneyActivity"
@@ -55,7 +54,10 @@
         <activity android:name=".ui.ReachTimeActivity"/>
         <activity android:name=".ui.SendFunctionPriceActivity"/>
         <activity android:name=".ui.PayFunctionActivity"/>
-        <activity android:name=".ui.MoneyChooseActivity"/>
+        <activity android:name=".ui.MoneyChooseActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:windowSoftInputMode="stateHidden"
+                />
     </application>
 
 </manifest>

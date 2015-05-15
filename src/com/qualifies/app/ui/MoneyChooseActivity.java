@@ -1,12 +1,14 @@
 package com.qualifies.app.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,15 +16,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.qualifies.app.R;
 import com.qualifies.app.manager.MoneyManager;
-import com.qualifies.app.ui.adapter.MoneyAdapter;
 import com.qualifies.app.ui.adapter.MoneyChooseAdapter;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 public class MoneyChooseActivity extends Activity implements View.OnClickListener {
     private ListView listView;
     private SharedPreferences sp;
     private EditText editText;
     private Button addMoney;
+    private MoneyChooseAdapter adapter;
 
 
     @Override
@@ -62,9 +65,16 @@ public class MoneyChooseActivity extends Activity implements View.OnClickListene
             }
         });
 
-        MoneyManager moneyManager = MoneyManager.getInstance();
-        moneyManager.getNow(sp.getString("token", ""), nowHandler, this);
+        findViewById(R.id.back_button).setOnClickListener(this);
 
+        Intent intent = getIntent();
+        try {
+            JSONArray goods = new JSONArray(intent.getStringExtra("goods"));
+            MoneyManager moneyManager = MoneyManager.getInstance();
+            moneyManager.getCanUse(sp.getString("token", ""), goods, canUsehandler);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -76,18 +86,31 @@ public class MoneyChooseActivity extends Activity implements View.OnClickListene
                 moneyManager.addMoney(editText.getText().toString(), sp.getString("token", ""), addMoneyHandler, this);
             }
             break;
+            case R.id.back_button: {
+                if (adapter != null) {
+                    Intent result = new Intent();
+                    result.putExtra("moneyId", adapter.getCheck());
+                    result.putExtra("moneyName", adapter.getCheckName());
+                    setResult(1, result);
+                }
+                finish();
+            }
+            break;
         }
     }
 
-    Handler nowHandler = new Handler() {
+    Handler canUsehandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
                 try {
                     JSONArray data = (JSONArray) msg.obj;
-                    //Log.e("moneyNow", data.toString());
-                    MoneyChooseAdapter adapter = new MoneyChooseAdapter();
+//                    Log.e("MoneyChoose", data.toString());
+                    adapter = new MoneyChooseAdapter();
+                    Intent intent = getIntent();
+                    String moneyId = intent.getStringExtra("money");
                     adapter.setContent(getApplicationContext(), data);
+                    adapter.setCheck(moneyId);
                     listView.setAdapter(adapter);
                 } catch (NullPointerException e) {
                     e.printStackTrace();

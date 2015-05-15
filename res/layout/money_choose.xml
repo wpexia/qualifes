@@ -43,6 +43,7 @@
                     android:id="@+id/editText"
                     android:background="@drawable/money_edit"
                     android:lines="1"
+                    android:inputType="number"
                     android:paddingLeft="8dp"
                     android:layout_marginLeft="10dp"
                     android:layout_toLeftOf="@+id/addMoney"

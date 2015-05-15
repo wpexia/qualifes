@@ -13,7 +13,7 @@
             android:textColor="#6e6e6e"
             android:layout_marginLeft="15dp"
             android:paddingBottom="12dp"
-            android:id="@+id/textView18" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+            android:id="@+id/name" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"/>
     <TextView
             android:layout_width="wrap_content"
@@ -22,6 +22,6 @@
             android:textSize="14sp"
             android:textColor="@color/settingRed"
             android:layout_marginRight="15dp"
-            android:id="@+id/textView19" android:layout_alignParentTop="true" android:layout_alignParentRight="true"
+            android:id="@+id/price" android:layout_alignParentTop="true" android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"/>
 </RelativeLayout>

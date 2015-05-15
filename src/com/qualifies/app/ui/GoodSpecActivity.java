@@ -2,9 +2,11 @@ package com.qualifies.app.ui;
 
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import com.qualifies.app.R;
 import com.qualifies.app.manager.ShoppingCartManager;
 import com.qualifies.app.ui.adapter.SpecListViewAdapter;
+import com.qualifies.app.util.AsyncImageLoader;
 import com.qualifies.app.util.OfflineCartDbHelper;
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -34,6 +36,8 @@ import android.widget.Toast;
 
 public class GoodSpecActivity extends Activity implements OnClickListener {
 
+
+    private AsyncImageLoader imageLoader = new AsyncImageLoader();
     private AsyncHttpClient client;
     private SharedPreferences sp;
     private ImageButton spec_back;
@@ -112,6 +116,18 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
                     }
 
 //                    ImageCacheHelper.getImageCache().get(dataObject.getString("goods_img"), spec_img);
+                    Bitmap chche = imageLoader.loadDrawable(dataObject.getString("goods_img"), spec_img,
+                            new AsyncImageLoader.ImageCallback() {
+                                @Override
+                                public void imageLoaded(Bitmap imageDrawable, ImageView imageView, String imageUrl) {
+                                    imageView.setImageBitmap(imageDrawable);
+                                }
+                            }
+                    );
+                    if (chche != null) {
+                        spec_img.setImageBitmap(chche);
+                    }
+
 
                     JSONObject attribute = dataObject.getJSONObject("attribute");
                     specArray = attribute.getJSONArray("spe");

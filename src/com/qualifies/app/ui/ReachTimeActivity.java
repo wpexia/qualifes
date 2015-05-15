@@ -36,17 +36,17 @@ public class ReachTimeActivity extends Activity implements View.OnClickListener{
         int id = v.getId();
         switch (id) {
             case R.id.time1:{
-                this.setResult(1);
+                this.setResult(0);
                 finish();
             }
             break;
             case R.id.time2:{
-                this.setResult(2);
+                this.setResult(1);
                 finish();
             }
             break;
             case R.id.time3:{
-                this.setResult(3);
+                this.setResult(2);
                 finish();
             }
             break;

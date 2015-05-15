@@ -116,7 +116,7 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                     }
 
                     Log.e("after", data.toString());
-                    final ShoppingCartAdapter adapter = new ShoppingCartAdapter(getActivity(), data);
+                    final ShoppingCartAdapter adapter = new ShoppingCartAdapter(getActivity().getApplicationContext(), data);
                     listView.setAdapter(adapter);
                     CheckBox checkTotal = (CheckBox) getActivity().findViewById(R.id.totalcheckBox);
                     checkTotal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -155,7 +155,7 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                         JSONObject obj = data.getJSONObject(i);
                         obj.put("checked", false);
                     }
-                    adapter = new ShoppingCartAdapter(getActivity(), data);
+                    adapter = new ShoppingCartAdapter(getActivity().getApplicationContext(), data);
                     listView.setAdapter(adapter);
                     CheckBox checkTotal = (CheckBox) getActivity().findViewById(R.id.totalcheckBox);
                     checkTotal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

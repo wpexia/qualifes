@@ -1,6 +1,7 @@
 package com.qualifies.app.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,16 +62,16 @@ public class HomeBottomAdapter extends BaseAdapter {
             ((TextView) convertView.findViewById(R.id.info_discount)).setText(result + "折");
             ((TextView) convertView.findViewById(R.id.info_origin)).setText("产地 " + good.getString("origin"));
             ImageView image = (ImageView) convertView.findViewById(R.id.info_image);
-//            Drawable cachedImage = imageLoader.loadDrawable(good.get("goods_img").toString(), image,
-//                    new AsyncImageLoader.ImageCallback() {
-//                        public void imageLoaded(Drawable imageDrawable,
-//                                                ImageView imageView, String imageUrl) {
-//                            imageView.setImageDrawable(imageDrawable);
-//                        }
-//                    }, 5);
-//            if (cachedImage != null) {
-//                image.setImageDrawable(cachedImage);
-//            }
+            Bitmap cachedImage = imageLoader.loadDrawable(good.get("goods_img").toString(), image,
+                    new AsyncImageLoader.ImageCallback() {
+                        public void imageLoaded(Bitmap imageDrawable,
+                                                ImageView imageView, String imageUrl) {
+                            imageView.setImageBitmap(imageDrawable);
+                        }
+                    }, 5);
+            if (cachedImage != null) {
+                image.setImageBitmap(cachedImage);
+            }
             //ImageCacheHelper.getImageCache().get(good.get("goods_img").toString(), image);
         } catch (JSONException e) {
             e.printStackTrace();

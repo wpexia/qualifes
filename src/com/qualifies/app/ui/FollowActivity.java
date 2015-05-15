@@ -145,6 +145,7 @@ public class FollowActivity extends Activity implements View.OnClickListener {
                     if (goods.length() < 10) {
                         productListNotNullFragment.setHasMore(false);
                     }
+                    productListNotNullFragment.nofity();
                 } catch (JSONException e) {
                     changeFragment(true);
                 }

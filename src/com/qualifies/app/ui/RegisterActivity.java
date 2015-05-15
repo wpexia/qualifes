@@ -78,7 +78,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 if (username.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT).show();
                 } else {
-                    registerManager.getCode(username.getText().toString(), gcHandler, this);
+                    registerManager.getCode(username.getText().toString(), gcHandler, getApplicationContext());
                 }
             }
             break;
@@ -98,7 +98,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                     Toast.makeText(getApplicationContext(), "密码不能为空！", Toast.LENGTH_SHORT).show();
                     break;
                 } else {
-                    registerManager.register(username.getText().toString(), code.getText().toString(), password.getText().toString(), registerHandler, this);
+                    registerManager.register(username.getText().toString(), code.getText().toString(), password.getText().toString(), registerHandler, getApplicationContext());
                 }
             }
             break;

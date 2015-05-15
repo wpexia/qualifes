@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.*;
 import android.os.Process;
+import android.util.Log;
 import android.widget.ImageView;
 
 
@@ -39,6 +40,7 @@ public class AsyncImageLoader {
                         }
                         Bitmap preview_bitmap = null;
                         try {
+//                            Log.e("imgUrl",imageUrl);
                             InputStream inputStream = new java.net.URL(imageUrl).openStream();
                             BitmapFactory.Options options = new BitmapFactory.Options();
                             options.inSampleSize = size;

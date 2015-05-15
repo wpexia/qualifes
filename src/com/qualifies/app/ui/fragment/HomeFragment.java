@@ -51,15 +51,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        initView();
-    }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initView();
     }
 
@@ -74,6 +69,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         });
 
         scrollView = (ScrollView) getActivity().findViewById(R.id.scrollView);
+
 
         viewFlipper = (ViewFlipper) getActivity().findViewById(R.id.viewFlipper);
 
@@ -168,7 +164,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                                                         ImageView imageView, String imageUrl) {
                                     imageView.setImageBitmap(imageDrawable);
                                 }
-                            }, 2);
+                            }, 1);
                     if (cachedImageL != null) {
                         imageButtonL.setImageBitmap(cachedImageL);
                     }
@@ -180,7 +176,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                                                         ImageView imageView, String imageUrl) {
                                     imageView.setImageBitmap(imageDrawable);
                                 }
-                            }, 2);
+                            }, 1);
                     if (cachedImageR != null) {
                         imageButtonR.setImageBitmap(cachedImageR);
                     }
@@ -213,7 +209,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                     gridView1.setColumnWidth(itemWidth);
                     gridView1.setStretchMode(GridView.NO_STRETCH);
                     gridView1.setNumColumns(size);
-                    gridView1.setAdapter(new HomeGridViewAdapter(getActivity(), goodsRedData));
+                    gridView1.setAdapter(new HomeGridViewAdapter(getActivity().getApplicationContext(), goodsRedData));
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
@@ -241,7 +237,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                     gridView2.setColumnWidth(itemWidth);
                     gridView2.setStretchMode(GridView.NO_STRETCH);
                     gridView2.setNumColumns(size);
-                    gridView2.setAdapter(new HomeGridViewAdapter(getActivity(), goodsBlueData));
+                    gridView1.setScrollBarSize(0);
+                    gridView2.setAdapter(new HomeGridViewAdapter(getActivity().getApplicationContext(), goodsBlueData));
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
@@ -260,7 +257,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                     }
                     HomeBottomAdapter adapter = new HomeBottomAdapter(getActivity(), goodsBottomData);
                     listView.setAdapter(adapter);
-                    listView.setDividerHeight(1);
                     ViewGroup.LayoutParams params = listView.getLayoutParams();
                     int totalHeight = 0;
                     View listItem = adapter.getView(0, null, listView);
@@ -330,6 +326,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         startActivity(intent);
     }
 
+    public boolean onTouchEvent(MotionEvent e) {
+        return gestureDetector.onTouchEvent(e);
+    }
 
     @Override
     public boolean onDown(MotionEvent e) {
@@ -358,7 +357,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if (e2.getX() - e1.getX() > 500) {             // 从左向右滑动（左进右出）
+        if (e2.getX() - e1.getX() > 200) {             // 从左向右滑动（左进右出）
             viewFlipper.stopFlipping();                // 点击事件后，停止自动播放
             viewFlipper.setAutoStart(false);
             Animation rInAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.push_right_in);    // 向右滑动左侧进入的渐变效果（alpha  0.1 -> 1.0）
@@ -368,7 +367,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
             viewFlipper.setOutAnimation(rOutAnim);
             viewFlipper.showPrevious();
             return true;
-        } else if (e2.getX() - e1.getX() < -500) {         // 从右向左滑动（右进左出）
+        } else if (e2.getX() - e1.getX() < -200) {         // 从右向左滑动（右进左出）
             viewFlipper.stopFlipping();                // 点击事件后，停止自动播放
             viewFlipper.setAutoStart(false);
             Animation lInAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.push_left_in);        // 向左滑动左侧进入的渐变效果（alpha 0.1  -> 1.0）

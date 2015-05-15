@@ -64,7 +64,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
         home_search_history_label = (TextView) getActivity().findViewById(R.id.home_search_history_label);
         home_search_history_items = (GridView) getActivity().findViewById(R.id.home_search_history_items);
-        home_search_history_items.setAdapter(new SearchHotAdapter(getActivity(), daList, searchHandler));
+        home_search_history_items.setAdapter(new SearchHotAdapter(getActivity().getApplicationContext(), daList, searchHandler));
         home_search_history_clear = (TextView) getActivity().findViewById(R.id.home_search_history_clear);
         if (daList.isEmpty()) {
             home_search_history_clear.setVisibility(View.GONE);
@@ -134,7 +134,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     for (int i = 0; i < data.length(); i++) {
                         dataList.add(data.getString(i).toString());
                     }
-                    home_search_hot_items.setAdapter(new SearchHotAdapter(getActivity(), dataList, searchHandler));
+                    home_search_hot_items.setAdapter(new SearchHotAdapter(getActivity().getApplicationContext(), dataList, searchHandler));
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {

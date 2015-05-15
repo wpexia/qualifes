@@ -94,9 +94,9 @@ public class MoneyNowFragment extends Fragment implements View.OnClickListener {
                 try {
                     JSONArray data = (JSONArray) msg.obj;
                     //Log.e("moneyNow", data.toString());
-//                    MoneyAdapter adapter = new MoneyAdapter();
-//                    adapter.setContent(getActivity(), data);
-//                    listView.setAdapter(adapter);
+                    MoneyAdapter adapter = new MoneyAdapter();
+                    adapter.setContent(getActivity(), data);
+                    listView.setAdapter(adapter);
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }

@@ -42,7 +42,6 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
         getActivity().findViewById(R.id.personal_history).setOnClickListener(this);
         getActivity().findViewById(R.id.personal_follow).setOnClickListener(this);
         getActivity().findViewById(R.id.personal_position).setOnClickListener(this);
-        getActivity().findViewById(R.id.personal_realname).setOnClickListener(this);
         getActivity().findViewById(R.id.personal_money).setOnClickListener(this);
     }
 
@@ -89,11 +88,6 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
             break;
             case R.id.personal_position: {
                 Intent intent = new Intent(getActivity(), PositionActivity.class);
-                startActivity(intent);
-            }
-            break;
-            case R.id.personal_realname: {
-                Intent intent = new Intent(getActivity(), RealNameActivity.class);
                 startActivity(intent);
             }
             break;
