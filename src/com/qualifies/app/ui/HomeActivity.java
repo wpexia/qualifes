@@ -14,6 +14,8 @@ import com.qualifies.app.config.Api;
 import com.qualifies.app.ui.fragment.HomeFragment;
 import com.qualifies.app.ui.fragment.SearchFragment;
 import com.qualifies.app.ui.fragment.ShoppingCartFragment;
+import com.qualifies.app.util.WXApi;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 public class HomeActivity extends Activity implements View.OnClickListener, View.OnTouchListener {
 
@@ -26,12 +28,21 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
     private ShoppingCartFragment shoppingCartFragment;
     private PersonalFragment personalFragment;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         Api.setContext(getApplicationContext());
+//        initWx();
         initView();
+    }
+
+    //微信支付注册函数
+    private void initWx() {
+        WXApi.api = WXAPIFactory.createWXAPI(this, null);
+
+        WXApi.api.registerApp(WXApi.APP_ID);
     }
 
     private void initView() {
@@ -169,8 +180,8 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if(fragmentId == 0){
-            if(homeFragment.onTouchEvent(ev)) return true;
+        if (fragmentId == 0) {
+            if (homeFragment.onTouchEvent(ev)) return true;
         }
         return super.dispatchTouchEvent(ev);
     }

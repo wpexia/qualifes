@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,19 +15,20 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.alipay.sdk.app.PayTask;
 import com.qualifies.app.R;
 import com.qualifies.app.manager.OrderManager;
+import com.qualifies.app.manager.ZFBManager;
 import com.qualifies.app.ui.adapter.OrderAmountAdapter;
 import com.qualifies.app.ui.fragment.OrderConfirmNullFragment;
 import com.qualifies.app.ui.fragment.OrderConfirmOkFragment;
+import com.qualifies.app.util.WXApi;
+import com.tencent.mm.sdk.modelpay.PayReq;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class OrderConfirmActivity extends Activity implements View.OnClickListener {
 
@@ -42,7 +42,7 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
 
     private JSONObject position;
     private JSONArray goods;
-    private int receiveTime = -1;
+    private int receiveTime = 0;
     private int payFunction = 0;
     private String moneyId = "";
 
@@ -141,19 +141,97 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
                 intent.putExtra("goods", goods.toString());
                 startActivityForResult(intent, 4);
             }
+            break;
             case R.id.confirm: {
-                if (receiveTime == -1) {
-                    Toast.makeText(getApplicationContext(), "请选择收货时间", Toast.LENGTH_SHORT).show();
-                    return;
-                }
                 if (payFunction == 0) {
-                    Toast.makeText(getApplicationContext(), "支付方式", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "请选择支付方式", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                
+                SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
+                String token = sp.getString("token", "");
+                String positionId = "";
+                try {
+                    positionId = position.getString("address_id");
+//                    Log.e("position", position.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                String[] payFunctions = {"alipay_app", "weixin_app"};
+                String payFunctionStr = payFunctions[payFunction - 1];
+                OrderManager manager = OrderManager.getInstance();
+                if (payFunction == 2) {
+                    manager.creatOrder(token, positionId, payFunctionStr, goods, createOrderWXHandler);
+                } else if (payFunction == 1) {
+                    manager.creatOrder(token, positionId, payFunctionStr, goods, creatOrderZFBHandler);
+                }
             }
+            break;
         }
     }
+
+
+    Handler creatOrderZFBHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+//            Log.e("ZFB", ((JSONObject) msg.obj).toString());
+            try {
+                String params = ((JSONObject) msg.obj).getString("data");
+                ZFBManager.pay(params, OrderConfirmActivity.this, ZFBPayHandler);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+
+    Handler ZFBPayHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            String result = (String) msg.obj;
+            Log.e("ZFBPay", result);
+        }
+    };
+
+
+    Handler createOrderWXHandler = new Handler() {
+        String sign;
+        String partnerId;
+        String prepayId;
+        String nonceStr;
+        String timeStamp;
+        String packageValue;
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                try {
+                    JSONObject data = ((JSONObject) msg.obj).getJSONObject("data");
+                    Log.e("WXPay", data.toString());
+                    sign = data.getString("sign");
+                    partnerId = data.getString("partnerid");
+                    prepayId = data.getString("prepayid");
+                    nonceStr = data.getString("noncestr");
+                    timeStamp = data.getString("timestamp");
+                    packageValue = data.getString("package");
+
+                    final IWXAPI api = WXAPIFactory.createWXAPI(OrderConfirmActivity.this, null);
+                    PayReq request = new PayReq();
+                    request.appId = WXApi.APP_ID;
+                    request.partnerId = partnerId;
+                    request.prepayId = prepayId;
+                    request.packageValue = packageValue;
+                    request.nonceStr = nonceStr;
+                    request.timeStamp = timeStamp;
+                    request.sign = sign;
+                    api.registerApp(WXApi.APP_ID);
+                    api.sendReq(request);
+//                    WXApi.sendPayReq(sign, partnerId, prepayId, nonceStr, timeStamp, packageValue);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -177,7 +255,7 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
             case 2: {
                 String[] strs = {"节假日工作日均可", "仅工作日", "仅节假日"};
                 ((TextView) findViewById(R.id.timeContent)).setText(strs[resultCode - 1]);
-                receiveTime = resultCode;
+                receiveTime = resultCode - 1;
             }
             break;
             case 3: {

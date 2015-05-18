@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:minHeight="180dp"
+                android:layout_marginBottom="20dp"
+                android:layout_height="180dp" android:id="@+id/item">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单号:"
+            android:id="@+id/textView6"
+            android:layout_marginLeft="15dp"
+            android:textColor="#6e6e6e"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#6e6e6e"
+            android:text="1273812387120983"
+            android:id="@+id/textView7"
+            android:layout_toRightOf="@+id/textView6"
+            android:layout_alignTop="@+id/textView6"
+            android:layout_toEndOf="@+id/textView6"/>
+    <View android:layout_width="fill_parent" android:layout_height="1dp"
+          android:layout_below="@id/textView9"
+          android:layout_alignLeft="@id/textView9"
+          android:background="@color/f4f4f4"
+          android:layout_marginRight="15dp"
+          android:layout_marginTop="8dp"
+          android:id="@+id/view2"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#e3223f"
+            android:text="等待支付"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="18dp"
+            android:id="@+id/textView16" android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+    <Button
+            android:layout_width="70dp"
+            android:layout_height="28dp"
+            android:text="去支付"
+            android:textColor="#6e6e6e"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/orderbutton"
+            android:id="@+id/button2" android:layout_alignParentBottom="true" android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥198.00"
+            android:textSize="16sp"
+            android:textColor="#e3223f"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/textView17" android:layout_above="@+id/button2" android:layout_alignRight="@id/button2"
+            />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单金额:"
+            android:textColor="#6e6e6e"
+            android:id="@+id/textView18" android:layout_alignTop="@+id/textView17"
+            android:layout_toLeftOf="@+id/button2" android:layout_toStartOf="@+id/button2"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="税费￥98.00"
+            android:textColor="#bebebe"
+            android:layout_marginRight="20dp"
+            android:id="@+id/textView19" android:layout_alignTop="@+id/textView18"
+            android:layout_toLeftOf="@+id/textView18" android:layout_toStartOf="@+id/textView18"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_in"
+            android:id="@+id/imageView9"
+            android:layout_alignTop="@+id/gridView" android:layout_alignRight="@+id/view2"
+            android:layout_alignEnd="@+id/view2"/>
+    <GridView
+            android:layout_marginTop="14dp"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_marginRight="50dp"
+            android:id="@+id/gridView" android:layout_below="@+id/textView6" android:layout_alignLeft="@+id/textView6"
+            android:layout_alignStart="@+id/textView6"/>
+
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package com.qualifies.app.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -259,11 +260,11 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
         System.out.println(position);
         int goods_id = Integer.valueOf(data.get(position).get("goods_id").toString());
 
-//		Intent intent = new Intent(SearchResultActivity.this, GoodDetailActivity.class);
-//		Bundle bundle = new Bundle();
-//		bundle.putInt("goods_id", goods_id);
-//		intent.putExtra("goods_id", bundle);
-//		startActivity(intent);
+		Intent intent = new Intent(SearchResultActivity.this, GoodDetailActivity.class);
+		Bundle bundle = new Bundle();
+		bundle.putInt("goods_id", goods_id);
+		intent.putExtra("goods_id", bundle);
+		startActivity(intent);
     }
 }
 

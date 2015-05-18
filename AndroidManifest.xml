@@ -9,8 +9,10 @@
             android:targetSdkVersion="22"/>
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
     <application
             android:allowBackup="true"
             android:icon="@drawable/ic_launcher"
@@ -58,6 +60,24 @@
                   android:configChanges="keyboardHidden|orientation"
                   android:windowSoftInputMode="stateHidden"
                 />
+        <activity android:name="com.qualifies.app.wxapi.WXPayEntryActivity"
+                  android:exported="true"
+                  android:launchMode="singleTop"
+                >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="wxd930ea5d5a258f4f"/>
+            </intent-filter>
+        </activity>
+
+
+        <receiver
+                android:name="com.qualifies.app.util.AppRegister">
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

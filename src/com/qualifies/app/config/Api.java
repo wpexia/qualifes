@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Message;
+import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,6 +31,7 @@ public class Api {
                 if (response.getInt("status") == 401) {
                     SharedPreferences sp = mContext.getSharedPreferences("user", Activity.MODE_PRIVATE);
                     sp.edit().remove("token").apply();
+                    Toast.makeText(mContext, "请重新登陆!", Toast.LENGTH_SHORT).show();
                 }
                 if (response.getInt("status") < 200 || response.getInt("status") >= 300)
                     msg.what = 1;

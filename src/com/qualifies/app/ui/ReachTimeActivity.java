@@ -18,13 +18,13 @@ public class ReachTimeActivity extends Activity implements View.OnClickListener{
         Intent intent = getIntent();
         int choose = intent.getIntExtra("choose",0);
         this.setResult(choose);
-        if(choose == 1){
+        if(choose == 0){
             findViewById(R.id.timechoose1).setVisibility(View.VISIBLE);
         }
-        if(choose == 2){
+        if(choose == 1){
             findViewById(R.id.timechoose2).setVisibility(View.VISIBLE);
         }
-        if(choose == 3){
+        if(choose == 2){
             findViewById(R.id.timechoose3).setVisibility(View.VISIBLE);
         }
         findViewById(R.id.time1).setOnClickListener(this);
@@ -36,17 +36,17 @@ public class ReachTimeActivity extends Activity implements View.OnClickListener{
         int id = v.getId();
         switch (id) {
             case R.id.time1:{
-                this.setResult(0);
-                finish();
-            }
-            break;
-            case R.id.time2:{
                 this.setResult(1);
                 finish();
             }
             break;
-            case R.id.time3:{
+            case R.id.time2:{
                 this.setResult(2);
+                finish();
+            }
+            break;
+            case R.id.time3:{
+                this.setResult(3);
                 finish();
             }
             break;

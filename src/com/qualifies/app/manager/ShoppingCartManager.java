@@ -31,7 +31,6 @@ public class ShoppingCartManager {
         private String[] goodsAttr;
         private String[] goodsNum;
         private Handler handler;
-        private Context context;
 
         public AddShoppingCart(String token, String[] goodsId, String[] goodsAttr, String[] goodsNum, Handler handler, Context context) {
             this.token = token;
@@ -39,7 +38,6 @@ public class ShoppingCartManager {
             this.goodsAttr = goodsAttr;
             this.goodsNum = goodsNum;
             this.handler = handler;
-            this.context = context;
         }
 
         @Override

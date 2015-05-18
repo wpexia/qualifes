@@ -1,5 +1,7 @@
 package com.qualifies.app.ui;
 
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.widget.Toast;
 import com.qualifies.app.manager.LoginManager;
 import com.qualifies.app.R;
@@ -14,6 +16,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import com.qualifies.app.manager.ShoppingCartManager;
+import com.qualifies.app.util.OfflineCartDbHelper;
 
 public class LoginActivity extends Activity implements OnClickListener {
     private EditText userNameText;
@@ -66,14 +70,30 @@ public class LoginActivity extends Activity implements OnClickListener {
             startActivity(intent);
         }
     }
+
     //Handler
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0: {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("username", userNameText.getText().toString());
                     Toast.makeText(getApplicationContext(), "登陆成功", Toast.LENGTH_SHORT).show();
+                    SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
+                    String token = sp.getString("token", "  ");
+                    OfflineCartDbHelper helper = new OfflineCartDbHelper(getApplicationContext());
+                    Cursor cursor = helper.select();
+                    String[] goodIds = new String[100];
+                    String[] goodAttr = new String[100];
+                    String[] goodNum = new String[100];
+                    int i = 0;
+                    while (cursor.moveToNext()) {
+                        goodIds[i] = cursor.getString(1);
+                        goodAttr[i] = cursor.getString(2);
+                        goodNum[i] = cursor.getString(3);
+                        i++;
+                    }
+                    ShoppingCartManager manager = ShoppingCartManager.getInstance();
+                    manager.addShoppingCart(token, goodIds, goodAttr, goodNum, addOfflineHandler, getApplicationContext());
+
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
@@ -83,6 +103,16 @@ public class LoginActivity extends Activity implements OnClickListener {
                     break;
             }
 
+        }
+    };
+
+    Handler addOfflineHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                OfflineCartDbHelper helper = new OfflineCartDbHelper(getApplicationContext());
+                helper.clear();
+            }
         }
     };
 

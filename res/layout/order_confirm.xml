@@ -81,6 +81,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="#6e6e6e"
                             android:id="@+id/timeContent"
+                            android:text="节假日工作日均可"
                             android:textSize="16sp" android:layout_centerVertical="true"
                             android:layout_marginLeft="100dp"/>
                     <TextView

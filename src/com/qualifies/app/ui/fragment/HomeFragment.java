@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,6 +19,8 @@ import com.qualifies.app.ui.HomeActivity;
 import com.qualifies.app.ui.adapter.HomeBottomAdapter;
 import com.qualifies.app.ui.adapter.HomeGridViewAdapter;
 import com.qualifies.app.util.AsyncImageLoader;
+import com.qualifies.app.util.DisplayParams;
+import com.qualifies.app.util.DisplayUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -357,6 +360,12 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        DisplayParams params = DisplayParams.getInstance(getActivity().getApplicationContext());
+        if (e1.getY() > DisplayUtil.dip2px(210, params.scale)) {
+//            Log.e("y", String.valueOf(e1.getY()));
+//            Log.e("px", String.valueOf(DisplayUtil.px2dip(210, params.scale)));
+            return false;
+        }
         if (e2.getX() - e1.getX() > 200) {             // 从左向右滑动（左进右出）
             viewFlipper.stopFlipping();                // 点击事件后，停止自动播放
             viewFlipper.setAutoStart(false);
