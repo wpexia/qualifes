@@ -4,7 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.qualifies.app.R;
+import com.qualifes.app.R;
 import in.srain.cube.util.LocalDisplay;
 import in.srain.cube.views.block.BlockListAdapter;
 import in.srain.cube.views.block.BlockListView;

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="60dp"
+              android:background="@color/f4f4f4"
+              android:layout_height="60dp">
+            <ImageView android:layout_width="60dp"
+                       android:id="@+id/image"
+                       android:scaleType="fitXY"
+                       android:src="@drawable/img_empty"
+                       android:layout_height="60dp"/>
+</LinearLayout>

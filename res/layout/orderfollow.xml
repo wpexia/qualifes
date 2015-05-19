@@ -69,10 +69,9 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="178978687"
                 android:textSize="16sp"
                 android:textColor="#3d3d3d"
-                android:id="@+id/textView37"
+                android:id="@+id/sn"
                 android:layout_alignBottom="@+id/textView35"
                 android:layout_alignLeft="@+id/textView36"
                 android:layout_alignStart="@+id/textView36"/>

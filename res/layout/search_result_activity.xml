@@ -3,7 +3,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/f4f4f4"
-                tools:context="com.qualifies.app.qualifieslife.SearchResultActivity">
+                tools:context="com.qualifes.app.qualifieslife.SearchResultActivity">
 
     <RelativeLayout
             android:id="@+id/home_search_result_head"

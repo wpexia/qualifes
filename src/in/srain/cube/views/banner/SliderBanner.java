@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.RelativeLayout;
-import com.qualifies.app.R;
+import com.qualifes.app.R;
 import in.srain.cube.views.DotView;
 import in.srain.cube.views.mix.AutoPlayer;
 

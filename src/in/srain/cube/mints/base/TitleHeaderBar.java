@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.qualifies.app.R;
+import com.qualifes.app.R;
 
 public class TitleHeaderBar extends RelativeLayout {
 

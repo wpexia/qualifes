@@ -13,7 +13,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.widget.Toast;
-import com.qualifies.app.R;
+import com.qualifes.app.R;
 
 
 import java.io.File;

@@ -9,6 +9,7 @@
         android:layout_width="144px"
         android:layout_height="140px"
         android:scaleType="fitXY"
+        android:src="@drawable/img_empty"
         android:layout_marginTop="10px"
         android:layout_centerHorizontal="true"/>
 	<TextView 

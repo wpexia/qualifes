@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
-import com.qualifies.app.R;
+import com.qualifes.app.R;
 import in.srain.cube.views.banner.PagerIndicator;
 
 public class DotView extends LinearLayout implements PagerIndicator {

@@ -126,7 +126,7 @@
                         android:layout_height="200px"
                         android:layout_below="@+id/twoPicViewGroup"
                         android:layout_marginTop="10px"
-                        android:layout_toRightOf="@+id/care">"
+                        android:layout_toRightOf="@+id/care">
                     <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent">

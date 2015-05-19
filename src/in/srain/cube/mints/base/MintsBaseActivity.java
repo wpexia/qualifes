@@ -1,6 +1,6 @@
 package in.srain.cube.mints.base;
 
-import com.qualifies.app.R;
+import com.qualifes.app.R;
 import in.srain.cube.app.XActivity;
 
 public abstract class MintsBaseActivity extends XActivity {

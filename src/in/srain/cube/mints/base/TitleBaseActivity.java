@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import com.qualifies.app.R;
+import com.qualifes.app.R;
 
 public abstract class TitleBaseActivity extends MintsBaseActivity {
 

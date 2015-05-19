@@ -19,6 +19,7 @@
     <ImageView
             android:id="@+id/info_image"
             android:layout_width="140px"
+            android:src="@drawable/img_empty"
             android:layout_height="140px"
             android:layout_below="@+id/info_top"
             android:layout_marginLeft="30px"

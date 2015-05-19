@@ -8,7 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.util.AttributeSet;
 import android.view.View;
-import com.qualifies.app.R;
+import com.qualifes.app.R;
 
 
 public class MoreActionView extends View {

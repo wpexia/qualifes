@@ -31,7 +31,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
-import com.qualifies.app.R;
+import com.qualifes.app.R;
 import kankan.wheel.widget.adapters.WheelViewAdapter;
 
 import java.util.LinkedList;

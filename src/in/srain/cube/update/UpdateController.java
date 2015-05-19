@@ -13,7 +13,7 @@ import android.net.Uri;
 import android.view.Gravity;
 import android.widget.RemoteViews;
 import android.widget.Toast;
-import com.qualifies.app.R;
+import com.qualifes.app.R;
 import in.srain.cube.cache.DiskFileUtils;
 
 import java.io.File;

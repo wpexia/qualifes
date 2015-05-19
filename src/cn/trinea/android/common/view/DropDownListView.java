@@ -14,12 +14,11 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.qualifies.app.R;
+import com.qualifes.app.R;
 
 /**
  * <strong> Listview which can do something when drop down or scroll to bottom. for example, drop down to refresh and

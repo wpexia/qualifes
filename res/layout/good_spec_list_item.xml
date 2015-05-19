@@ -12,7 +12,7 @@
             android:textColor="#6e6e6e"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="18dp"/>
-    <com.qualifies.app.ui.view.GoodSpecGridView
+    <com.qualifes.app.ui.view.GoodSpecGridView
             android:id="@+id/spec_model_gridView"
             android:layout_below="@+id/spec_model_name"
             android:layout_marginTop="14dp"
@@ -25,5 +25,5 @@
             android:verticalSpacing="15dp"
             android:gravity="left"
             android:layout_height="wrap_content">
-    </com.qualifies.app.ui.view.GoodSpecGridView>
+    </com.qualifes.app.ui.view.GoodSpecGridView>
 </RelativeLayout>

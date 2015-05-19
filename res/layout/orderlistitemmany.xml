@@ -3,6 +3,7 @@
                 android:layout_width="match_parent"
                 android:background="@color/white"
                 android:minHeight="180dp"
+                android:clickable="true"
                 android:layout_marginBottom="20dp"
                 android:layout_height="180dp" android:id="@+id/item">
 
@@ -13,6 +14,7 @@
             android:id="@+id/textView6"
             android:layout_marginLeft="15dp"
             android:textColor="#6e6e6e"
+            android:textSize="10sp"
             android:layout_marginTop="10dp"
             android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"/>
@@ -20,18 +22,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#6e6e6e"
-            android:text="1273812387120983"
-            android:id="@+id/textView7"
+            android:textSize="10sp"
+            android:text="12123123"
+            android:id="@+id/sn"
             android:layout_toRightOf="@+id/textView6"
             android:layout_alignTop="@+id/textView6"
             android:layout_toEndOf="@+id/textView6"/>
-    <View android:layout_width="fill_parent" android:layout_height="1dp"
-          android:layout_below="@id/textView9"
-          android:layout_alignLeft="@id/textView9"
-          android:background="@color/f4f4f4"
-          android:layout_marginRight="15dp"
-          android:layout_marginTop="8dp"
-          android:id="@+id/view2"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,7 +36,7 @@
             android:text="等待支付"
             android:layout_marginLeft="15dp"
             android:layout_marginBottom="18dp"
-            android:id="@+id/textView16" android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+            android:id="@+id/status" android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"/>
     <Button
             android:layout_width="70dp"
@@ -50,7 +46,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/orderbutton"
-            android:id="@+id/button2" android:layout_alignParentBottom="true" android:layout_alignParentRight="true"
+            android:id="@+id/button" android:layout_alignParentBottom="true" android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"/>
     <TextView
             android:layout_width="wrap_content"
@@ -59,36 +55,57 @@
             android:textSize="16sp"
             android:textColor="#e3223f"
             android:layout_marginBottom="10dp"
-            android:id="@+id/textView17" android:layout_above="@+id/button2" android:layout_alignRight="@id/button2"
+            android:id="@+id/money" android:layout_above="@+id/button" android:layout_alignRight="@id/button"
             />
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="订单金额:"
             android:textColor="#6e6e6e"
-            android:id="@+id/textView18" android:layout_alignTop="@+id/textView17"
-            android:layout_toLeftOf="@+id/button2" android:layout_toStartOf="@+id/button2"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="税费￥98.00"
-            android:textColor="#bebebe"
-            android:layout_marginRight="20dp"
-            android:id="@+id/textView19" android:layout_alignTop="@+id/textView18"
-            android:layout_toLeftOf="@+id/textView18" android:layout_toStartOf="@+id/textView18"/>
+            android:layout_marginRight="15dp"
+            android:id="@+id/textView18" android:layout_alignTop="@+id/money"
+            android:layout_toLeftOf="@+id/button" android:layout_toStartOf="@+id/button"/>
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_in"
             android:id="@+id/imageView9"
-            android:layout_alignTop="@+id/gridView" android:layout_alignRight="@+id/view2"
-            android:layout_alignEnd="@+id/view2"/>
-    <GridView
-            android:layout_marginTop="14dp"
-            android:layout_width="fill_parent"
+            android:layout_alignTop="@+id/firstList"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            />
+    <HorizontalScrollView
+            android:id="@+id/firstList"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginTop="14dp"
             android:layout_marginRight="50dp"
-            android:id="@+id/gridView" android:layout_below="@+id/textView6" android:layout_alignLeft="@+id/textView6"
-            android:layout_alignStart="@+id/textView6"/>
+            android:layout_below="@+id/textView6" android:layout_alignLeft="@+id/textView6"
+            android:layout_alignStart="@+id/textView6">
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent">
+            <GridView
+                    android:id="@+id/gridView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:scrollbars="none"
+                    android:fadingEdge="none"
+                    android:listSelector="#00000000"
+                    android:gravity="center"
+                    android:numColumns="auto_fit"
+                    android:stretchMode="spacingWidthUniform">
+            </GridView>
+        </LinearLayout>
+    </HorizontalScrollView>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="下单时间："
+            android:textColor="#6e6e6e"
+            android:textSize="10sp"
+            android:id="@+id/add_time" android:layout_alignBottom="@+id/sn"
+            android:layout_toRightOf="@+id/sn" android:layout_toEndOf="@+id/sn"/>
 
 </RelativeLayout>

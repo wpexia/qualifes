@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.widget.Toast;
-import com.qualifies.app.R;
+import com.qualifes.app.R;
 import in.srain.cube.cache.DiskFileUtils;
 import in.srain.cube.diskcache.FileUtils;
 

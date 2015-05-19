@@ -15,6 +15,7 @@
                 android:layout_height="50dp"
                 android:layout_width="wrap_content"
                 android:clickable="true"
+                android:id="@+id/nopayorder"
                 android:layout_weight="1" android:background="@drawable/personal_press">
             <ImageView
                     android:layout_width="wrap_content"
@@ -35,6 +36,7 @@
                 android:layout_height="50dp"
                 android:layout_width="wrap_content"
                 android:clickable="true"
+                android:id="@+id/noshiporder"
                 android:layout_weight="1" android:background="@drawable/personal_press">
             <ImageView
                     android:layout_width="wrap_content"
@@ -55,6 +57,7 @@
                 android:layout_height="50dp"
                 android:layout_width="wrap_content"
                 android:clickable="true"
+                android:id="@+id/orderlist"
                 android:layout_weight="1" android:background="@drawable/personal_press">
             <ImageView
                     android:layout_width="wrap_content"

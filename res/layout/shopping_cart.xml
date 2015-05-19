@@ -42,10 +42,12 @@
                   android:layout_height="48dp">
         <RelativeLayout android:layout_width="match_parent" android:layout_height="48dp">
             <CheckBox
-                    android:layout_marginLeft="9dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginRight="9dp"
                     android:paddingTop="20dp"
                     android:paddingBottom="20dp"
+                    android:paddingLeft="9dp"
+                    android:paddingRight="9dp"
                     android:layout_width="wrap_content"
                     android:button="@drawable/checkbutton"
                     android:layout_height="wrap_content"
