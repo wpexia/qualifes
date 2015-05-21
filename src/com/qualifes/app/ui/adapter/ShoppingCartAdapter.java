@@ -1,12 +1,16 @@
 package com.qualifes.app.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.qualifes.app.R;
+import com.qualifes.app.ui.GoodDetailActivity;
 import com.qualifes.app.ui.HomeActivity;
 import com.qualifes.app.util.AsyncImageLoader;
 import org.json.JSONArray;
@@ -38,6 +42,11 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
+        try {
+            return mData.getJSONObject(position);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -52,7 +61,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
         try {
             final JSONObject obj = mData.getJSONObject(position);
             ((TextView) convertView.findViewById(R.id.name)).setText(obj.getString("goods_name"));
-
+            ((TextView) convertView.findViewById(R.id.price)).setText("￥" + obj.getString("goods_price"));
             final EditText number = ((EditText) convertView.findViewById(R.id.number));
             if (obj.getInt("goods_number") > obj.getInt("goods_inventory")) {
                 obj.remove("goods_number");
@@ -101,6 +110,21 @@ public class ShoppingCartAdapter extends BaseAdapter {
                         }
 
                     }
+                }
+            });
+            convertView.findViewById(R.id.item).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, GoodDetailActivity.class);
+                    Bundle bundle = new Bundle();
+//                    Log.e("goodsId", mData.get(position).get("goods_id").toString());
+                    try {
+                        bundle.putInt("goods_id", obj.getInt("goods_id"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    intent.putExtra("goods_id", bundle);
+                    ((Activity) context).startActivity(intent);
                 }
             });
             ImageView image = (ImageView) convertView.findViewById(R.id.image);

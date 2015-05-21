@@ -1,54 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.qualifes.app"
-          android:versionCode="1"
-          android:versionName="1.0">
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0"
+          package="com.qualifes.app">
 
-    <uses-sdk
-            android:minSdkVersion="15"
-            android:targetSdkVersion="22"/>
+    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="22"/>
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <application
-            android:allowBackup="true"
-            android:icon="@drawable/ic_launcher"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar">
-        <activity
-                android:name="com.qualifes.app.ui.RegisterActivity"
-                android:launchMode="singleTask"
-                android:label="@string/register_name">
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission  android:name="android.permission.CALL_PHONE" />
+
+
+    <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name"
+                 android:theme="@android:style/Theme.NoTitleBar">
+        <activity android:label="@string/register_name" android:launchMode="singleTask"
+                  android:name="com.qualifes.app.ui.RegisterActivity">
         </activity>
-        <activity
-                android:name="com.qualifes.app.ui.ProtocolActivity"
-                android:launchMode="singleTask"
-                android:label="@string/protocol_name">
+        <activity android:label="@string/protocol_name" android:launchMode="singleTask"
+                  android:name="com.qualifes.app.ui.ProtocolActivity">
         </activity>
-        <activity android:name="com.qualifes.app.ui.HomeActivity"
-                  android:windowSoftInputMode="adjustPan"
-                  android:launchMode="singleTask" android:label="品制生活">
+        <activity android:label="品制生活" android:launchMode="singleTask" android:name="com.qualifes.app.ui.HomeActivity"
+                  android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.qualifes.app.ui.LoginActivity" android:launchMode="singleTask"/>
+        <activity android:launchMode="singleTask" android:name="com.qualifes.app.ui.LoginActivity"/>
         <activity android:name="com.qualifes.app.ui.HistoryActivity"/>
         <activity android:name="com.qualifes.app.ui.FollowActivity"/>
         <activity android:name="com.qualifes.app.ui.SettingActivity"/>
         <activity android:name="com.qualifes.app.ui.PositionActivity"/>
         <activity android:name="com.qualifes.app.ui.AddPositionActivity"/>
-        <activity android:name="com.qualifes.app.ui.MoneyActivity"
-                  android:configChanges="keyboardHidden|orientation"
-                  android:windowSoftInputMode="stateHidden"
-                />
-        <activity android:name="com.qualifes.app.ui.SearchResultActivity"/>
-        <activity android:name="com.qualifes.app.ui.GoodDetailActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation" android:name="com.qualifes.app.ui.MoneyActivity"
+                  android:windowSoftInputMode="stateHidden"/>
+        <activity android:launchMode="singleTask" android:name="com.qualifes.app.ui.SearchResultActivity"/>
+        <activity android:name="com.qualifes.app.ui.GoodDetailActivity"
+                  android:theme="@style/Theme.InCallScreen"
+                >
+            <intent-filter>
+                <data android:scheme="qualifes"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+
+        </activity>
+
+
         <activity android:name="com.qualifes.app.ui.GoodSpecActivity"/>
         <activity android:name="com.qualifes.app.ui.OrderConfirmActivity"/>
         <activity android:name="com.qualifes.app.ui.ChoosePositionActivity"/>
@@ -56,24 +59,20 @@
         <activity android:name="com.qualifes.app.ui.ReachTimeActivity"/>
         <activity android:name="com.qualifes.app.ui.SendFunctionPriceActivity"/>
         <activity android:name="com.qualifes.app.ui.PayFunctionActivity"/>
-        <activity android:name="com.qualifes.app.ui.MoneyChooseActivity"
-                  android:configChanges="keyboardHidden|orientation"
-                  android:windowSoftInputMode="stateHidden"
-                />
+        <activity android:configChanges="keyboardHidden|orientation"
+                  android:name="com.qualifes.app.ui.MoneyChooseActivity" android:windowSoftInputMode="stateHidden"/>
         <activity android:name="com.qualifes.app.ui.OrderNoPayActivity"/>
-        <activity android:name=".ui.OrderDetailActivity"
-                  android:launchMode="singleTop"/>
-        <activity android:name=".ui.OrderNoShipActivity"
-                  android:launchMode="singleTop"/>
-        <activity android:name=".ui.OrderListActivity"
-                  android:launchMode="singleTop"/>
-        <activity android:name=".ui.WuLiuActivity"
-                  android:launchMode="singleTop"
-                />
-        <activity android:name="com.qualifes.app.wxapi.WXPayEntryActivity"
-                  android:exported="true"
-                  android:launchMode="singleTop"
-                >
+        <activity android:launchMode="singleTop" android:name=".ui.OrderDetailActivity"/>
+        <activity android:launchMode="singleTop" android:name=".ui.OrderNoShipActivity"/>
+        <activity android:launchMode="singleTop" android:name=".ui.OrderListActivity"/>
+        <activity android:launchMode="singleTop" android:name=".ui.WuLiuActivity"/>
+        <activity android:name=".ui.SearchKindActivity"/>
+        <activity android:name=".ui.WebActivity"/>
+        <activity android:name=".ui.GoodInfoActivity"/>
+        <activity android:name=".ui.ShoppingCartActivity"/>
+        <activity android:name=".ui.view.GoodCanshuActivity"/>
+        <activity android:exported="true" android:launchMode="singleTop"
+                  android:name="com.qualifes.app.wxapi.WXPayEntryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -82,12 +81,20 @@
         </activity>
 
 
-        <receiver
-                android:name="com.qualifes.app.util.AppRegister">
+        <receiver android:name="com.qualifes.app.util.AppRegister">
             <intent-filter>
                 <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP"/>
             </intent-filter>
         </receiver>
+        <meta-data android:name="UMENG_APPKEY" android:value="555b11ea67e58e321f001662"/>
+        <activity android:configChanges="orientation|keyboard" android:launchMode="singleTask"
+                  android:name="com.umeng.socialize.view.ShareActivity" android:noHistory="true"
+                  android:theme="@style/Theme.UMDialog" android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:exported="true"
+                  android:name=".wxapi.WXEntryActivity" android:screenOrientation="portrait"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
     </application>
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 </manifest>

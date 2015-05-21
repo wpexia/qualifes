@@ -61,7 +61,16 @@ public class AddPositionActivity extends Activity implements View.OnClickListene
                 String positionStr = plistHelper.getPosition(provinceIndex, cityIndex, townIndex);
                 position.setText(positionStr);
                 province.setCurrentItem(provinceIndex);
+                String[] cities = plistHelper.getCity(provinceIndex);
+                ArrayWheelAdapter<String> adapterc = new ArrayWheelAdapter<String>(d.getContext(), cities);
+                adapterc.setTextSize(18);
+                city.setViewAdapter(adapterc);
                 city.setCurrentItem(cityIndex);
+
+                String[] towns = plistHelper.getTown(provinceIndex, cityIndex);
+                ArrayWheelAdapter<String> adaptert = new ArrayWheelAdapter<String>(d.getContext(), towns);
+                adaptert.setTextSize(18);
+                town.setViewAdapter(adaptert);
                 town.setCurrentItem(townIndex);
 
                 addressId = obj.getString("address_id");

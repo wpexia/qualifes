@@ -3,10 +3,12 @@ package com.qualifes.app.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.qualifes.app.R;
 
 public class SettingActivity extends Activity implements View.OnClickListener {
@@ -25,6 +27,10 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         openImage = (RelativeLayout) findViewById(R.id.openImage);
         openImage.setOnClickListener(this);
         findViewById(R.id.logout).setOnClickListener(this);
+        findViewById(R.id.call).setOnClickListener(this);
+        findViewById(R.id.cleancache).setOnClickListener(this);
+        findViewById(R.id.aboutus).setOnClickListener(this);
+        findViewById(R.id.help).setOnClickListener(this);
     }
 
     @Override
@@ -60,6 +66,27 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 startActivity(intent);
             }
             break;
+            case R.id.call: {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4008946066"));
+                startActivity(intent);
+            }
+            break;
+            case R.id.cleancache: {
+                Toast.makeText(this,"清除成功",Toast.LENGTH_SHORT).show();
+            }
+            break;
+            case R.id.aboutus: {
+                Intent intent = new Intent(SettingActivity.this, WebActivity.class);
+                intent.putExtra("url", "http://www.qualifes.com/webview/release/ios_info/about.html");
+                startActivity(intent);
+            }
+            break;
+            case R.id.help: {
+                Intent intent = new Intent(SettingActivity.this, WebActivity.class);
+                intent.putExtra("url", "http://www.qualifes.com/webview/release/ios_info/help.html");
+                startActivity(intent);
+            }
+
         }
     }
 }

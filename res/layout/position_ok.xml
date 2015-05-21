@@ -58,11 +58,12 @@
                 android:id="@+id/defaultphone" android:layout_toLeftOf="@+id/icon_in"
                 android:layout_toStartOf="@+id/icon_in"/>
     </RelativeLayout>
-    <ListView android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/listView"
-              android:layout_marginTop="10dp"
-              android:layout_below="@+id/defaultposition"/>
+    <cn.trinea.android.common.view.DropDownListView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/defaultposition"/>
     <Button
             android:layout_width="fill_parent"
             android:layout_height="50dp"

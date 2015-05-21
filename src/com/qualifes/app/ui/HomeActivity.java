@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,24 +27,51 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
     private SearchFragment searchFragment;
     private ShoppingCartFragment shoppingCartFragment;
     private PersonalFragment personalFragment;
+    boolean flag = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.main);manager = getFragmentManager();
+        fragmentId = 0;
         Api.setContext(getApplicationContext());
-        initView();
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        manager = getFragmentManager();
+        changeFragment();
+        Handler x = new Handler();
+        x.postDelayed(new splashhandler(), 2000);
+    }
+
+    class splashhandler implements Runnable {
+
+        public void run() {
+            flag = true;
+            try {
+                initView();
+
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     private void initView() {
-        manager = getFragmentManager();
-        fragmentId = 0;
+        findViewById(R.id.tab).setVisibility(View.VISIBLE);
+        findViewById(R.id.main).setVisibility(View.VISIBLE);
+        findViewById(R.id.start).setVisibility(View.GONE);
         tab = (LinearLayout) findViewById(R.id.tab);
         changeFragment();
         findViewById(R.id.home).setOnClickListener(this);
         findViewById(R.id.personal).setOnClickListener(this);
         findViewById(R.id.shoppingcart).setOnClickListener(this);
+        findViewById(R.id.list).setOnClickListener(this);
     }
 
 
@@ -88,6 +116,12 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                 fragmentId = 2;
                 changeFragment();
             }
+            break;
+            case R.id.list: {
+                Intent intent = new Intent(this, SearchKindActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
         }
     }
 
@@ -102,7 +136,9 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                 } else {
                     transaction.show(homeFragment);
                 }
-                tab.setVisibility(View.VISIBLE);
+                if (flag) {
+                    tab.setVisibility(View.VISIBLE);
+                }
             }
             break;
             case 2: {

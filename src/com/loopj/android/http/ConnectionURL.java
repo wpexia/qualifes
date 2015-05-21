@@ -13,6 +13,7 @@ public class ConnectionURL {
 	private static String searchURL = "get_so";
 	private static String goodsInfo = "get_goods";
 	private static String hotGoods = "get_hot";
+    private static String goodCategory = "get_category";
 	
 	public final static String getVisualURL() {
 		return baseURL + visualURL;
@@ -26,6 +27,9 @@ public class ConnectionURL {
 	public final static String getHotGoods(){
 		return baseURL + hotGoods;
 	}
+    public final static String getGoodCategory(){
+        return baseURL + goodCategory;
+    }
 	/** 
      * 获取网落图片资源  
      * @param url 

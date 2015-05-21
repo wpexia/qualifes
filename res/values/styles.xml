@@ -43,4 +43,15 @@
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
     </style>
 
+
+    <style name="Theme.PopupMenu"
+           parent="@android:style/Widget.Holo.Light.ListPopupWindow">
+        <item name="android:popupBackground">@color/popupwindow_background</item>
+    </style>
+
+    <style name="Theme.InCallScreen"
+           parent="@android:style/Theme.Holo.NoActionBar">
+        <item name="android:popupMenuStyle">@style/Theme.PopupMenu</item>
+    </style>
+
 </resources>

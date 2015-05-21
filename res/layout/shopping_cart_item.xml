@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
+                android:id="@+id/item"
                 android:background="@color/white"
+                android:clickable="true"
                 android:layout_height="120dp">
     <CheckBox
             android:layout_width="wrap_content"
@@ -81,4 +83,13 @@
           android:background="#dedede"
           android:layout_alignParentBottom="true"
             />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:textSize="16sp"
+            android:layout_marginLeft="14dp"
+            android:textColor="#ff3300"
+            android:id="@+id/price" android:layout_alignBottom="@+id/add" android:layout_toRightOf="@+id/add"
+            android:layout_toEndOf="@+id/add"/>
 </RelativeLayout>

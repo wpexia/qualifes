@@ -51,7 +51,7 @@ public class HistoryActivity extends Activity  implements View.OnClickListener{
             if (productListNotNullFragment == null) {
                 productListNotNullFragment = new ProductListNotNullFragment();
                 productListNotNullFragment.setStar(false);
-                productListNotNullFragment.setData(getData(),0);
+                productListNotNullFragment.setData(0);
                 transaction.add(R.id.fragment, productListNotNullFragment);
             } else {
                 transaction.show(productListNullFragment);

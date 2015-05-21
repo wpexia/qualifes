@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.qualifes.app"
+          android:versionCode="1"
+          android:versionName="1.0">
+
+    <uses-sdk
+            android:minSdkVersion="15"
+            android:targetSdkVersion="22"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+
+
+    <application
+            android:allowBackup="true"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar">
+        <activity
+                android:name="com.qualifes.app.ui.RegisterActivity"
+                android:launchMode="singleTask"
+                android:label="@string/register_name">
+        </activity>
+        <activity
+                android:name="com.qualifes.app.ui.ProtocolActivity"
+                android:launchMode="singleTask"
+                android:label="@string/protocol_name">
+        </activity>
+        <activity android:name="com.qualifes.app.ui.HomeActivity"
+                  android:windowSoftInputMode="adjustPan"
+                  android:launchMode="singleTask" android:label="品制生活">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.qualifes.app.ui.LoginActivity" android:launchMode="singleTask"/>
+        <activity android:name="com.qualifes.app.ui.HistoryActivity"/>
+        <activity android:name="com.qualifes.app.ui.FollowActivity"/>
+        <activity android:name="com.qualifes.app.ui.SettingActivity"/>
+        <activity android:name="com.qualifes.app.ui.PositionActivity"/>
+        <activity android:name="com.qualifes.app.ui.AddPositionActivity"/>
+        <activity android:name="com.qualifes.app.ui.MoneyActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:windowSoftInputMode="stateHidden"
+                />
+        <activity android:name="com.qualifes.app.ui.SearchResultActivity"
+                  android:launchMode="singleTask"
+                />
+        <activity android:name="com.qualifes.app.ui.GoodDetailActivity">
+            <intent-filter>
+                <data android:scheme="qualifes"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+
+        </activity>
+
+
+        <activity android:name="com.qualifes.app.ui.GoodSpecActivity"/>
+        <activity android:name="com.qualifes.app.ui.OrderConfirmActivity"/>
+        <activity android:name="com.qualifes.app.ui.ChoosePositionActivity"/>
+        <activity android:name="com.qualifes.app.ui.OrderGoodsDetailActivity"/>
+        <activity android:name="com.qualifes.app.ui.ReachTimeActivity"/>
+        <activity android:name="com.qualifes.app.ui.SendFunctionPriceActivity"/>
+        <activity android:name="com.qualifes.app.ui.PayFunctionActivity"/>
+        <activity android:name="com.qualifes.app.ui.MoneyChooseActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:windowSoftInputMode="stateHidden"
+                />
+        <activity android:name="com.qualifes.app.ui.OrderNoPayActivity"/>
+        <activity android:name=".ui.OrderDetailActivity"
+                  android:launchMode="singleTop"/>
+        <activity android:name=".ui.OrderNoShipActivity"
+                  android:launchMode="singleTop"/>
+        <activity android:name=".ui.OrderListActivity"
+                  android:launchMode="singleTop"/>
+        <activity android:name=".ui.WuLiuActivity"
+                  android:launchMode="singleTop"
+                />
+        <activity android:name=".ui.SearchKindActivity"/>
+        <activity android:name=".ui.WebActivity"/>
+        <activity android:name=".ui.GoodInfoActivity"/>
+        <activity android:name=".ui.ShoppingCartActivity"/>
+        <activity android:name=".ui.view.GoodCanshuActivity"/>
+        <activity android:name="com.qualifes.app.wxapi.WXPayEntryActivity"
+                  android:exported="true"
+                  android:launchMode="singleTop"
+                >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="wx6d7eadfe25abaa8f "/>
+            </intent-filter>
+        </activity>
+
+
+        <receiver
+                android:name="com.qualifes.app.util.AppRegister">
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP"/>
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

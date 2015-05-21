@@ -94,8 +94,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                     ShoppingCartManager manager = ShoppingCartManager.getInstance();
                     manager.addShoppingCart(token, goodIds, goodAttr, goodNum, addOfflineHandler, getApplicationContext());
 
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(intent);
+                    finish();
                 }
                 break;
                 case 1:

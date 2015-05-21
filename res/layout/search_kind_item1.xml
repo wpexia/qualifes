@@ -16,6 +16,7 @@
         android:id="@+id/home_search_kind_item_children"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_below="@+id/home_search_kind_item_name"
         android:layout_alignLeft="@+id/home_search_kind_item_name"
         android:layout_marginTop="18px"

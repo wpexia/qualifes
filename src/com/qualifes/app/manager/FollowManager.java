@@ -3,6 +3,7 @@ package com.qualifes.app.manager;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -47,7 +48,7 @@ public class FollowManager {
                     super.onSuccess(statusCode, headers, response);
                     Api.dealSuccessRes(response, msg);
                     msg.obj = response;
-//                    Log.e("follow", response.toString());
+                    Log.e("follow", response.toString());
                     handler.sendMessage(msg);
                 }
 

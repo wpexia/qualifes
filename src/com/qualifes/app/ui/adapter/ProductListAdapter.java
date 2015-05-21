@@ -48,7 +48,9 @@ public class ProductListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
-        convertView = mInflater.inflate(R.layout.history_item, null);
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.history_item, null);
+        }
         ImageView image = (ImageView) convertView.findViewById(R.id.imageView);
         TextView title = (TextView) convertView.findViewById(R.id.title);
         TextView place = (TextView) convertView.findViewById(R.id.place);

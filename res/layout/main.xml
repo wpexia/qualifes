@@ -3,9 +3,22 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                    android:background="@color/white"
+                    android:id="@+id/start"
+            >
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_slogan"
+                android:paddingBottom="24dp"
+                android:id="@+id/imageView8" android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
     <LinearLayout
             android:background="#ffffff"
             android:id="@+id/tab"
+            android:visibility="invisible"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="48dp" android:layout_alignParentBottom="true"
@@ -44,6 +57,8 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:id="@+id/main"
+            android:visibility="invisible"
             android:layout_above="@+id/tab"
-            />
+            >
+    </FrameLayout>
 </RelativeLayout>

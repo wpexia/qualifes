@@ -1,18 +1,37 @@
 package com.qualifes.app.ui;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.*;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
+import android.os.Handler;
+import android.os.Message;
+import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
 import android.widget.*;
 import com.qualifes.app.R;
+import com.qualifes.app.config.Api;
+import com.qualifes.app.ui.view.GoodCanshuActivity;
 import com.qualifes.app.util.AsyncImageLoader;
+import com.qualifes.app.util.DisplayParams;
+import com.qualifes.app.util.DisplayUtil;
+import com.qualifes.app.util.WXApi;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWebPage;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
+import com.umeng.socialize.weixin.media.CircleShareContent;
+import com.umeng.socialize.weixin.media.WeiXinShareContent;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,8 +46,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 
@@ -58,6 +75,8 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
     private int goods_id;
     HashSet<Bitmap> bitmapCache = new HashSet<Bitmap>();
 
+    UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+
 
     private AsyncImageLoader imageLoader = new AsyncImageLoader();
 
@@ -68,13 +87,25 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
         setContentView(R.layout.good_details_activity);
 
         Intent intent = this.getIntent();
-        Bundle bundle = intent.getBundleExtra("goods_id");
-        goods_id = bundle.getInt("goods_id");
+        if (intent.hasExtra("goods_id")) {
+            Bundle bundle = intent.getBundleExtra("goods_id");
+            goods_id = bundle.getInt("goods_id");
+        } else {
+            String url = intent.getDataString();
+            url = url.substring(20, url.length() - 2);
+            goods_id = Integer.parseInt(url);
+        }
         init();
     }
 
     private void init() {
         client = new AsyncHttpClient();
+
+
+        findViewById(R.id.detail_spec).setOnClickListener(this);
+        findViewById(R.id.detail_gooddata).setOnClickListener(this);
+        findViewById(R.id.detail_good_info).setOnClickListener(this);
+        findViewById(R.id.detail_closing_cost).setOnClickListener(this);
         detail_back = (ImageButton) findViewById(R.id.detail_back);
         detail_back.setOnClickListener(this);
 
@@ -115,13 +146,15 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
 
         gestureDetector = new GestureDetector(getApplicationContext(), this);
         accessServer();
+
+
     }
 
     private void accessServer() {
-        RequestParams params = new RequestParams();
+        final RequestParams params = new RequestParams();
         params.put("data[goods_id]", goods_id);
         params.put("data[type]", "j");
-        SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
+        final SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
         if (sp.contains("token")) {
             params.put("token", sp.getString("token", ""));
         }
@@ -132,14 +165,53 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
                 super.onSuccess(statusCode, headers, response);
                 List<String> imgStrs = new ArrayList<String>();
                 try {
-                    JSONObject dataObject = response.getJSONObject("data");
+                    final JSONObject dataObject = response.getJSONObject("data");
                     detail_good_name.setText(dataObject.getString("goods_name"));
-                    JSONArray imgsArray = dataObject.getJSONArray("goods_img");
+                    final JSONArray imgsArray = dataObject.getJSONArray("goods_img");
 
 
                     if (dataObject.getInt("is_coll") != 0) {
                         detail_star.setImageDrawable(getResources().getDrawable(R.drawable.stat_red_circle));
+                    } else {
+                        if (sp.contains("token")) {
+                            detail_star.setOnClickListener(new OnClickListener() {
+                                Handler handler = new Handler() {
+                                    @Override
+                                    public void handleMessage(Message msg) {
+                                        Toast.makeText(GoodDetailActivity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                                        detail_star.setImageDrawable(getResources().getDrawable(R.drawable.stat_red_circle));
+                                        detail_star.setOnClickListener(null);
+                                    }
+                                };
+
+                                @Override
+                                public void onClick(View v) {
+                                    AsyncHttpClient client = new AsyncHttpClient();
+                                    RequestParams params1 = new RequestParams();
+                                    final Message msg = handler.obtainMessage();
+                                    params1.put("token", sp.getString("token", ""));
+                                    params1.put("data[goods_id]", goods_id);
+                                    client.post(Api.url("add_collect"), params1, new JsonHttpResponseHandler() {
+                                        @Override
+                                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                            Api.dealSuccessRes(response, msg);
+                                            handler.sendMessage(msg);
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
+                            detail_star.setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(GoodDetailActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
                     }
+
+
                     detail_goods_name.setText(dataObject.getString("goods_name"));
                     BigDecimal shopPrice = new BigDecimal(dataObject.getString("shop_price"));
                     BigDecimal marketPrice = new BigDecimal(dataObject.getString("market_price"));
@@ -179,7 +251,91 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
                             detail_imgs.startFlipping();
                         }
                     }
+                    findViewById(R.id.detail_share).setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            PopupMenu popup = new PopupMenu(GoodDetailActivity.this, v);
+                            MenuInflater inflater = popup.getMenuInflater();
+                            inflater.inflate(R.menu.main, popup.getMenu());
+                            try {
+                                Field[] fields = popup.getClass().getDeclaredFields();
+                                for (Field field : fields) {
+                                    if ("mPopup".equals(field.getName())) {
+                                        field.setAccessible(true);
+                                        Object menuPopupHelper = field.get(popup);
+                                        Class<?> classPopupHelper = Class.forName(menuPopupHelper
+                                                .getClass().getName());
+                                        Method setForceIcons = classPopupHelper.getMethod(
+                                                "setForceShowIcon", boolean.class);
+                                        setForceIcons.invoke(menuPopupHelper, true);
+                                        break;
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    int id = item.getItemId();
+                                    try {
+                                        if (id == R.id.friend) {
+                                            UMWXHandler wxHandler = new UMWXHandler(GoodDetailActivity.this, WXApi.APP_ID, WXApi.APP_KEY);
+                                            wxHandler.addToSocialSDK();
+                                            UMImage shareImage = new UMImage(GoodDetailActivity.this,imgsArray.getString(0));
+                                            WeiXinShareContent content = new WeiXinShareContent();
+                                            content.setTargetUrl("http://www.qualifes.com/webview/release/goods_info_android/index.html?id=" + goods_id);
+                                            content.setShareMedia(shareImage);
+                                            content.setShareContent(dataObject.getString("goods_name"));
+                                            content.setTitle(dataObject.getString("goods_name"));
+                                            mController.setShareMedia(content);
+                                            mController.directShare(GoodDetailActivity.this, SHARE_MEDIA.WEIXIN, new SocializeListeners.SnsPostListener() {
+                                                @Override
+                                                public void onComplete(SHARE_MEDIA arg0, int arg1,
+                                                                       SocializeEntity arg2) {
+//                                                    Toast.makeText(GoodDetailActivity.this, "分享完成", Toast.LENGTH_SHORT).show();
+                                                }
 
+                                                @Override
+                                                public void onStart() {
+//                                                    Toast.makeText(GoodDetailActivity.this, "开始分享", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        } else {
+                                            UMImage shareImage = new UMImage(GoodDetailActivity.this,imgsArray.getString(0));
+                                            UMWXHandler wxCircleHandler = new UMWXHandler(GoodDetailActivity.this, WXApi.APP_ID, WXApi.APP_KEY);
+                                            wxCircleHandler.setToCircle(true);
+                                            wxCircleHandler.addToSocialSDK();
+                                            CircleShareContent content = new CircleShareContent();
+                                            content.setTargetUrl("http://www.qualifes.com/webview/release/goods_info_android/index.html?id=" + goods_id);
+                                            content.setShareMedia(shareImage);
+                                            content.setShareContent(dataObject.getString("goods_name"));
+                                            content.setTitle(dataObject.getString("goods_name"));
+                                            mController.setShareMedia(content);
+                                            mController.directShare(GoodDetailActivity.this, SHARE_MEDIA.WEIXIN_CIRCLE, new SocializeListeners.SnsPostListener() {
+                                                @Override
+                                                public void onComplete(SHARE_MEDIA arg0, int arg1,
+                                                                       SocializeEntity arg2) {
+//                                                    Toast.makeText(GoodDetailActivity.this, "分享完成", Toast.LENGTH_SHORT).show();
+                                                }
+
+                                                @Override
+                                                public void onStart() {
+//                                                    Toast.makeText(GoodDetailActivity.this, "开始分享", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+                                    return true;
+                                }
+                            });
+                            popup.show();
+                        }
+                    });
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -228,14 +384,22 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
                 break;
             case R.id.detail_share:
                 break;
-            case R.id.detail_good_info_press:
+            case R.id.detail_good_info:
+                Intent intent1 = new Intent(this, GoodInfoActivity.class);
+                intent1.putExtra("url", "http://www.qualifes.com/webview/release/goods_info_ios/miaoshu.html?id=" + goods_id);
+                startActivity(intent1);
                 break;
-            case R.id.detail_spec_press:
+            case R.id.detail_spec:
                 startActivity(intent2);
                 break;
-            case R.id.detail_gooddata_press:
+            case R.id.detail_gooddata:
+                Intent intent3 = new Intent(this, GoodCanshuActivity.class);
+                intent3.putExtra("url", "http://www.qualifes.com/webview/release/goods_info_ios/canshu.html?id=" + goods_id);
+                startActivity(intent3);
                 break;
             case R.id.detail_closing_cost:
+                Intent intent4 = new Intent(this, ShoppingCartActivity.class);
+                startActivity(intent4);
                 break;
             case R.id.detail_addto_shoppingcart:
                 startActivity(intent2);
@@ -278,6 +442,12 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        DisplayParams params = DisplayParams.getInstance(getApplicationContext());
+        if (e1.getY() > DisplayUtil.dip2px(320, params.scale)) {
+//            Log.e("y", String.valueOf(e1.getY()));
+//            Log.e("px", String.valueOf(DisplayUtil.px2dip(210, params.scale)));
+            return false;
+        }
         if (e2.getX() - e1.getX() > 200) {             // 从左向右滑动（左进右出）
             detail_imgs.stopFlipping();                // 点击事件后，停止自动播放
             detail_imgs.setAutoStart(false);

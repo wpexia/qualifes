@@ -143,6 +143,7 @@
             android:id="@+id/detail_spec"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
+            android:clickable="true"
             android:layout_below="@+id/detail_good_info"
             android:background="@drawable/item_stroke"
             >

@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 public class AsyncImageLoader {
 
-
+    int jibuji = 20;
 
     public AsyncImageLoader() {
 
@@ -28,10 +28,8 @@ public class AsyncImageLoader {
                 new Thread() {
                     @Override
                     public void run() {
-                        if (size == 1) {
-                            Process.setThreadPriority(Process.THREAD_PRIORITY_DISPLAY);
-                        } else {
-                            Process.setThreadPriority(Process.THREAD_PRIORITY_LOWEST);
+                        if (jibuji != 20) {
+                            Process.setThreadPriority(jibuji);
                         }
                         Bitmap preview_bitmap = null;
                         try {
@@ -58,6 +56,11 @@ public class AsyncImageLoader {
 
     public Bitmap loadDrawable(final String imageUrl, final ImageView imageView, final ImageCallback imageCallback) {
         return loadDrawable(imageUrl, imageView, imageCallback, 1);
+    }
+
+    public Bitmap loadDrawable(final String imageUrl, final ImageView imageView, final ImageCallback imageCallback, final int size, int jibuji) {
+        this.jibuji = jibuji;
+        return loadDrawable(imageUrl, imageView, imageCallback, size);
     }
 
     //回调接口

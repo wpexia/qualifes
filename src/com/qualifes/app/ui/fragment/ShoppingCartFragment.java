@@ -14,10 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
@@ -26,10 +23,7 @@ import com.qualifes.app.R;
 import com.qualifes.app.manager.FollowManager;
 import com.qualifes.app.manager.HistoryManager;
 import com.qualifes.app.manager.ShoppingCartManager;
-import com.qualifes.app.ui.FollowActivity;
-import com.qualifes.app.ui.HistoryActivity;
-import com.qualifes.app.ui.LoginActivity;
-import com.qualifes.app.ui.OrderConfirmActivity;
+import com.qualifes.app.ui.*;
 import com.qualifes.app.ui.adapter.ShoppingCartAdapter;
 import com.qualifes.app.util.OfflineCartDbHelper;
 import org.json.JSONArray;
@@ -64,41 +58,6 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
         init();
     }
 
-
-//    private void createSwipeMenu() {
-//        SwipeMenuCreator creator = new SwipeMenuCreator() {
-//
-//            @Override
-//            public void create(SwipeMenu menu) {
-//                try {
-//                    SwipeMenuItem deleteItem = new SwipeMenuItem(
-//                            getActivity().getApplicationContext());
-//                    deleteItem.setBackground(new ColorDrawable(Color.rgb(0xFF, 0x33,
-//                            0x00)));
-//                    deleteItem.setWidth(140);
-//                    deleteItem.setTitle("删除");
-//                    deleteItem.setTitleSize(18);
-//                    deleteItem.setTitleColor(Color.WHITE);
-//                    menu.addMenuItem(deleteItem);
-//                } catch (NullPointerException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        };
-//        listView.setMenuCreator(creator);
-//        listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-//            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-//                try {
-//                    Log.w("SwipeMenuListView", "OnClick" + String.valueOf(position) + "    " + String.valueOf(index));
-//
-//                    return true;// false : not close the menu; true : close the menu
-//                } catch (NullPointerException e) {
-//                    e.printStackTrace();
-//                    return true;
-//                }
-//            }
-//        });
-//    }
 
     private void init() {
         if (sp.contains("token")) {
@@ -163,7 +122,7 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                     }
 
                     Log.e("after", data.toString());
-                    final ShoppingCartAdapter adapter = new ShoppingCartAdapter(getActivity().getApplicationContext(), data);
+                    final ShoppingCartAdapter adapter = new ShoppingCartAdapter(getActivity(), data);
                     listView.setAdapter(adapter);
                     listView.setDividerHeight(0);
                     CheckBox checkTotal = (CheckBox) getActivity().findViewById(R.id.totalcheckBox);
@@ -203,7 +162,7 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                         JSONObject obj = data.getJSONObject(i);
                         obj.put("checked", false);
                     }
-                    adapter = new ShoppingCartAdapter(getActivity().getApplicationContext(), data);
+                    adapter = new ShoppingCartAdapter(getActivity(), data);
                     listView.setAdapter(adapter);
                     listView.setDividerHeight(0);
                     CheckBox checkTotal = (CheckBox) getActivity().findViewById(R.id.totalcheckBox);

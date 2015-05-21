@@ -120,7 +120,7 @@ public class PositionManager {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     try {
                         Api.dealSuccessRes(response, msg);
-                        Log.e("get_address", response.toString());
+//                        Log.e("get_address", response.toString());
                         msg.obj = response.getJSONArray("data");
                         handler.sendMessage(msg);
                     } catch (JSONException e) {

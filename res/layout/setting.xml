@@ -40,7 +40,7 @@
                     android:text="拨打400-894-6066"
                     android:textColor="#6e6e6e"
                     android:textSize="14sp"
-                    android:id="@+id/button3"
+                    android:id="@+id/call"
                     android:layout_gravity="center" android:layout_centerVertical="true"
                     android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
                     android:layout_marginRight="10dp"/>
@@ -142,34 +142,6 @@
                 android:layout_height="50dp"
                 android:background="@drawable/presonal_press_line"
                 android:clickable="true"
-                android:id="@+id/rete">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="给品质生活打分"
-                    android:textColor="#6e6e6e"
-                    android:textSize="16sp" android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/personal_icon_history"
-                    android:layout_toEndOf="@+id/personal_icon_history"
-                    android:layout_marginLeft="15dp"/>
-            <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
-                    android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:background="#dedede"
-                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
-        </RelativeLayout>
-        <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/presonal_press_line"
-                android:clickable="true"
                 android:id="@+id/checkupdate">
             <TextView
                     android:layout_width="wrap_content"
@@ -242,12 +214,6 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
                     android:src="@drawable/icon_in" android:background="#ffffffff" android:layout_marginRight="15dp"/>
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:background="#dedede"
-                    android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" android:layout_marginLeft="15dp"/>
         </RelativeLayout>
     </LinearLayout>
     <Button android:layout_width="fill_parent"

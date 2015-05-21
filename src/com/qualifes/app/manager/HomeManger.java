@@ -1,6 +1,8 @@
 package com.qualifes.app.manager;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.*;
 import android.os.Process;
 import com.loopj.android.http.AsyncHttpClient;
@@ -93,6 +95,10 @@ public class HomeManger {
             RequestParams requestParams = new RequestParams();
             requestParams.put("type", "goods");
             requestParams.put("logo", logo);
+            SharedPreferences sp = context.getSharedPreferences("user", Activity.MODE_PRIVATE);
+            if (sp.contains("token")) {
+                requestParams.put("token", sp.getString("token", ""));
+            }
             client.get(Api.url(service), requestParams, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

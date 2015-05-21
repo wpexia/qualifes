@@ -72,7 +72,7 @@ public class FollowActivity extends Activity implements View.OnClickListener {
             if (productListNotNullFragment == null) {
                 productListNotNullFragment = new ProductListNotNullFragment();
                 productListNotNullFragment.setStar(true);
-                productListNotNullFragment.setData(getData(), 1);
+                productListNotNullFragment.setData(1);
                 transaction.add(R.id.fragment, productListNotNullFragment);
             } else {
                 transaction.show(productListNullFragment);

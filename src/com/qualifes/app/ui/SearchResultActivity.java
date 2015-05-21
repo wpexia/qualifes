@@ -41,7 +41,10 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
     SearchAdapter adapter;
 
     AsyncHttpClient client;
+    boolean flag =true;
     List<HashMap<String, Object>> data;
+
+    String ids;
 
     String[] from = {"goods_thumbBitMap", "goods_name", "shop_price", "market_price", "discount", "origin"};
     int[] to = {R.id.search_info_image, R.id.search_info_goods_name, R.id.search_info_shop_price,
@@ -58,9 +61,15 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
 
         Bundle bundle = this.getIntent().getExtras();
         if (bundle != null) {
-            String searchKeyWord = bundle.getString("searchKeyWord");
-            if (searchKeyWord != null) {
-                home_search_result_input.setText(searchKeyWord);
+            if (!bundle.containsKey("flag")) {
+                String searchKeyWord = bundle.getString("searchKeyWord");
+                if (searchKeyWord != null) {
+                    home_search_result_input.setText(searchKeyWord);
+                }
+            } else {
+                flag =false;
+                ids = bundle.getString("searchKeyWord");
+//                ids = "49";
             }
         }
 
@@ -106,14 +115,18 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
                 search_result_order_sales.setSelected(false);
                 search_result_order_popu.setSelected(false);
 
-                if (home_search_result_input.getText().toString().isEmpty()) {
+                if (home_search_result_input.getText().toString().isEmpty() && flag) {
                     Toast.makeText(getApplicationContext(), "请输入搜索的商品信息", Toast.LENGTH_SHORT).show();
                 } else {
                     String input = home_search_result_input.getText().toString();
                     data = new ArrayList<HashMap<String, Object>>();
 
                     RequestParams params = new RequestParams();
-                    params.put("data[keywords]", input);
+                    if(flag) {
+                        params.put("data[keywords]", input);
+                    } else {
+                        params.put("data[cat_id]", ids);
+                    }
                     params.put("data[order_sort]", "desc");
                     params.put("data[limit_m]", 0);
                     params.put("data[limit_n]", 5);
@@ -142,14 +155,18 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
                 search_result_order_sales.setSelected(true);
                 search_result_order_popu.setSelected(false);
 
-                if (home_search_result_input.getText().toString().isEmpty()) {
+                if (home_search_result_input.getText().toString().isEmpty() && flag) {
                     Toast.makeText(getApplicationContext(), "请输入搜索的商品信息", Toast.LENGTH_SHORT).show();
                 } else {
                     String input = home_search_result_input.getText().toString();
                     data = new ArrayList<HashMap<String, Object>>();
 
                     RequestParams params = new RequestParams();
-                    params.put("data[keywords]", input);
+                    if(flag) {
+                        params.put("data[keywords]", input);
+                    } else {
+                        params.put("data[cat_id]", ids);
+                    }
                     params.put("data[order_field]", "is_hot");
                     params.put("data[order_sort]", "desc");
                     params.put("data[limit_m]", 0);
@@ -171,14 +188,18 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
                 search_result_order_sales.setSelected(false);
                 search_result_order_popu.setSelected(true);
 
-                if (home_search_result_input.getText().toString().isEmpty()) {
+                if (home_search_result_input.getText().toString().isEmpty() && flag) {
                     Toast.makeText(getApplicationContext(), "请输入搜索的商品信息", Toast.LENGTH_SHORT).show();
                 } else {
                     String input = home_search_result_input.getText().toString();
                     data = new ArrayList<HashMap<String, Object>>();
 
                     RequestParams params = new RequestParams();
-                    params.put("data[keywords]", input);
+                    if(flag) {
+                        params.put("data[keywords]", input);
+                    } else {
+                        params.put("data[cat_id]", ids);
+                    }
                     params.put("data[order_field]", "click_count");
                     params.put("data[order_sort]", "desc");
                     params.put("data[limit_m]", 0);
@@ -260,11 +281,11 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
         System.out.println(position);
         int goods_id = Integer.valueOf(data.get(position).get("goods_id").toString());
 
-		Intent intent = new Intent(SearchResultActivity.this, GoodDetailActivity.class);
-		Bundle bundle = new Bundle();
-		bundle.putInt("goods_id", goods_id);
-		intent.putExtra("goods_id", bundle);
-		startActivity(intent);
+        Intent intent = new Intent(SearchResultActivity.this, GoodDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("goods_id", goods_id);
+        intent.putExtra("goods_id", bundle);
+        startActivity(intent);
     }
 }
 

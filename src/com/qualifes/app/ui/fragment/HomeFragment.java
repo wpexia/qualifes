@@ -15,6 +15,7 @@ import com.qualifes.app.R;
 import com.qualifes.app.manager.HomeManger;
 import com.qualifes.app.ui.GoodDetailActivity;
 import com.qualifes.app.ui.HomeActivity;
+import com.qualifes.app.ui.WebActivity;
 import com.qualifes.app.ui.adapter.HomeBottomAdapter;
 import com.qualifes.app.ui.adapter.HomeGridViewAdapter;
 import com.qualifes.app.util.AsyncImageLoader;
@@ -114,20 +115,32 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                         viewFlipperData = data;
                     }
                     for (int i = 0; i < data.length(); i++) {
-                        JSONObject obj = data.getJSONObject(i);
+                        final JSONObject obj = data.getJSONObject(i);
 //                        Log.e("obj", obj.toString());
                         ImageView image = new ImageView(getActivity());
+                        image.setClickable(true);
+                        image.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getActivity(), WebActivity.class);
+                                try {
+                                    intent.putExtra("url", obj.getString("url"));
+                                    startActivity(intent);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
                         Bitmap cachedImage = imageLoader.loadDrawable(obj.get("img").toString(), image,
                                 new AsyncImageLoader.ImageCallback() {
                                     public void imageLoaded(Bitmap imageDrawable,
                                                             ImageView imageView, String imageUrl) {
                                         imageView.setImageBitmap(imageDrawable);
                                     }
-                                }, 1);
+                                }, 1, -19);
                         if (cachedImage != null) {
                             image.setImageBitmap(cachedImage);
                         }
-//                        ImageCacheHelper.getImageSdCache().get(obj.get("img").toString(), image);
                         image.setScaleType(ImageView.ScaleType.FIT_XY);
                         viewFlipper.addView(image, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                     }
@@ -159,29 +172,53 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                     if (!data.equals(null)) {
                         specialMiddleData = data;
                     }
-                    JSONObject buttonL = data.getJSONObject(0);
+                    final JSONObject buttonL = data.getJSONObject(0);
                     Bitmap cachedImageL = imageLoader.loadDrawable(buttonL.get("img").toString(), imageButtonL,
                             new AsyncImageLoader.ImageCallback() {
                                 public void imageLoaded(Bitmap imageDrawable,
                                                         ImageView imageView, String imageUrl) {
                                     imageView.setImageBitmap(imageDrawable);
                                 }
-                            }, 1);
+                            }, 1, -16);
                     if (cachedImageL != null) {
                         imageButtonL.setImageBitmap(cachedImageL);
                     }
+                    imageButtonL.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), WebActivity.class);
+                            try {
+                                intent.putExtra("url", buttonL.getString("url"));
+                                startActivity(intent);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
 //                    ImageCacheHelper.getImageSdCache().get(buttonL.get("img").toString(), imageButtonL);
-                    JSONObject buttonR = data.getJSONObject(1);
+                    final JSONObject buttonR = data.getJSONObject(1);
                     Bitmap cachedImageR = imageLoader.loadDrawable(buttonR.get("img").toString(), imageButtonR,
                             new AsyncImageLoader.ImageCallback() {
                                 public void imageLoaded(Bitmap imageDrawable,
                                                         ImageView imageView, String imageUrl) {
                                     imageView.setImageBitmap(imageDrawable);
                                 }
-                            }, 1);
+                            }, 1, -16);
                     if (cachedImageR != null) {
                         imageButtonR.setImageBitmap(cachedImageR);
                     }
+                    imageButtonR.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), WebActivity.class);
+                            try {
+                                intent.putExtra("url", buttonR.getString("url"));
+                                startActivity(intent);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
 //                    ImageCacheHelper.getImageSdCache().get(buttonR.get("img").toString(), imageButtonR);
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -38,7 +38,7 @@ public class ProductListNotNullFragment extends Fragment {
     private ProductListAdapter productListAdapter;
     private View mView;
     private boolean hasStar = false;
-    private LinkedList<HashMap<String, Object>> mData;
+    private LinkedList<HashMap<String, Object>> mData = new LinkedList<HashMap<String, Object>>();
     private int managerId;
     private boolean hasMore = true;
     private SharedPreferences sp;
@@ -52,8 +52,7 @@ public class ProductListNotNullFragment extends Fragment {
         this.hasMore = hasMore;
     }
 
-    public void setData(LinkedList<HashMap<String, Object>> data, int id) {
-        this.mData = data;
+    public void setData(int id) {
         this.managerId = id;
     }
 
@@ -77,6 +76,7 @@ public class ProductListNotNullFragment extends Fragment {
     public void onResume() {
         super.onResume();
         initView();
+        listView.onDropDown();
     }
 
     private void initView() {
@@ -142,7 +142,7 @@ public class ProductListNotNullFragment extends Fragment {
                             FollowManager followManager = FollowManager.getInstance();
                             followManager.delete(sp.getString("token", ""), mData.get(position).get("rec_id").toString(), getActivity());
                         }
-                        if (mData.size() == 0) {
+                        if (mData.size() == 1) {
                             ((FollowActivity) getActivity()).changeFragment(true);
                         }
                     }
@@ -192,6 +192,8 @@ public class ProductListNotNullFragment extends Fragment {
                         break;
                         case 1: {
                             mData = ((FollowActivity) getActivity()).getData();
+                            productListAdapter = new ProductListAdapter(mData, hasStar, getActivity().getApplication());
+                            listView.setAdapter(productListAdapter);
                             listView.resetBottom();
                         }
                     }
@@ -306,7 +308,7 @@ public class ProductListNotNullFragment extends Fragment {
             } else {
                 id = id + "," + mData.get(i).get(id_name).toString();
             }
-            productListAdapter.delete(i);
+            productListAdapter.delete(i - 1);
         }
         productListAdapter.notifyDataSetChanged();
         try {

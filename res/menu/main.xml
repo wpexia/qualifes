@@ -1,9 +1,17 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.example.menutest03.MainActivity" >
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
+            android:id="@+id/friend"
+            android:orderInCategory="200"
+            android:icon="@drawable/icon_sharea"
+            android:title="发送给朋友"/>
+    <item
+            android:id="@+id/circle"
+            android:orderInCategory="100"
+            android:icon="@drawable/icon_shareb"
+            android:title="分享到朋友圈"/>
+
 
 </menu>

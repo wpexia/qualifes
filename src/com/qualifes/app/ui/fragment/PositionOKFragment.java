@@ -4,14 +4,19 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.qualifes.app.R;
 import com.qualifes.app.manager.PositionManager;
 import com.qualifes.app.ui.adapter.PositionAdapter;
@@ -25,8 +30,8 @@ public class PositionOKFragment extends Fragment {
 
     private SharedPreferences sp;
     private View mView;
-    private ListView listView;
-
+    private SwipeMenuListView listView;
+    PositionAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +41,7 @@ public class PositionOKFragment extends Fragment {
     }
 
     private void initView() {
-        listView = (ListView) mView.findViewById(R.id.listView);
+        listView = (SwipeMenuListView) mView.findViewById(R.id.listView);
     }
 
 
@@ -46,9 +51,38 @@ public class PositionOKFragment extends Fragment {
         sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
         mView.findViewById(R.id.add).setOnClickListener((PositionActivity) getActivity());
         mView.findViewById(R.id.icon_in).setOnClickListener((PositionActivity) getActivity());
-        listView = (ListView) getActivity().findViewById(R.id.listView);
         getPos();
+        listView = (SwipeMenuListView) mView.findViewById(R.id.listView);
+        createSwipeMenu();
+    }
 
+
+    private void createSwipeMenu() {
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+
+            @Override
+            public void create(SwipeMenu menu) {
+                    SwipeMenuItem deleteItem = new SwipeMenuItem(
+                            getActivity().getApplicationContext());
+                    deleteItem.setBackground(new ColorDrawable(Color.rgb(0xFF, 0x33,
+                            0x00)));
+                    deleteItem.setWidth(140);
+                    deleteItem.setTitle("删除");
+                    deleteItem.setTitleSize(18);
+                    deleteItem.setTitleColor(Color.WHITE);
+                    menu.addMenuItem(deleteItem);
+            }
+        };
+        listView.setMenuCreator(creator);
+        listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                if(adapter != null) {
+                    adapter.delete(position);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -87,7 +121,7 @@ public class PositionOKFragment extends Fragment {
                             });
                         }
                     }
-                    PositionAdapter adapter = new PositionAdapter();
+                    adapter = new PositionAdapter();
                     adapter.setContent(noDefault, getActivity());
                     listView.setAdapter(adapter);
                 } catch (JSONException e) {
