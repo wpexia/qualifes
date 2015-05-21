@@ -24,6 +24,7 @@ import com.qualifes.app.ui.fragment.SearchFragment;
 import com.qualifes.app.ui.fragment.ShoppingCartFragment;
 import com.qualifes.app.util.AsyncHttpCilentUtil;
 import com.readystatesoftware.viewbadger.BadgeView;
+import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +47,15 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);manager = getFragmentManager();
         fragmentId = 0;
+        MobclickAgent.setDebugMode(true);
+//      SDK在统计Fragment时，需要关闭Activity自带的页面统计，
+//		然后在每个页面中重新集成页面统计的代码(包括调用了 onResume 和 onPause 的Activity)。
+        MobclickAgent.openActivityDurationTrack(false);
+//		MobclickAgent.setAutoLocation(true);
+//		MobclickAgent.setSessionContinueMillis(1000);
+
+        MobclickAgent.updateOnlineConfig(this);
+
         Api.setContext(getApplicationContext());
     }
 
