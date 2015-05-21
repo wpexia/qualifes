@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.qualifes.app.R;
 import com.qualifes.app.config.Api;
+import com.qualifes.app.ui.GoodDetailActivity;
 import com.qualifes.app.ui.LoginActivity;
 import com.qualifes.app.util.AsyncImageLoader;
 import org.apache.http.Header;
@@ -124,6 +126,20 @@ public class HomeBottomAdapter extends BaseAdapter {
                     }
                 });
             }
+            convertView.findViewById(R.id.item).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, GoodDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    try {
+                        bundle.putInt("goods_id", good.getInt("goods_id"));
+                        intent.putExtra("goods_id", bundle);
+                        context.startActivity(intent);
+                    }catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }

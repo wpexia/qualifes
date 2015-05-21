@@ -62,8 +62,12 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
                 JSONArray data = (JSONArray) msg.obj;
-                ((TextView) getActivity().findViewById(R.id.newBadge)).setText(String.valueOf(data.length()));
-                getActivity().findViewById(R.id.newBadge).setVisibility(View.VISIBLE);
+                if (data.length() > 0) {
+                    ((TextView) getActivity().findViewById(R.id.newBadge)).setText(String.valueOf(data.length()));
+                    getActivity().findViewById(R.id.newBadge).setVisibility(View.VISIBLE);
+                } else {
+                    getActivity().findViewById(R.id.newBadge).setVisibility(View.INVISIBLE);
+                }
             }
         }
     };
@@ -96,6 +100,8 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
         if (sp.contains("token")) {
             OrderManager manager = OrderManager.getInstance();
             manager.getOrder(sp.getString("token", ""), "2", "0,3,5", "1,5", getBadgeHandler);
+        } else {
+            getActivity().findViewById(R.id.newBadge).setVisibility(View.INVISIBLE);
         }
     }
 

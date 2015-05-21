@@ -85,7 +85,6 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
                 try {
-
                     JSONArray data = (JSONArray) msg.obj;
                     OfflineCartDbHelper dbHelper = new OfflineCartDbHelper(ShoppingCartActivity.this);
                     Cursor cursor = dbHelper.select();
@@ -127,6 +126,17 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            } else {
+                findViewById(R.id.gone).setVisibility(View.VISIBLE);
+                findViewById(R.id.page).setVisibility(View.GONE);
+                findViewById(R.id.guang).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ShoppingCartActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                return;
             }
         }
     };
@@ -167,6 +177,17 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            } else {
+                findViewById(R.id.gone).setVisibility(View.VISIBLE);
+                findViewById(R.id.page).setVisibility(View.GONE);
+                findViewById(R.id.guang).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ShoppingCartActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                return;
             }
         }
     };

@@ -307,6 +307,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                     totalHeight += listItem.getMeasuredHeight() * adapter.getCount();
                     params.height = totalHeight + listView.getDividerHeight() * (data.length() - 1);
                     listView.setLayoutParams(params);
+                    listView.setOnItemClickListener(HomeFragment.this);
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }

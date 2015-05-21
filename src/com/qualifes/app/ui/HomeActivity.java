@@ -31,7 +31,7 @@ import org.json.JSONObject;
 public class HomeActivity extends Activity implements View.OnClickListener, View.OnTouchListener {
 
     private FragmentManager manager;
-    private int fragmentId;
+    public int fragmentId;
     private LinearLayout tab;
 
     private HomeFragment homeFragment;
@@ -83,6 +83,11 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         findViewById(R.id.personal).setOnClickListener(this);
         findViewById(R.id.shoppingcart).setOnClickListener(this);
         findViewById(R.id.list).setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
         if(sp.contains("token")) {
             AsyncHttpClient client = new AsyncHttpClient();
@@ -99,16 +104,21 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                     try {
                         msg.obj = response.getJSONObject("data").getJSONArray("data");
                         int number = response.getJSONObject("data").getJSONArray("data").length();
-                        ((TextView)findViewById(R.id.badge)).setText(String.valueOf(number));
-                        findViewById(R.id.badge).setVisibility(View.VISIBLE);
+                        if(number >0) {
+                            ((TextView) findViewById(R.id.badge)).setText(String.valueOf(number));
+                            findViewById(R.id.badge).setVisibility(View.VISIBLE);
+                        } else {
+                            findViewById(R.id.badge).setVisibility(View.INVISIBLE);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             });
+        } else {
+            findViewById(R.id.badge).setVisibility(View.INVISIBLE);
         }
     }
-
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -160,7 +170,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         }
     }
 
-    private void changeFragment() {
+    public void changeFragment() {
         FragmentTransaction transaction = manager.beginTransaction();
         hideFragment(transaction);
         switch (fragmentId) {

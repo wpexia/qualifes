@@ -147,6 +147,12 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
         accessServer();
 
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
         if(sp.contains("token")) {
             AsyncHttpClient client = new AsyncHttpClient();
@@ -163,13 +169,19 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
                     try {
                         msg.obj = response.getJSONObject("data").getJSONArray("data");
                         int number = response.getJSONObject("data").getJSONArray("data").length();
-                        ((TextView) findViewById(R.id.badge)).setText(String.valueOf(number));
-                        findViewById(R.id.badge).setVisibility(View.VISIBLE);
+                        if(number > 0) {
+                            ((TextView) findViewById(R.id.badge)).setText(String.valueOf(number));
+                            findViewById(R.id.badge).setVisibility(View.VISIBLE);
+                        } else {
+                            findViewById(R.id.badge).setVisibility(View.INVISIBLE);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             });
+        } else {
+            findViewById(R.id.badge).setVisibility(View.INVISIBLE);
         }
     }
 

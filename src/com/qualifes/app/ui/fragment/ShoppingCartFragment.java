@@ -154,6 +154,17 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            } else {
+                getActivity().findViewById(R.id.gone).setVisibility(View.VISIBLE);
+                getActivity().findViewById(R.id.page).setVisibility(View.GONE);
+                getActivity().findViewById(R.id.guang).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((HomeActivity)getActivity()).fragmentId = 0;
+                        ((HomeActivity)getActivity()).changeFragment();
+                    }
+                });
+                return;
             }
         }
     };
@@ -194,6 +205,17 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }else {
+                getActivity().findViewById(R.id.gone).setVisibility(View.VISIBLE);
+                getActivity().findViewById(R.id.page).setVisibility(View.GONE);
+                getActivity().findViewById(R.id.guang).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((HomeActivity)getActivity()).fragmentId = 0;
+                        ((HomeActivity)getActivity()).changeFragment();
+                    }
+                });
+                return;
             }
         }
     };

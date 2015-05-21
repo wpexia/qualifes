@@ -3,16 +3,24 @@ package com.qualifes.app.ui.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.qualifes.app.R;
+import com.qualifes.app.config.Api;
 import com.qualifes.app.ui.GoodDetailActivity;
 import com.qualifes.app.ui.HomeActivity;
 import com.qualifes.app.util.AsyncImageLoader;
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -125,6 +133,33 @@ public class ShoppingCartAdapter extends BaseAdapter {
                     }
                     intent.putExtra("goods_id", bundle);
                     ((Activity) context).startActivity(intent);
+                }
+            });
+            convertView.findViewById(R.id.icon_in).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences sp = context.getSharedPreferences("user", Activity.MODE_PRIVATE);
+                    if (sp.contains("token")) {
+                        try {
+                            AsyncHttpClient client = new AsyncHttpClient();
+                            RequestParams params = new RequestParams();
+                            params.put("token", sp.getString("token", ""));
+                            params.put("data[cart_id]", obj.getString("rec_id"));
+                            final Message msg = new Message();
+                            client.post(Api.url("del_cart"), params, new JsonHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                    Api.dealSuccessRes(response, msg);
+                                    Log.e("del_cart", response.toString());
+                                    Toast.makeText(context, msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                                    mData.remove(position);
+                                    notifyDataSetChanged();
+                                }
+                            });
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             });
             ImageView image = (ImageView) convertView.findViewById(R.id.image);

@@ -188,6 +188,8 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
         public void handleMessage(Message msg) {
             String result = (String) msg.obj;
             Log.e("ZFBPay", result);
+            Intent intent = new Intent(OrderConfirmActivity.this, OrderListActivity.class);
+            startActivity(intent);
         }
     };
 

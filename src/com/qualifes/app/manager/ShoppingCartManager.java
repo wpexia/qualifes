@@ -101,6 +101,8 @@ public class ShoppingCartManager {
                         msg.obj = response.getJSONObject("data").getJSONArray("data");
                         handler.sendMessage(msg);
                     } catch (JSONException e) {
+                        msg.what = 1;
+                        handler.sendMessage(msg);
                         e.printStackTrace();
                     }
                 }
@@ -137,6 +139,8 @@ public class ShoppingCartManager {
                         msg.obj = response.getJSONObject("data").getJSONArray("data");
                         handler.sendMessage(msg);
                     } catch (JSONException e) {
+                        msg.what = 1;
+                        handler.sendMessage(msg);
                         e.printStackTrace();
                     }
 
