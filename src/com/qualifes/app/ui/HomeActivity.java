@@ -4,18 +4,29 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.qualifes.app.R;
 import com.qualifes.app.config.Api;
 import com.qualifes.app.ui.fragment.HomeFragment;
 import com.qualifes.app.ui.fragment.PersonalFragment;
 import com.qualifes.app.ui.fragment.SearchFragment;
 import com.qualifes.app.ui.fragment.ShoppingCartFragment;
+import com.qualifes.app.util.AsyncHttpCilentUtil;
+import com.readystatesoftware.viewbadger.BadgeView;
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class HomeActivity extends Activity implements View.OnClickListener, View.OnTouchListener {
 
@@ -45,7 +56,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         manager = getFragmentManager();
         changeFragment();
         Handler x = new Handler();
-        x.postDelayed(new splashhandler(), 2000);
+        x.postDelayed(new splashhandler(), 5000);
     }
 
     class splashhandler implements Runnable {
@@ -72,6 +83,30 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         findViewById(R.id.personal).setOnClickListener(this);
         findViewById(R.id.shoppingcart).setOnClickListener(this);
         findViewById(R.id.list).setOnClickListener(this);
+        SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
+        if(sp.contains("token")) {
+            AsyncHttpClient client = new AsyncHttpClient();
+            final Message msg = new Message();
+            RequestParams params = new RequestParams();
+            params.put("token", sp.getString("token",""));
+            params.put("data[limit][m]", "0");
+            params.put("data[limit][n]", "100");
+            client.get(Api.url("get_cart"), params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Api.dealSuccessRes(response, msg);
+//                    Log.e("get_cart", response.toString());
+                    try {
+                        msg.obj = response.getJSONObject("data").getJSONArray("data");
+                        int number = response.getJSONObject("data").getJSONArray("data").length();
+                        ((TextView)findViewById(R.id.badge)).setText(String.valueOf(number));
+                        findViewById(R.id.badge).setVisibility(View.VISIBLE);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
     }
 
 

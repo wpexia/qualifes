@@ -137,7 +137,6 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
         detail_gooddata_press = (ImageButton) findViewById(R.id.detail_gooddata_press);
         detail_gooddata_press.setOnClickListener(this);
 
-        detail_icon_shoppingcart = (ImageView) findViewById(R.id.detail_icon_shoppingcart);
         detail_closing_cost = (Button) findViewById(R.id.detail_closing_cost);
         detail_closing_cost.setOnClickListener(this);
 
@@ -148,6 +147,30 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
         accessServer();
 
 
+        SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
+        if(sp.contains("token")) {
+            AsyncHttpClient client = new AsyncHttpClient();
+            final Message msg = new Message();
+            RequestParams params = new RequestParams();
+            params.put("token", sp.getString("token", ""));
+            params.put("data[limit][m]", "0");
+            params.put("data[limit][n]", "100");
+            client.get(Api.url("get_cart"), params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Api.dealSuccessRes(response, msg);
+//                    Log.e("get_cart", response.toString());
+                    try {
+                        msg.obj = response.getJSONObject("data").getJSONArray("data");
+                        int number = response.getJSONObject("data").getJSONArray("data").length();
+                        ((TextView) findViewById(R.id.badge)).setText(String.valueOf(number));
+                        findViewById(R.id.badge).setVisibility(View.VISIBLE);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
     }
 
     private void accessServer() {

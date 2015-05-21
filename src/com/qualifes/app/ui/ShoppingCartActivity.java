@@ -9,10 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import com.qualifes.app.R;
 import com.qualifes.app.manager.ShoppingCartManager;
 import com.qualifes.app.ui.adapter.ShoppingCartAdapter;
@@ -21,10 +18,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ShoppingCartActivity extends Activity implements View.OnClickListener{
+public class ShoppingCartActivity extends Activity implements View.OnClickListener {
     private ListView listView;
     private SharedPreferences sp;
     ShoppingCartAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +31,7 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
         listView = (ListView) findViewById(R.id.content);
         init();
     }
+
     private void init() {
         if (sp.contains("token")) {
             ShoppingCartManager manager = ShoppingCartManager.getInstance();
@@ -60,10 +59,17 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
         switch (id) {
             case R.id.creatOrder: {
                 if (sp.contains("token")) {
-                    if (adapter != null) {
-                        Intent intent = new Intent(ShoppingCartActivity.this, OrderConfirmActivity.class);
-                        intent.putExtra("goods", adapter.getGoods());
-                        startActivity(intent);
+                    try {
+                        JSONArray goods = new JSONArray(adapter.getGoods());
+                        if (adapter != null && goods.length() != 0) {
+                            Intent intent = new Intent(ShoppingCartActivity.this, OrderConfirmActivity.class);
+                            intent.putExtra("goods", adapter.getGoods());
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(ShoppingCartActivity.this, "请选择结算商品", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.fillInStackTrace();
                     }
                 } else {
                     Intent intent = new Intent(ShoppingCartActivity.this, LoginActivity.class);
@@ -96,7 +102,7 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
                     }
 
                     Log.e("after", data.toString());
-                    final ShoppingCartAdapter adapter = new ShoppingCartAdapter(ShoppingCartActivity.this.getApplicationContext(), data);
+                    final ShoppingCartAdapter adapter = new ShoppingCartAdapter(ShoppingCartActivity.this, data);
                     listView.setAdapter(adapter);
                     listView.setDividerHeight(0);
                     CheckBox checkTotal = (CheckBox) ShoppingCartActivity.this.findViewById(R.id.totalcheckBox);
@@ -136,7 +142,7 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
                         JSONObject obj = data.getJSONObject(i);
                         obj.put("checked", false);
                     }
-                    adapter = new ShoppingCartAdapter(ShoppingCartActivity.this.getApplicationContext(), data);
+                    adapter = new ShoppingCartAdapter(ShoppingCartActivity.this, data);
                     listView.setAdapter(adapter);
                     listView.setDividerHeight(0);
                     CheckBox checkTotal = (CheckBox) ShoppingCartActivity.this.findViewById(R.id.totalcheckBox);

@@ -45,6 +45,7 @@ public class LoginActivity extends Activity implements OnClickListener {
         LoginButton.setOnClickListener(this);
         forgetPasswordButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
+        findViewById(R.id.ForgetPassword).setOnClickListener(this);
     }
 
     @Override
@@ -67,6 +68,10 @@ public class LoginActivity extends Activity implements OnClickListener {
         }
         if (v == registerButton) {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        }
+        if (v.getId() == R.id.ForgetPassword) {
+            Intent intent = new Intent(LoginActivity.this, ForgetPWActivity.class);
             startActivity(intent);
         }
     }

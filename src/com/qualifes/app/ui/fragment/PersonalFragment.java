@@ -7,13 +7,19 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import com.qualifes.app.R;
+import com.qualifes.app.manager.OrderManager;
 import com.qualifes.app.ui.*;
+import com.qualifes.app.ui.adapter.OrderListAdapter;
 import com.qualifes.app.ui.fragment.LoginFragment;
 import com.qualifes.app.ui.fragment.UnLoginFragment;
+import org.json.JSONArray;
 
 public class PersonalFragment extends Fragment implements View.OnClickListener {
 
@@ -47,7 +53,20 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
         getActivity().findViewById(R.id.nopayorder).setOnClickListener(this);
         getActivity().findViewById(R.id.noshiporder).setOnClickListener(this);
         getActivity().findViewById(R.id.orderlist).setOnClickListener(this);
+
     }
+
+
+    Handler getBadgeHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                JSONArray data = (JSONArray) msg.obj;
+                ((TextView) getActivity().findViewById(R.id.newBadge)).setText(String.valueOf(data.length()));
+                getActivity().findViewById(R.id.newBadge).setVisibility(View.VISIBLE);
+            }
+        }
+    };
 
     @Override
     public void onResume() {
@@ -74,6 +93,10 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
             }
         }
         transaction.commit();
+        if (sp.contains("token")) {
+            OrderManager manager = OrderManager.getInstance();
+            manager.getOrder(sp.getString("token", ""), "2", "0,3,5", "1,5", getBadgeHandler);
+        }
     }
 
     @Override

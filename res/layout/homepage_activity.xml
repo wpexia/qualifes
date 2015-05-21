@@ -7,7 +7,7 @@
     <RelativeLayout
             android:id="@+id/head"
             android:layout_width="fill_parent"
-            android:layout_height="96px"
+            android:layout_height="48dp"
             android:background="#00aaff"
             android:focusable="true"
             android:focusableInTouchMode="true">
@@ -16,7 +16,7 @@
                 android:id="@+id/logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30px"
+                android:layout_marginLeft="15dp"
                 android:background="@drawable/logo"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/homepageLogo"/>
@@ -24,12 +24,12 @@
         <EditText
                 android:id="@+id/input"
                 android:layout_width="match_parent"
-                android:layout_height="60px"
+                android:layout_height="30dp"
                 android:clickable="true"
                 android:layout_toRightOf="@+id/logo"
-                android:layout_marginLeft="28px"
+                android:layout_marginLeft="14dp"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="30px"
+                android:layout_marginRight="15dp"
                 android:background="@drawable/shape"
                 android:textSize="10sp"
                 android:hint="请输入搜索的商品名称和品牌名"/>
@@ -60,18 +60,18 @@
             <ViewFlipper
                     android:id="@+id/viewFlipper"
                     android:layout_width="match_parent"
-                    android:layout_height="320px"
+                    android:layout_height="160dp"
                     >
             </ViewFlipper>
 
             <LinearLayout
                     android:id="@+id/twoPicViewGroup"
                     android:layout_width="fill_parent"
-                    android:layout_height="170px"
+                    android:layout_height="85dp"
                     android:orientation="horizontal"
                     android:weightSum="2"
                     android:layout_below="@+id/viewFlipper"
-                    android:layout_marginTop="10px">
+                    android:layout_marginTop="5dp">
 
                 <ImageView
                         android:id="@+id/secondPic"
@@ -94,18 +94,18 @@
                     android:orientation="horizontal">
                 <RelativeLayout
                         android:id="@+id/care"
-                        android:layout_width="160px"
-                        android:layout_height="200px"
+                        android:layout_width="80dp"
+                        android:layout_height="100dp"
                         android:layout_below="@+id/twoPicViewGroup"
-                        android:layout_marginTop="10px"
+                        android:layout_marginTop="5dp"
                         android:background="#e3223f">
                     <TextView
                             android:id="@+id/label11"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="70px"
-                            android:layout_marginBottom="10px"
+                            android:layout_marginTop="35dp"
+                            android:layout_marginBottom="5dp"
                             android:textSize="8sp"
                             android:textColor="#ffffff"
                             android:text="让人不断回味的味道"/>
@@ -123,9 +123,9 @@
                 <HorizontalScrollView
                         android:id="@+id/firstList"
                         android:layout_width="match_parent"
-                        android:layout_height="200px"
+                        android:layout_height="100dp"
                         android:layout_below="@+id/twoPicViewGroup"
-                        android:layout_marginTop="10px"
+                        android:layout_marginTop="5dp"
                         android:layout_toRightOf="@+id/care">
                     <LinearLayout
                             android:layout_width="wrap_content"
@@ -133,7 +133,7 @@
                         <GridView
                                 android:id="@+id/gridView1"
                                 android:layout_width="wrap_content"
-                                android:layout_height="200px"
+                                android:layout_height="100dp"
                                 android:scrollbars="none"
                                 android:fadingEdge="none"
                                 android:listSelector="#00000000"
@@ -149,17 +149,17 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/care"
-                    android:layout_marginTop="10px">
+                    android:layout_marginTop="5dp">
                 <HorizontalScrollView
                         android:id="@+id/secondtList"
                         android:layout_width="match_parent"
-                        android:layout_height="200px"
-                        android:layout_marginTop="10px"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="5dp"
                         android:layout_alignBottom="@+id/clean"
                         android:layout_toLeftOf="@+id/clean">
                     <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="200px">
+                            android:layout_height="100dp">
 
                         <GridView android:id="@+id/gridView2"
                                   android:layout_width="wrap_content"
@@ -176,8 +176,8 @@
 
                 <RelativeLayout
                         android:id="@+id/clean"
-                        android:layout_width="160px"
-                        android:layout_height="200px"
+                        android:layout_width="80dp"
+                        android:layout_height="100dp"
                         android:background="#039be7"
                         android:layout_alignParentRight="true"
                         android:layout_toRightOf="@+id/clean">
@@ -185,8 +185,8 @@
                               android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:layout_centerHorizontal="true"
-                              android:layout_marginTop="70px"
-                              android:layout_marginBottom="10px"
+                              android:layout_marginTop="35dp"
+                              android:layout_marginBottom="5dp"
                               android:textSize="8sp"
                               android:textColor="#ffffff"
                               android:text="瞬间点亮居室的性感"/>

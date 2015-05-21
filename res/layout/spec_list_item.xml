@@ -2,27 +2,27 @@
 	<RelativeLayout 
 	    xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:layout_width="fill_parent"
-	    android:layout_height="185px"
+	    android:layout_height="92dp"
 	    android:background="@drawable/item_stroke">
 		<TextView
 		    android:id="@+id/spec_model_name"
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
 		    android:textSize="12sp"
-		    android:layout_marginLeft="30px"
-		    android:layout_marginTop="36px"
+		    android:layout_marginLeft="15dp"
+		    android:layout_marginTop="18dp"
 		    android:text="名字"/>
 		<GridView 
 		    android:id="@+id/spec_model_gridView"
 		    android:layout_below="@+id/spec_model_name"
-		    android:layout_marginTop="28px"
+		    android:layout_marginTop="14dp"
 		    android:layout_width="match_parent"
 		    android:layout_alignLeft="@+id/spec_model_name"
 		    android:numColumns="auto_fit"
-		    android:columnWidth="120px"
+		    android:columnWidth="60dp"
 		    android:gravity="left"
-		    android:verticalSpacing="28px"
-		    android:horizontalSpacing="30px"
+		    android:verticalSpacing="14dp"
+		    android:horizontalSpacing="15dp"
 		    android:layout_height="wrap_content"></GridView>
 		
 		<TextView android:id="@+id/spec_list_bottom"

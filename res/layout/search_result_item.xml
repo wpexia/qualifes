@@ -41,14 +41,14 @@
             android:textSize="9sp"
             android:layout_marginTop="3dp"
             android:layout_toRightOf="@+id/search_info_shop_price"
-            android:layout_marginLeft="10px"
+            android:layout_marginLeft="5dp"
             android:layout_alignBottom="@+id/search_info_shop_price"
             android:text="￥598.00"
             />
     <TextView
             android:id="@+id/search_info_discount"
-            android:layout_width="76px"
-            android:layout_height="28px"
+            android:layout_width="38dp"
+            android:layout_height="14dp"
             android:textColor="#ff3300"
             android:textSize="9sp"
             android:layout_below="@+id/search_info_shop_price"

@@ -16,7 +16,8 @@
                 android:layout_width="wrap_content"
                 android:clickable="true"
                 android:id="@+id/nopayorder"
-                android:layout_weight="1" android:background="@drawable/personal_press">
+                android:layout_weight="1"
+                android:background="@drawable/personal_press">
             <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -38,13 +39,34 @@
                 android:clickable="true"
                 android:id="@+id/noshiporder"
                 android:layout_weight="1" android:background="@drawable/personal_press">
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+            <FrameLayout
                     android:id="@+id/personal_icon_car"
-                    android:src="@drawable/icon_car"
+                    android:clickable="true"
+                    android:layout_width="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="8dp"/>
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/icon_car"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="30dp"
+                        />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/newBadge"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|right"
+                        android:background="#FF0000"
+                        android:text="23"
+                        android:visibility="invisible"
+                        android:textColor="@android:color/white"/>
+            </FrameLayout>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

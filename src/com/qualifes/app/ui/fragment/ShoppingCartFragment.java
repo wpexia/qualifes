@@ -86,10 +86,17 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
         switch (id) {
             case R.id.creatOrder: {
                 if (sp.contains("token")) {
-                    if (adapter != null) {
-                        Intent intent = new Intent(getActivity(), OrderConfirmActivity.class);
-                        intent.putExtra("goods", adapter.getGoods());
-                        startActivity(intent);
+                    try {
+                        JSONArray goods = new JSONArray(adapter.getGoods());
+                        if (adapter != null && goods.length() != 0) {
+                            Intent intent = new Intent(getActivity(), OrderConfirmActivity.class);
+                            intent.putExtra("goods", adapter.getGoods());
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getActivity(), "请选择结算商品",Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 } else {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);

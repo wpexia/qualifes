@@ -31,6 +31,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.cleancache).setOnClickListener(this);
         findViewById(R.id.aboutus).setOnClickListener(this);
         findViewById(R.id.help).setOnClickListener(this);
+        findViewById(R.id.changepassword).setOnClickListener(this);
     }
 
     @Override
@@ -86,7 +87,11 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 intent.putExtra("url", "http://www.qualifes.com/webview/release/ios_info/help.html");
                 startActivity(intent);
             }
-
+            break;
+            case R.id.changepassword: {
+                Intent intent = new Intent(SettingActivity.this, ChangePasswdActivity.class);
+                startActivity(intent);
+            }
         }
     }
 }
