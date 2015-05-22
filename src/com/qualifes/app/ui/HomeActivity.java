@@ -162,11 +162,6 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                 changeFragment();
             }
             break;
-            case R.id.personal_setting: {
-                Intent intent = new Intent(this, SettingActivity.class);
-                startActivity(intent);
-            }
-            break;
             case R.id.shoppingcart: {
                 fragmentId = 2;
                 changeFragment();

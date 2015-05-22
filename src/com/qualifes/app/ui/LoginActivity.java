@@ -2,6 +2,7 @@ package com.qualifes.app.ui;
 
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.view.Gravity;
 import android.widget.Toast;
 import com.qualifes.app.manager.LoginManager;
 import com.qualifes.app.R;
@@ -46,17 +47,27 @@ public class LoginActivity extends Activity implements OnClickListener {
         forgetPasswordButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
         findViewById(R.id.ForgetPassword).setOnClickListener(this);
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         if (v == LoginButton) {
             if (userNameText.getText().toString().equals("")) {
-                Toast.makeText(getApplicationContext(), "请输入手机号", Toast.LENGTH_SHORT).show();
+                Toast toast = Toast.makeText(getApplicationContext(), "请输入手机号", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
                 return;
             }
             if (passwordText.getText().toString().equals("")) {
-                Toast.makeText(getApplicationContext(), "请输入密码", Toast.LENGTH_SHORT).show();
+                Toast toast = Toast.makeText(getApplicationContext(), "请输入密码", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
                 return;
             }
 
@@ -81,7 +92,9 @@ public class LoginActivity extends Activity implements OnClickListener {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0: {
-                    Toast.makeText(getApplicationContext(), "登陆成功", Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "登陆成功", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                     SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
                     String token = sp.getString("token", "  ");
                     OfflineCartDbHelper helper = new OfflineCartDbHelper(getApplicationContext());
@@ -103,7 +116,9 @@ public class LoginActivity extends Activity implements OnClickListener {
                 }
                 break;
                 case 1:
-                    Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                     break;
             }
 

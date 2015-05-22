@@ -18,6 +18,12 @@ public class PayFunctionActivity extends Activity implements View.OnClickListene
     private void initView() {
         findViewById(R.id.pay1).setOnClickListener(this);
         findViewById(R.id.pay2).setOnClickListener(this);
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.widget.ListView;
 import com.qualifes.app.R;
 import com.qualifes.app.manager.OrderManager;
@@ -27,7 +28,12 @@ public class OrderListActivity extends Activity {
         mListView = (ListView) findViewById(R.id.content);
         OrderManager manager = OrderManager.getInstance();
         manager.getOrder(sp.getString("token", ""), "", "", "", getOrderHandler);
-
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     Handler getOrderHandler = new Handler() {

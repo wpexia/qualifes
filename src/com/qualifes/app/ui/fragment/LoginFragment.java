@@ -2,6 +2,7 @@ package com.qualifes.app.ui.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.qualifes.app.R;
 import com.qualifes.app.ui.HomeActivity;
+import com.qualifes.app.ui.SettingActivity;
 
 
 public class LoginFragment extends Fragment {
@@ -22,7 +24,13 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().findViewById(R.id.personal_setting).setOnClickListener((HomeActivity) getActivity());
+        getActivity().findViewById(R.id.personal_setting_login).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent);
+            }
+        });
         SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
         String username = sp.getString("username","00000000000");
         username = username.substring(0,3) + "****" + username.substring(7,11);

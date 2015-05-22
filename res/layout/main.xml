@@ -18,8 +18,8 @@
     <LinearLayout
             android:background="#eeeeee"
             android:id="@+id/tab"
-            android:visibility="invisible"
             android:orientation="horizontal"
+            android:visibility="invisible"
             android:layout_width="fill_parent"
             android:layout_height="48dp" android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true">
@@ -40,8 +40,6 @@
         <FrameLayout
                 android:id="@+id/frameLayout1"
                 android:layout_weight="1"
-                android:paddingRight="30dp"
-                android:paddingLeft="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent" >
             <ImageButton
@@ -55,12 +53,13 @@
                     android:layout_width="wrap_content"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
+                    android:layout_marginRight="10dp"
                     android:id="@+id/badge"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|right"
+                    android:visibility="invisible"
                     android:background="#FF0000"
                     android:text="23"
-                    android:visibility="invisible"
                     android:textColor="@android:color/white" />
         </FrameLayout>
         <ImageButton

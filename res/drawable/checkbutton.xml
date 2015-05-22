@@ -6,7 +6,6 @@
             >
         <layer-list>
             <item android:drawable="@drawable/shoppingdot_selected"/>
-            <item android:drawable="@drawable/shoppingdot"/>
         </layer-list>
     </item>
     <item

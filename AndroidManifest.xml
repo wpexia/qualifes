@@ -19,9 +19,6 @@
         <activity android:label="@string/register_name" android:launchMode="singleTask"
                   android:name="com.qualifes.app.ui.RegisterActivity">
         </activity>
-        <activity android:label="@string/protocol_name" android:launchMode="singleTask"
-                  android:name="com.qualifes.app.ui.ProtocolActivity">
-        </activity>
         <activity android:label="品制生活" android:launchMode="singleTask" android:name="com.qualifes.app.ui.HomeActivity"
                   android:windowSoftInputMode="adjustPan">
             <intent-filter>

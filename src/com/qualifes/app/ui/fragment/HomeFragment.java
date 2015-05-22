@@ -125,6 +125,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                                 Intent intent = new Intent(getActivity(), WebActivity.class);
                                 try {
                                     intent.putExtra("url", obj.getString("url"));
+                                    intent.putExtra("title",obj.getString("name"));
                                     startActivity(intent);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -189,6 +190,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                             Intent intent = new Intent(getActivity(), WebActivity.class);
                             try {
                                 intent.putExtra("url", buttonL.getString("url"));
+                                intent.putExtra("title",buttonL.getString("name"));
                                 startActivity(intent);
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -213,6 +215,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                             Intent intent = new Intent(getActivity(), WebActivity.class);
                             try {
                                 intent.putExtra("url", buttonR.getString("url"));
+                                intent.putExtra("title",buttonR.getString("name"));
                                 startActivity(intent);
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -407,7 +410,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 //            Log.e("px", String.valueOf(DisplayUtil.px2dip(210, params.scale)));
             return false;
         }
-        if (e2.getX() - e1.getX() > 200) {             // 从左向右滑动（左进右出）
+        if (e2.getX() - e1.getX() > DisplayUtil.dip2px(100, params.scale)) {             // 从左向右滑动（左进右出）
             viewFlipper.stopFlipping();                // 点击事件后，停止自动播放
             viewFlipper.setAutoStart(false);
             Animation rInAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.push_right_in);    // 向右滑动左侧进入的渐变效果（alpha  0.1 -> 1.0）
@@ -417,7 +420,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
             viewFlipper.setOutAnimation(rOutAnim);
             viewFlipper.showPrevious();
             return true;
-        } else if (e2.getX() - e1.getX() < -200) {         // 从右向左滑动（右进左出）
+        } else if (e2.getX() - e1.getX() < - DisplayUtil.dip2px(100, params.scale)) {         // 从右向左滑动（右进左出）
             viewFlipper.stopFlipping();                // 点击事件后，停止自动播放
             viewFlipper.setAutoStart(false);
             Animation lInAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.push_left_in);        // 向左滑动左侧进入的渐变效果（alpha 0.1  -> 1.0）

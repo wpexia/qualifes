@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -67,6 +68,12 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 return false;
             }
         });
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 
@@ -76,14 +83,18 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         switch (id) {
             case R.id.get_code: {
                 if (username.getText().toString().equals("")) {
-                    Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 } else {
                     registerManager.getCode(username.getText().toString(), gcHandler, getApplicationContext());
                 }
             }
             break;
             case R.id.protocol: {
-                Intent intent = new Intent(RegisterActivity.this, ProtocolActivity.class);
+                Intent intent = new Intent(RegisterActivity.this, WebActivity.class);
+                intent.putExtra("title", "品制生活用户服务注册协议");
+                intent.putExtra("url", "http://www.qualifes.com/webview/beta/ios_info/register.html");
                 startActivity(intent);
             }
             break;
@@ -109,7 +120,9 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     //获取验证码Handler
     Handler gcHandler = new Handler() {
         public void handleMessage(Message msg) {
-            Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+            Toast toast = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
             if (msg.what == 0) {
                 time = new Timer();
                 task = new TimerTask() {
@@ -149,7 +162,9 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 case 0: {
                     try {
                         Thread.sleep(1000);
-                        Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                        Toast toast = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -158,7 +173,9 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 }
                 break;
                 case 1: {
-                    Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }
             }
         }
@@ -171,13 +188,17 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 case 0: {
                     Bundle bundle = new Bundle();
                     bundle.putString("username", username.getText().toString());
-                    Toast.makeText(getApplicationContext(), "登陆成功", Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "登陆成功", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                     Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
                 break;
                 case 1: {
-                    Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                     break;
                 }
             }

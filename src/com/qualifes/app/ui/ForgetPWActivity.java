@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +28,6 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
     private EditText password;
     private Button getCode;
     private Button viewPassword;
-    private Button protocol;
     private Button agree;
     private int count;
     private Timer time;
@@ -51,10 +51,8 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
         password = (EditText) findViewById(R.id.password_name);
         getCode = (Button) findViewById(R.id.get_code);
         viewPassword = (Button) findViewById(R.id.show_password);
-        protocol = (Button) findViewById(R.id.protocol);
         agree = (Button) findViewById(R.id.agree);
         getCode.setOnClickListener(this);
-        protocol.setOnClickListener(this);
         agree.setOnClickListener(this);
         viewPassword.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -80,26 +78,29 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
         switch (id) {
             case R.id.get_code: {
                 if (username.getText().toString().equals("")) {
-                    Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 } else {
                     registerManager.getCode(username.getText().toString(), gcHandler, getApplicationContext());
                 }
             }
             break;
-            case R.id.protocol: {
-                Intent intent = new Intent(ForgetPWActivity.this, ProtocolActivity.class);
-                startActivity(intent);
-            }
-            break;
             case R.id.agree: {
                 if (username.getText().toString().equals("")) {
-                    Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                     break;
                 } else if (code.getText().toString().equals("")) {
-                    Toast.makeText(getApplicationContext(), "验证码不能为空！", Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "验证码不能为空！", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                     break;
                 } else if (password.getText().toString().equals("")) {
-                    Toast.makeText(getApplicationContext(), "密码不能为空！", Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "密码不能为空！", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                     break;
                 } else {
                     registerManager.register(username.getText().toString(), code.getText().toString(), password.getText().toString(), registerHandler, getApplicationContext());
@@ -113,7 +114,9 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
     //获取验证码Handler
     Handler gcHandler = new Handler() {
         public void handleMessage(Message msg) {
-            Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+            Toast toast = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
             if (msg.what == 0) {
                 time = new Timer();
                 task = new TimerTask() {
@@ -153,7 +156,9 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
                 case 0: {
                     try {
                         Thread.sleep(1000);
-                        Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                        Toast toast = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -162,7 +167,9 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
                 }
                 break;
                 case 1: {
-                    Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }
             }
         }
@@ -181,7 +188,9 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
                 }
                 break;
                 case 1: {
-                    Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                     break;
                 }
             }

@@ -42,6 +42,12 @@ public class OrderDetailActivity extends Activity {
         OrderManager manager = OrderManager.getInstance();
 
         manager.getOrderById(sp.getString("token", ""), id, getOrderByIdHandler);
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 

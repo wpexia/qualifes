@@ -153,6 +153,7 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
                         obj.put("checked", false);
                     }
                     adapter = new ShoppingCartAdapter(ShoppingCartActivity.this, data);
+                    adapter.setIsactivity();
                     listView.setAdapter(adapter);
                     listView.setDividerHeight(0);
                     CheckBox checkTotal = (CheckBox) ShoppingCartActivity.this.findViewById(R.id.totalcheckBox);

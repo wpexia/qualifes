@@ -179,7 +179,7 @@
             android:layout_marginTop="56dp"
             android:background="@null"
             android:gravity="center"
-            android:text="《品质生活用户服务协议》"
+            android:text="《品制生活用户服务注册协议》"
             android:textColor="@drawable/register_text_press"
             android:textSize="14sp"/>
 

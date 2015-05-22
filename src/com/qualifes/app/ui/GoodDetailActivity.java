@@ -147,14 +147,13 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
         accessServer();
 
 
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
-        if(sp.contains("token")) {
+        if (sp.contains("token")) {
             AsyncHttpClient client = new AsyncHttpClient();
             final Message msg = new Message();
             RequestParams params = new RequestParams();
@@ -169,7 +168,7 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
                     try {
                         msg.obj = response.getJSONObject("data").getJSONArray("data");
                         int number = response.getJSONObject("data").getJSONArray("data").length();
-                        if(number > 0) {
+                        if (number > 0) {
                             ((TextView) findViewById(R.id.badge)).setText(String.valueOf(number));
                             findViewById(R.id.badge).setVisibility(View.VISIBLE);
                         } else {
@@ -317,7 +316,7 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
                                         if (id == R.id.friend) {
                                             UMWXHandler wxHandler = new UMWXHandler(GoodDetailActivity.this, WXApi.APP_ID, WXApi.APP_KEY);
                                             wxHandler.addToSocialSDK();
-                                            UMImage shareImage = new UMImage(GoodDetailActivity.this,imgsArray.getString(0));
+                                            UMImage shareImage = new UMImage(GoodDetailActivity.this, imgsArray.getString(0));
                                             WeiXinShareContent content = new WeiXinShareContent();
                                             content.setTargetUrl("http://www.qualifes.com/webview/release/goods_info_android/index.html?id=" + goods_id);
                                             content.setShareMedia(shareImage);
@@ -337,7 +336,7 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
                                                 }
                                             });
                                         } else {
-                                            UMImage shareImage = new UMImage(GoodDetailActivity.this,imgsArray.getString(0));
+                                            UMImage shareImage = new UMImage(GoodDetailActivity.this, imgsArray.getString(0));
                                             UMWXHandler wxCircleHandler = new UMWXHandler(GoodDetailActivity.this, WXApi.APP_ID, WXApi.APP_KEY);
                                             wxCircleHandler.setToCircle(true);
                                             wxCircleHandler.addToSocialSDK();
@@ -483,7 +482,7 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
 //            Log.e("px", String.valueOf(DisplayUtil.px2dip(210, params.scale)));
             return false;
         }
-        if (e2.getX() - e1.getX() > 200) {             // 从左向右滑动（左进右出）
+        if (e2.getX() - e1.getX() > DisplayUtil.dip2px(100, params.scale)) {             // 从左向右滑动（左进右出）
             detail_imgs.stopFlipping();                // 点击事件后，停止自动播放
             detail_imgs.setAutoStart(false);
             Animation rInAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_right_in);    // 向右滑动左侧进入的渐变效果（alpha  0.1 -> 1.0）
@@ -493,7 +492,7 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
             detail_imgs.setOutAnimation(rOutAnim);
             detail_imgs.showPrevious();
             return true;
-        } else if (e2.getX() - e1.getX() < -200) {         // 从右向左滑动（右进左出）
+        } else if (e2.getX() - e1.getX() < -DisplayUtil.dip2px(100, params.scale)) {         // 从右向左滑动（右进左出）
             detail_imgs.stopFlipping();                // 点击事件后，停止自动播放
             detail_imgs.setAutoStart(false);
             Animation lInAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_left_in);        // 向左滑动左侧进入的渐变效果（alpha 0.1  -> 1.0）

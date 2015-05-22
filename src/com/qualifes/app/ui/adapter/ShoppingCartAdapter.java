@@ -19,6 +19,7 @@ import com.qualifes.app.R;
 import com.qualifes.app.config.Api;
 import com.qualifes.app.ui.GoodDetailActivity;
 import com.qualifes.app.ui.HomeActivity;
+import com.qualifes.app.ui.ShoppingCartActivity;
 import com.qualifes.app.util.AsyncImageLoader;
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -34,6 +35,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
     private JSONArray mData;
     private AsyncImageLoader imageLoader = new AsyncImageLoader();
     public boolean flag = false;
+    public boolean isactivity = false;
 
     Map<String, Bitmap> bitCache = new HashMap<>();
 
@@ -42,6 +44,10 @@ public class ShoppingCartAdapter extends BaseAdapter {
         this.inflater = LayoutInflater.from(context);
         this.mData = data;
     }
+    public void setIsactivity() {
+        isactivity = true;
+    }
+
 
     @Override
     public int getCount() {
@@ -256,7 +262,12 @@ public class ShoppingCartAdapter extends BaseAdapter {
                         obj.remove("checked");
                         obj.put("checked", isChecked);
                         double money = obj.getDouble("goods_price") * Integer.parseInt(number.getText().toString());
-                        TextView total = (TextView) ((HomeActivity) parent.getContext()).findViewById(R.id.total);
+                        TextView total;
+                        if(!isactivity) {
+                            total = (TextView) ((HomeActivity) parent.getContext()).findViewById(R.id.total);
+                        } else  {
+                            total = (TextView) ((ShoppingCartActivity) parent.getContext()).findViewById(R.id.total);
+                        }
                         if (!isChecked) {
                             CheckBox totalCheck = (CheckBox) ((HomeActivity) parent.getContext()).findViewById(R.id.totalcheckBox);
                             if (totalCheck.isChecked()) {

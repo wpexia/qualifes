@@ -74,6 +74,12 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
         OrderManager manager = OrderManager.getInstance();
         manager.initOrder(sp.getString("token", ""), goods, initOrderHander);
 
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 

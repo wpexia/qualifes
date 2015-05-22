@@ -10,6 +10,7 @@ import com.qualifes.app.R;
 import com.qualifes.app.ui.HomeActivity;
 import com.qualifes.app.ui.LoginActivity;
 import com.qualifes.app.ui.RegisterActivity;
+import com.qualifes.app.ui.SettingActivity;
 
 public class UnLoginFragment extends Fragment implements View.OnClickListener {
     @Override
@@ -23,7 +24,7 @@ public class UnLoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().findViewById(R.id.personal_setting).setOnClickListener((HomeActivity) getActivity());
+        getActivity().findViewById(R.id.personal_setting).setOnClickListener(this);
     }
 
     @Override
@@ -37,6 +38,11 @@ public class UnLoginFragment extends Fragment implements View.OnClickListener {
             break;
             case R.id.personal_register: {
                 Intent intent = new Intent(getActivity(), RegisterActivity.class);
+                startActivity(intent);
+            }
+            break;
+            case R.id.personal_setting: {
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent);
             }
             break;

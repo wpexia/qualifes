@@ -30,6 +30,12 @@ public class ReachTimeActivity extends Activity implements View.OnClickListener{
         findViewById(R.id.time1).setOnClickListener(this);
         findViewById(R.id.time2).setOnClickListener(this);
         findViewById(R.id.time3).setOnClickListener(this);
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
     @Override
     public void onClick(View v) {

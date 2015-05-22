@@ -25,6 +25,12 @@ public class PositionActivity extends Activity implements View.OnClickListener {
         sp = getSharedPreferences("user", MODE_PRIVATE);
         manager = getFragmentManager();
         initView();
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void initView() {

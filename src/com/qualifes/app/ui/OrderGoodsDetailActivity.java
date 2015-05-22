@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import com.qualifes.app.R;
 import com.qualifes.app.ui.adapter.OrderDetailAdapter;
@@ -23,6 +24,12 @@ public class OrderGoodsDetailActivity extends Activity {
             Log.e("goods", goods.toString());
             OrderDetailAdapter adapter = new OrderDetailAdapter(getApplicationContext(), goods);
             ((ListView) findViewById(R.id.content)).setAdapter(adapter);
+            findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
             ((ListView) findViewById(R.id.content)).setDividerHeight(0);
         } catch (JSONException e) {
             e.printStackTrace();

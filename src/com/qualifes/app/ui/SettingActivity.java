@@ -32,6 +32,9 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.aboutus).setOnClickListener(this);
         findViewById(R.id.help).setOnClickListener(this);
         findViewById(R.id.changepassword).setOnClickListener(this);
+        if(!sp.contains("token")) {
+            findViewById(R.id.logout).setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -78,12 +81,14 @@ public class SettingActivity extends Activity implements View.OnClickListener {
             break;
             case R.id.aboutus: {
                 Intent intent = new Intent(SettingActivity.this, WebActivity.class);
+                intent.putExtra("title","关于我们");
                 intent.putExtra("url", "http://www.qualifes.com/webview/release/ios_info/about.html");
                 startActivity(intent);
             }
             break;
             case R.id.help: {
                 Intent intent = new Intent(SettingActivity.this, WebActivity.class);
+                intent.putExtra("title","使用帮助");
                 intent.putExtra("url", "http://www.qualifes.com/webview/release/ios_info/help.html");
                 startActivity(intent);
             }
