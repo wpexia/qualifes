@@ -124,6 +124,8 @@ public class PositionManager {
                         msg.obj = response.getJSONArray("data");
                         handler.sendMessage(msg);
                     } catch (JSONException e) {
+                        msg.what = 1;
+                        handler.sendMessage(msg);
                         e.printStackTrace();
                     }
 

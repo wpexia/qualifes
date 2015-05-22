@@ -32,7 +32,7 @@ public class Api {
                 if (response.getInt("status") == 401) {
                     SharedPreferences sp = mContext.getSharedPreferences("user", Activity.MODE_PRIVATE);
                     sp.edit().remove("token").apply();
-                    Toast toast = Toast.makeText(mContext, "请重新登陆!", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(mContext, "请重新登录!", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
                 }

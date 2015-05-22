@@ -226,6 +226,9 @@ public class ProductListNotNullFragment extends Fragment {
                     }
                     break;
                 }
+                productListAdapter.notifyDataSetChanged();
+                // should call onBottomComplete function of DropDownListView at end of on bottom complete.
+                listView.onBottomComplete();
             }
 
             super.onPostExecute(result);
@@ -263,9 +266,6 @@ public class ProductListNotNullFragment extends Fragment {
                             map.put("discount", (int) ((1 - (price / oldPrice)) * 100) + "% 折扣");
                             mData.add(map);
                         }
-                        productListAdapter.notifyDataSetChanged();
-                        // should call onBottomComplete function of DropDownListView at end of on bottom complete.
-                        listView.onBottomComplete();
                         if (goods.length() < 10) {
                             listView.setHasMore(false);
                             listView.onBottomComplete();

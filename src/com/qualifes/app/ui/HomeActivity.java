@@ -45,7 +45,8 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);manager = getFragmentManager();
+        setContentView(R.layout.main);
+        manager = getFragmentManager();
         fragmentId = 0;
         MobclickAgent.setDebugMode(true);
 //      SDK在统计Fragment时，需要关闭Activity自带的页面统计，
@@ -98,12 +99,16 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
     @Override
     protected void onResume() {
         super.onResume();
+        if (flag) {
+            initView();
+        }
+
         SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
-        if(sp.contains("token")) {
+        if (sp.contains("token")) {
             AsyncHttpClient client = new AsyncHttpClient();
             final Message msg = new Message();
             RequestParams params = new RequestParams();
-            params.put("token", sp.getString("token",""));
+            params.put("token", sp.getString("token", ""));
             params.put("data[limit][m]", "0");
             params.put("data[limit][n]", "100");
             client.get(Api.url("get_cart"), params, new JsonHttpResponseHandler() {
@@ -114,7 +119,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                     try {
                         msg.obj = response.getJSONObject("data").getJSONArray("data");
                         int number = response.getJSONObject("data").getJSONArray("data").length();
-                        if(number >0) {
+                        if (number > 0) {
                             ((TextView) findViewById(R.id.badge)).setText(String.valueOf(number));
                             findViewById(R.id.badge).setVisibility(View.VISIBLE);
                         } else {

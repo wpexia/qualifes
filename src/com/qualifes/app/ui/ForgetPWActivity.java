@@ -182,7 +182,7 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
                 case 0: {
                     Bundle bundle = new Bundle();
                     bundle.putString("username", username.getText().toString());
-                    Toast.makeText(getApplicationContext(), "登陆成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(ForgetPWActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }

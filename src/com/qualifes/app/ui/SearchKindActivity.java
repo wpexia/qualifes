@@ -8,6 +8,8 @@ import java.util.Map;
 import com.loopj.android.http.RequestParams;
 import com.qualifes.app.R;
 import com.qualifes.app.ui.adapter.SearchKindAdapter;
+import com.qualifes.app.util.DisplayParams;
+import com.qualifes.app.util.DisplayUtil;
 import com.qualifes.app.util.SearchRecordDbHelper;
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -145,7 +147,8 @@ public class SearchKindActivity extends Activity implements OnClickListener, OnI
         switch (parent.getId()) {
 
             case R.id.homeSearchKindItems: {
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(210, RelativeLayout.LayoutParams.MATCH_PARENT);
+                DisplayParams params2 = DisplayParams.getInstance(getApplicationContext());
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(DisplayUtil.dip2px(105, params2.scale), RelativeLayout.LayoutParams.MATCH_PARENT);
                 kind.setLayoutParams(params);
                 for (int i = 0; i < cateList.size(); i++) {
                     RelativeLayout layout = (RelativeLayout) parent.getChildAt(i);
@@ -185,7 +188,7 @@ public class SearchKindActivity extends Activity implements OnClickListener, OnI
                 AsyncHttpClient client = new AsyncHttpClient();
                 RequestParams params2 = new RequestParams();
                 params2.put("data[parent_id]", childList.get(position).get("id"));
-                final StringBuffer keyWord = new StringBuffer("");
+                final StringBuffer keyWord = new StringBuffer(childList.get(position).get("id"));
                 client.get(ConnectionURL.getGoodCategory(), params2, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -193,20 +196,17 @@ public class SearchKindActivity extends Activity implements OnClickListener, OnI
                             JSONArray dataArray = response.getJSONArray("data");
                             for (int i = 0; i < dataArray.length(); i++) {
                                 JSONObject data = dataArray.getJSONObject(i);
-                                if (i != 0) {
-                                    keyWord.append(",");
-                                }
-                                keyWord.append(data.getString("cat_id"));
+                                keyWord.append("," + data.getString("cat_id"));
                             }
-                            Intent intent = new Intent(SearchKindActivity.this, SearchResultActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putBoolean("flag", true);
-                            bundle.putString("searchKeyWord", keyWord.toString());
-                            intent.putExtras(bundle);
-                            startActivity(intent);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        Intent intent = new Intent(SearchKindActivity.this, SearchResultActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("flag", true);
+                        bundle.putString("searchKeyWord", keyWord.toString());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                     }
                 });
             }

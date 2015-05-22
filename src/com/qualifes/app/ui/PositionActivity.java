@@ -6,10 +6,14 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import com.qualifes.app.R;
+import com.qualifes.app.manager.PositionManager;
 import com.qualifes.app.ui.fragment.PositionNullFragment;
 import com.qualifes.app.ui.fragment.PositionOKFragment;
+import org.json.JSONArray;
 
 public class PositionActivity extends Activity implements View.OnClickListener {
 
@@ -34,25 +38,34 @@ public class PositionActivity extends Activity implements View.OnClickListener {
     }
 
     private void initView() {
-        FragmentTransaction transaction = manager.beginTransaction();
-        hideFragment(transaction);
-        if (sp.contains("position")) {
-            if (positionNullFragment == null) {
-                positionNullFragment = new PositionNullFragment();
-                transaction.add(R.id.content, positionNullFragment);
-            } else {
-                transaction.show(positionNullFragment);
-            }
-        } else {
-            if (positionOKFragment == null) {
-                positionOKFragment = new PositionOKFragment();
-                transaction.add(R.id.content, positionOKFragment);
-            } else {
-                transaction.show(positionOKFragment);
-            }
-        }
-        transaction.commit();
+        PositionManager positionManager = PositionManager.getInstance();
+        positionManager.getPosition(sp.getString("token", ""), getPosition, PositionActivity.this);
+
     }
+
+    Handler getPosition = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            FragmentTransaction transaction = manager.beginTransaction();
+            hideFragment(transaction);
+            if (msg.what == 1) {
+                if (positionNullFragment == null) {
+                    positionNullFragment = new PositionNullFragment();
+                    transaction.add(R.id.content, positionNullFragment);
+                } else {
+                    transaction.show(positionNullFragment);
+                }
+            } else {
+                if (positionOKFragment == null) {
+                    positionOKFragment = new PositionOKFragment();
+                    transaction.add(R.id.content, positionOKFragment);
+                } else {
+                    transaction.show(positionOKFragment);
+                }
+            }
+            transaction.commit();
+        }
+    };
 
     private void hideFragment(FragmentTransaction transaction) {
         if (positionNullFragment != null) {
@@ -73,7 +86,7 @@ public class PositionActivity extends Activity implements View.OnClickListener {
             }
             break;
             case R.id.icon_in: {
-                
+
             }
             break;
         }

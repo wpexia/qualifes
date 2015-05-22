@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.qualifes.app.R;
 import com.qualifes.app.manager.PositionManager;
+import com.qualifes.app.util.DisplayParams;
+import com.qualifes.app.util.DisplayUtil;
 import com.qualifes.app.util.PlistHelper;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
@@ -28,12 +30,14 @@ public class AddPositionActivity extends Activity implements View.OnClickListene
     private SharedPreferences sp;
     private TextView position;
     private Position result;
+    DisplayParams displayParams;
     private String addressId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addposition);
+        displayParams = DisplayParams.getInstance(getApplicationContext());
         initView();
         Intent intent = getIntent();
         if (intent.hasExtra("position")) {
@@ -63,13 +67,13 @@ public class AddPositionActivity extends Activity implements View.OnClickListene
                 province.setCurrentItem(provinceIndex);
                 String[] cities = plistHelper.getCity(provinceIndex);
                 ArrayWheelAdapter<String> adapterc = new ArrayWheelAdapter<String>(d.getContext(), cities);
-                adapterc.setTextSize(18);
+                adapterc.setTextSize(DisplayUtil.sp2px(7,displayParams.fontScale));
                 city.setViewAdapter(adapterc);
                 city.setCurrentItem(cityIndex);
 
                 String[] towns = plistHelper.getTown(provinceIndex, cityIndex);
                 ArrayWheelAdapter<String> adaptert = new ArrayWheelAdapter<String>(d.getContext(), towns);
-                adaptert.setTextSize(18);
+                adaptert.setTextSize(DisplayUtil.sp2px(7,displayParams.fontScale));
                 town.setViewAdapter(adaptert);
                 town.setCurrentItem(townIndex);
 
@@ -102,7 +106,7 @@ public class AddPositionActivity extends Activity implements View.OnClickListene
         final WheelView town = (WheelView) d.findViewById(R.id.town);
 
         ArrayWheelAdapter<String> adapterp = new ArrayWheelAdapter<String>(d.getContext(), provinces);
-        adapterp.setTextSize(18);
+        adapterp.setTextSize(DisplayUtil.sp2px(7,displayParams.fontScale));
         province.setViewAdapter(adapterp);
         province.setCurrentItem(0);
         province.setDrawShadows(false);
@@ -117,13 +121,13 @@ public class AddPositionActivity extends Activity implements View.OnClickListene
                 int provinceId = province.getCurrentItem();
                 String[] citys = plistHelper.getCity(provinceId);
                 ArrayWheelAdapter<String> adapterc = new ArrayWheelAdapter<String>(d.getContext(), citys);
-                adapterc.setTextSize(18);
+                adapterc.setTextSize(DisplayUtil.sp2px(7,displayParams.fontScale));
                 city.setViewAdapter(adapterc);
                 city.setCurrentItem(0);
 
                 String[] towns = plistHelper.getTown(provinceId, 0);
                 ArrayWheelAdapter<String> adaptert = new ArrayWheelAdapter<String>(d.getContext(), towns);
-                adaptert.setTextSize(18);
+                adaptert.setTextSize(DisplayUtil.sp2px(7,displayParams.fontScale));
                 town.setViewAdapter(adaptert);
                 town.setCurrentItem(0);
             }
@@ -132,7 +136,7 @@ public class AddPositionActivity extends Activity implements View.OnClickListene
 
         String[] cities = plistHelper.getCity(0);
         ArrayWheelAdapter<String> adapterc = new ArrayWheelAdapter<String>(d.getContext(), cities);
-        adapterc.setTextSize(18);
+        adapterc.setTextSize(DisplayUtil.sp2px(7,displayParams.fontScale));
         city.setViewAdapter(adapterc);
         city.setCurrentItem(0);
         city.setDrawShadows(false);
@@ -150,7 +154,8 @@ public class AddPositionActivity extends Activity implements View.OnClickListene
 
                 String[] towns = plistHelper.getTown(provinceId, cityId);
                 ArrayWheelAdapter<String> adaptert = new ArrayWheelAdapter<String>(d.getContext(), towns);
-                adaptert.setTextSize(18);
+
+                adaptert.setTextSize(DisplayUtil.sp2px(7,displayParams.fontScale));
                 town.setViewAdapter(adaptert);
                 town.setCurrentItem(0);
             }
@@ -159,7 +164,7 @@ public class AddPositionActivity extends Activity implements View.OnClickListene
 
         String[] towns = plistHelper.getTown(0, 0);
         ArrayWheelAdapter<String> adaptert = new ArrayWheelAdapter<String>(d.getContext(), towns);
-        adaptert.setTextSize(18);
+        adaptert.setTextSize(DisplayUtil.sp2px(7,displayParams.fontScale));
         town.setViewAdapter(adaptert);
         town.setCurrentItem(0);
         town.setDrawShadows(false);

@@ -125,7 +125,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                                 Intent intent = new Intent(getActivity(), WebActivity.class);
                                 try {
                                     intent.putExtra("url", obj.getString("url"));
-                                    intent.putExtra("title",obj.getString("name"));
+                                    intent.putExtra("title", obj.getString("name"));
                                     startActivity(intent);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -190,7 +190,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                             Intent intent = new Intent(getActivity(), WebActivity.class);
                             try {
                                 intent.putExtra("url", buttonL.getString("url"));
-                                intent.putExtra("title",buttonL.getString("name"));
+                                intent.putExtra("title", buttonL.getString("name"));
                                 startActivity(intent);
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -215,7 +215,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                             Intent intent = new Intent(getActivity(), WebActivity.class);
                             try {
                                 intent.putExtra("url", buttonR.getString("url"));
-                                intent.putExtra("title",buttonR.getString("name"));
+                                intent.putExtra("title", buttonR.getString("name"));
                                 startActivity(intent);
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -242,7 +242,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                         goodsRedData = data;
                     }
                     int size = data.length();
-                    int itemWidth = 200;
+                    DisplayParams params1 = DisplayParams.getInstance(getActivity());
+                    int itemWidth = DisplayUtil.dip2px(100, params1.scale);
                     int gridViewWidth = size * itemWidth;
 
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(gridViewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -273,7 +274,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                         goodsBlueData = data;
                     }
                     int size = data.length();
-                    int itemWidth = 200;
+                    DisplayParams params1 = DisplayParams.getInstance(getActivity());
+                    int itemWidth = DisplayUtil.dip2px(100, params1.scale);
                     int gridViewWidth = size * itemWidth;
 
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(gridViewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -420,7 +422,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
             viewFlipper.setOutAnimation(rOutAnim);
             viewFlipper.showPrevious();
             return true;
-        } else if (e2.getX() - e1.getX() < - DisplayUtil.dip2px(100, params.scale)) {         // 从右向左滑动（右进左出）
+        } else if (e2.getX() - e1.getX() < -DisplayUtil.dip2px(100, params.scale)) {         // 从右向左滑动（右进左出）
             viewFlipper.stopFlipping();                // 点击事件后，停止自动播放
             viewFlipper.setAutoStart(false);
             Animation lInAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.push_left_in);        // 向左滑动左侧进入的渐变效果（alpha 0.1  -> 1.0）

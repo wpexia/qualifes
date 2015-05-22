@@ -92,7 +92,7 @@ public class LoginActivity extends Activity implements OnClickListener {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0: {
-                    Toast toast = Toast.makeText(getApplicationContext(), "登陆成功", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
                     SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);

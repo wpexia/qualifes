@@ -188,7 +188,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 case 0: {
                     Bundle bundle = new Bundle();
                     bundle.putString("username", username.getText().toString());
-                    Toast toast = Toast.makeText(getApplicationContext(), "登陆成功", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
                     Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
