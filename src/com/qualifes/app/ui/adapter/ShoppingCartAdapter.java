@@ -44,6 +44,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
         this.inflater = LayoutInflater.from(context);
         this.mData = data;
     }
+
     public void setIsactivity() {
         isactivity = true;
     }
@@ -126,12 +127,16 @@ public class ShoppingCartAdapter extends BaseAdapter {
                     }
                 }
             });
-            convertView.findViewById(R.id.item).setOnClickListener(new View.OnClickListener() {
+            if (obj.getBoolean("delete")) {
+                convertView.findViewById(R.id.delete).setVisibility(View.VISIBLE);
+            }
+
+            convertView.findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, GoodDetailActivity.class);
                     Bundle bundle = new Bundle();
-//                    Log.e("goodsId", mData.get(position).get("goods_id").toString());
+//                    Log.e("goodsId", mData.get(position).get("goods_id.toString());
                     try {
                         bundle.putInt("goods_id", obj.getInt("goods_id"));
                     } catch (JSONException e) {
@@ -141,7 +146,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
                     ((Activity) context).startActivity(intent);
                 }
             });
-            convertView.findViewById(R.id.icon_in).setOnClickListener(new View.OnClickListener() {
+            convertView.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     SharedPreferences sp = context.getSharedPreferences("user", Activity.MODE_PRIVATE);
@@ -160,6 +165,9 @@ public class ShoppingCartAdapter extends BaseAdapter {
                                     Toast.makeText(context, msg.obj.toString(), Toast.LENGTH_SHORT).show();
                                     mData.remove(position);
                                     notifyDataSetChanged();
+                                    if (mData.length() == 0) {
+                                        ((Activity) context).onContentChanged();
+                                    }
                                 }
                             });
                         } catch (JSONException e) {
@@ -198,7 +206,12 @@ public class ShoppingCartAdapter extends BaseAdapter {
                     if (num > 1) {
                         if (check.isChecked()) {
                             try {
-                                TextView total = (TextView) ((HomeActivity) parent.getContext()).findViewById(R.id.total);
+                                TextView total;
+                                if (!isactivity) {
+                                    total = (TextView) ((HomeActivity) parent.getContext()).findViewById(R.id.total);
+                                } else {
+                                    total = (TextView) ((ShoppingCartActivity) parent.getContext()).findViewById(R.id.total);
+                                }
                                 double money = obj.getDouble("goods_price");
                                 double totalMoney = Double.parseDouble(total.getText().toString());
                                 totalMoney -= money;
@@ -228,7 +241,12 @@ public class ShoppingCartAdapter extends BaseAdapter {
                         if (num < obj.getInt("goods_inventory")) {
                             if (check.isChecked()) {
                                 try {
-                                    TextView total = (TextView) ((HomeActivity) parent.getContext()).findViewById(R.id.total);
+                                    TextView total;
+                                    if (!isactivity) {
+                                        total = (TextView) ((HomeActivity) parent.getContext()).findViewById(R.id.total);
+                                    } else {
+                                        total = (TextView) ((ShoppingCartActivity) parent.getContext()).findViewById(R.id.total);
+                                    }
                                     double money = obj.getDouble("goods_price");
                                     double totalMoney = Double.parseDouble(total.getText().toString());
                                     totalMoney += money;
@@ -263,13 +281,20 @@ public class ShoppingCartAdapter extends BaseAdapter {
                         obj.put("checked", isChecked);
                         double money = obj.getDouble("goods_price") * Integer.parseInt(number.getText().toString());
                         TextView total;
-                        if(!isactivity) {
+                        if (!isactivity) {
                             total = (TextView) ((HomeActivity) parent.getContext()).findViewById(R.id.total);
-                        } else  {
+                        } else {
                             total = (TextView) ((ShoppingCartActivity) parent.getContext()).findViewById(R.id.total);
                         }
                         if (!isChecked) {
-                            CheckBox totalCheck = (CheckBox) ((HomeActivity) parent.getContext()).findViewById(R.id.totalcheckBox);
+                            CheckBox totalCheck;
+                            if (!isactivity) {
+                                totalCheck =
+                                        (CheckBox) ((HomeActivity) parent.getContext()).findViewById(R.id.totalcheckBox);
+                            } else {
+                                totalCheck =
+                                        (CheckBox) ((ShoppingCartActivity) parent.getContext()).findViewById(R.id.totalcheckBox);
+                            }
                             if (totalCheck.isChecked()) {
                                 totalCheck.setChecked(false);
                             }
@@ -277,7 +302,12 @@ public class ShoppingCartAdapter extends BaseAdapter {
                             totalMoney -= money;
                             total.setText(String.valueOf(totalMoney));
                         } else {
-                            CheckBox totalCheck = (CheckBox) ((HomeActivity) parent.getContext()).findViewById(R.id.totalcheckBox);
+                            CheckBox totalCheck;
+                            if (!isactivity) {
+                                totalCheck = (CheckBox) ((HomeActivity) parent.getContext()).findViewById(R.id.totalcheckBox);
+                            } else {
+                                totalCheck = (CheckBox) ((ShoppingCartActivity) parent.getContext()).findViewById(R.id.totalcheckBox);
+                            }
                             double totalMoney = Double.parseDouble(total.getText().toString());
                             totalMoney += money;
                             if (allChecked()) {

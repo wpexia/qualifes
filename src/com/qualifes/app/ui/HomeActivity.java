@@ -108,7 +108,16 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         if (flag) {
             initView();
         }
+        onRefresh();
+    }
 
+
+    @Override
+    public void onContentChanged() {
+        onRefresh();
+    }
+
+    public void onRefresh() {
         SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
         if (sp.contains("token")) {
             AsyncHttpClient client = new AsyncHttpClient();
@@ -132,6 +141,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                             findViewById(R.id.badge).setVisibility(View.INVISIBLE);
                         }
                     } catch (JSONException e) {
+                        findViewById(R.id.badge).setVisibility(View.INVISIBLE);
                         e.printStackTrace();
                     }
                 }

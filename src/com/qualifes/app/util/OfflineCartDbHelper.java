@@ -47,22 +47,26 @@ public class OfflineCartDbHelper extends SQLiteOpenHelper {
 
     public int contain(String goodsId) {
         Cursor cursor = this.getReadableDatabase().query(TABLE_NAME, null, null, null, null, null, " _id desc");
+        int id = -1;
         while (cursor.moveToNext()) {
             if (cursor.getString(1).equals(goodsId)) {
-                return cursor.getInt(0);
+                id = cursor.getInt(0);
             }
         }
-        return -1;
+        cursor.close();
+        return id;
     }
 
     public int numByGoodId(String goodsId) {
         Cursor cursor = this.getReadableDatabase().query(TABLE_NAME, null, null, null, null, null, " _id desc");
+        int id = 0;
         while (cursor.moveToNext()) {
             if (cursor.getString(1).equals(goodsId)) {
-                return cursor.getInt(3);
+                id = cursor.getInt(3);
             }
         }
-        return 0;
+        cursor.close();
+        return id;
     }
 
     public long insert(String goodsId, String goodsAttr, String goodNum, String goodsAttrName) {

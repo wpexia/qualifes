@@ -4,7 +4,6 @@
                 android:layout_width="match_parent"
                 android:id="@+id/item"
                 android:background="@color/white"
-                android:clickable="true"
                 android:layout_height="120dp">
     <CheckBox
             android:layout_width="wrap_content"
@@ -93,4 +92,13 @@
             android:textColor="#ff3300"
             android:id="@+id/price" android:layout_alignBottom="@+id/add" android:layout_toRightOf="@+id/add"
             android:layout_toEndOf="@+id/add"/>
+    <Button
+            android:layout_width="70dp"
+            android:layout_height="fill_parent"
+            android:text="删除"
+            android:visibility="gone"
+            android:textColor="#ffffff"
+            android:background="#ff3300"
+            android:id="@+id/delete" android:layout_centerVertical="true" android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
 </RelativeLayout>

@@ -2,26 +2,17 @@ package com.qualifes.app.ui.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.*;
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.qualifes.app.R;
-import com.qualifes.app.manager.FollowManager;
-import com.qualifes.app.manager.HistoryManager;
 import com.qualifes.app.manager.ShoppingCartManager;
 import com.qualifes.app.ui.*;
 import com.qualifes.app.ui.adapter.ShoppingCartAdapter;
@@ -48,8 +39,84 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
         super.onViewCreated(view, savedInstanceState);
         sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
         listView = (ListView) mView.findViewById(R.id.content);
-//        createSwipeMenu();
         init();
+    }
+
+
+    private void createSwipeMenu() {
+        listView.setOnTouchListener(new SwipeGestureListener(getActivity()));
+    }
+
+    class SwipeGestureListener extends GestureDetector.SimpleOnGestureListener implements
+            View.OnTouchListener {
+        Context context;
+        GestureDetector gDetector;
+        static final int SWIPE_MIN_DISTANCE = 120;
+        static final int SWIPE_MAX_OFF_PATH = 250;
+        static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
+        public SwipeGestureListener() {
+            super();
+        }
+
+        public SwipeGestureListener(Context context) {
+            this(context, null);
+        }
+
+        public SwipeGestureListener(Context context, GestureDetector gDetector) {
+
+            if (gDetector == null)
+                gDetector = new GestureDetector(context, this);
+
+            this.context = context;
+            this.gDetector = gDetector;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                               float velocityY) {
+            final int position = listView.pointToPosition(
+                    Math.round(e1.getX()), Math.round(e1.getY()));
+            if (Math.abs(e1.getY() - e2.getY()) < SWIPE_MAX_OFF_PATH) {
+                if (Math.abs(velocityX) < SWIPE_THRESHOLD_VELOCITY) {
+                    return false;
+                }
+                if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE) {
+                    JSONObject obj = (JSONObject) adapter.getItem(position);
+                    obj.remove("delete");
+                    try {
+                        obj.put("delete", true);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            final int position = listView.pointToPosition(
+                    Math.round(event.getX()), Math.round(event.getY()));
+            JSONObject obj = (JSONObject) adapter.getItem(position);
+            try {
+                if (obj.getBoolean("delete")) {
+                    obj.remove("delete");
+                    obj.put("delete", false);
+                    adapter.notifyDataSetChanged();
+                    return true;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return gDetector.onTouchEvent(event);
+        }
+
+        public GestureDetector getDetector() {
+            return gDetector;
+        }
+
     }
 
     @Override
@@ -67,12 +134,16 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
             OfflineCartDbHelper dbHelper = new OfflineCartDbHelper(getActivity());
             Cursor cursor = dbHelper.select();
 
-            String goodsIds = "";
+            String[] goodsIds = new String[100];
+            String[] goodsAttrs = new String[100];
+            int i = 0;
             while (cursor.moveToNext()) {
-                goodsIds += cursor.getString(1) + ",";
+                goodsIds[i] = cursor.getString(1);
+                goodsAttrs[i] = cursor.getString(2);
+                i++;
             }
             ShoppingCartManager manager = ShoppingCartManager.getInstance();
-            manager.getOfflineCart(goodsIds, getOfflineCartHandler);
+            manager.getOfflineCart(goodsIds, goodsAttrs, i, getOfflineCartHandler);
         }
         ((TextView) getActivity().findViewById(R.id.total)).setText("0.00");
         ((CheckBox) getActivity().findViewById(R.id.totalcheckBox)).setChecked(false);
@@ -93,7 +164,7 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                             intent.putExtra("goods", adapter.getGoods());
                             startActivity(intent);
                         } else {
-                            Toast.makeText(getActivity(), "请选择结算商品",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "请选择结算商品", Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -114,25 +185,26 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                 try {
                     getActivity().findViewById(R.id.gone).setVisibility(View.GONE);
                     getActivity().findViewById(R.id.page).setVisibility(View.VISIBLE);
-                    JSONArray data = (JSONArray) msg.obj;
+                    JSONObject data = (JSONObject) msg.obj;
                     OfflineCartDbHelper dbHelper = new OfflineCartDbHelper(getActivity());
                     Cursor cursor = dbHelper.select();
-                    for (int i = 0; i < data.length(); i++) {
-                        JSONObject obj = data.getJSONObject(i);
-                        obj.put("checked", false);
-                        cursor.moveToNext();
-                        obj.remove("goods_number");
-                        obj.put("goods_number", cursor.getString(3));
-                        obj.remove("goods_attr");
-                        JSONArray newarray = new JSONArray();
-                        newarray.put(cursor.getString(4));
-                        obj.put("goods_attr", newarray);
+                    JSONArray arry = new JSONArray();
+                    for (int i = 0; i < 100; i++) {
+                        if (data.has(String.valueOf(i))) {
+                            JSONObject obj = data.getJSONObject(String.valueOf(i));
+                            obj.put("checked", false);
+                            obj.put("delete", false);
+                            cursor.moveToNext();
+                            obj.remove("goods_number");
+                            obj.put("goods_number", cursor.getString(3));
+                            arry.put(obj);
+                        }
                     }
 
-                    Log.e("after", data.toString());
-                    final ShoppingCartAdapter adapter = new ShoppingCartAdapter(getActivity(), data);
+                    final ShoppingCartAdapter adapter = new ShoppingCartAdapter(getActivity(), arry);
                     listView.setAdapter(adapter);
                     listView.setDividerHeight(0);
+                    createSwipeMenu();
                     CheckBox checkTotal = (CheckBox) getActivity().findViewById(R.id.totalcheckBox);
                     checkTotal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
@@ -161,8 +233,8 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                 getActivity().findViewById(R.id.guang).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ((HomeActivity)getActivity()).fragmentId = 0;
-                        ((HomeActivity)getActivity()).changeFragment();
+                        ((HomeActivity) getActivity()).fragmentId = 0;
+                        ((HomeActivity) getActivity()).changeFragment();
                     }
                 });
                 return;
@@ -182,10 +254,12 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject obj = data.getJSONObject(i);
                         obj.put("checked", false);
+                        obj.put("delete", false);
                     }
                     adapter = new ShoppingCartAdapter(getActivity(), data);
                     listView.setAdapter(adapter);
                     listView.setDividerHeight(0);
+                    createSwipeMenu();
                     CheckBox checkTotal = (CheckBox) getActivity().findViewById(R.id.totalcheckBox);
                     checkTotal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
@@ -208,14 +282,14 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }else {
+            } else {
                 getActivity().findViewById(R.id.gone).setVisibility(View.VISIBLE);
                 getActivity().findViewById(R.id.page).setVisibility(View.GONE);
                 getActivity().findViewById(R.id.guang).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ((HomeActivity)getActivity()).fragmentId = 0;
-                        ((HomeActivity)getActivity()).changeFragment();
+                        ((HomeActivity) getActivity()).fragmentId = 0;
+                        ((HomeActivity) getActivity()).changeFragment();
                     }
                 });
                 return;

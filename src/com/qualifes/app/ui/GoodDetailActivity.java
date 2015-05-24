@@ -173,6 +173,7 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
                             findViewById(R.id.badge).setVisibility(View.INVISIBLE);
                         }
                     } catch (JSONException e) {
+                        findViewById(R.id.badge).setVisibility(View.INVISIBLE);
                         e.printStackTrace();
                     }
                 }

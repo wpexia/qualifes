@@ -181,11 +181,7 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
                         manager.addShoppingCart(sp.getString("token", ""), goodsId, goodsAttr, goodsNum, addGoodsHandler, getApplicationContext());
                     } else {
                         OfflineCartDbHelper dbHelper = new OfflineCartDbHelper(getApplicationContext());
-                        if (dbHelper.contain(String.valueOf(goods_id)) == -1) {
-                            dbHelper.insert(String.valueOf(goods_id), goodsAttrIDs(), spec_count_num.getText().toString(), goodsAttrNames());
-                        } else {
-                            dbHelper.update(dbHelper.contain(String.valueOf(goods_id)), String.valueOf(goods_id), goodsAttrIDs(), String.valueOf(dbHelper.numByGoodId(String.valueOf(goods_id)) + Integer.parseInt(spec_count_num.getText().toString())), goodsAttrNames());
-                        }
+                        dbHelper.insert(String.valueOf(goods_id), goodsAttrIDs(), spec_count_num.getText().toString(), goodsAttrNames());
                         Toast.makeText(GoodSpecActivity.this, "添加离线购物车成功", Toast.LENGTH_SHORT).show();
                         GoodSpecActivity.this.finish();
                     }
@@ -235,7 +231,6 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
                 result += id;
             }
         }
-//        Log.e("goodsAttr", result);
         return result;
     }
 
@@ -268,7 +263,6 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
                 }
             }
         }
-//        Log.e("goodsAttr", result);
         return result;
     }
 }

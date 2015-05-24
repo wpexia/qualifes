@@ -110,17 +110,22 @@ public class ShoppingCartManager {
         }
     }
 
-    public void getOfflineCart(String goodsId, Handler handler) {
-        Thread getOfflineCartThread = new Thread(new GetOfflineCartThread(goodsId, handler));
+    public void getOfflineCart(String[] goodsIds, String[] goodsAttrs, int num,Handler handler) {
+        Thread getOfflineCartThread = new Thread(new GetOfflineCartThread(goodsIds, goodsAttrs, num,handler));
         getOfflineCartThread.start();
     }
 
     class GetOfflineCartThread implements Runnable {
-        private String goodsId;
+        private String[] goodsId;
+        private String[] goodsAttrs;
+        int num;
+
         private Handler handler;
 
-        public GetOfflineCartThread(String goodsId, Handler handler) {
+        public GetOfflineCartThread(String[] goodsId, String[] goodsAttrs, int num,Handler handler) {
             this.goodsId = goodsId;
+            this.goodsAttrs = goodsAttrs;
+            this.num = num;
             this.handler = handler;
         }
 
@@ -129,14 +134,17 @@ public class ShoppingCartManager {
             AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
             final Message msg = handler.obtainMessage();
             RequestParams params = new RequestParams();
-            params.put("goods[0][goods_id]", goodsId);
+            for(int i = 0; i < num ; i++) {
+                params.put("goods["+ i +"][goods_id]", goodsId[i]);
+                params.put("goods["+ i +"][attribute]", goodsAttrs[i]);
+            }
             client.post(Api.url("get_off_cart"), params, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     try {
                         Api.dealSuccessRes(response, msg);
                         Log.e("get_off_cart", response.toString());
-                        msg.obj = response.getJSONObject("data").getJSONArray("data");
+                        msg.obj = response.getJSONObject("data").getJSONObject("data");
                         handler.sendMessage(msg);
                     } catch (JSONException e) {
                         msg.what = 1;

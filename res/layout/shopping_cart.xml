@@ -29,72 +29,72 @@
                 android:textSize="18sp" android:id="@+id/title">
         </TextView>
     </RelativeLayout>
-<RelativeLayout
-        android:layout_below="@+id/header"
-        android:id="@+id/page"
-        android:layout_width="fill_parent" android:layout_height="fill_parent">
-    <ListView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:dividerHeight="0dp"
-              android:layout_marginBottom="49dp"
-              android:id="@+id/content"
-            />
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_alignParentBottom="true"
-                  android:background="@color/white"
-                  android:layout_height="48dp">
-        <RelativeLayout android:layout_width="match_parent" android:layout_height="48dp">
-            <CheckBox
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="9dp"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp"
-                    android:paddingLeft="9dp"
-                    android:paddingRight="9dp"
-                    android:layout_width="wrap_content"
-                    android:button="@drawable/checkbutton"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/totalcheckBox"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="总额"
-                    android:textColor="#6e6e6e"
-                    android:textSize="12sp"
-                    android:id="@+id/textView" android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/totalcheckBox" android:layout_toEndOf="@+id/totalcheckBox"/>
+    <RelativeLayout
+            android:layout_below="@+id/header"
+            android:id="@+id/page"
+            android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <ListView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:dividerHeight="0dp"
+                  android:layout_marginBottom="49dp"
+                  android:id="@+id/content"
+                />
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_alignParentBottom="true"
+                      android:background="@color/white"
+                      android:layout_height="48dp">
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="48dp">
+                <CheckBox
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="9dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:paddingLeft="9dp"
+                        android:paddingRight="9dp"
+                        android:layout_width="wrap_content"
+                        android:button="@drawable/checkbutton"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/totalcheckBox"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="总额"
+                        android:textColor="#6e6e6e"
+                        android:textSize="12sp"
+                        android:id="@+id/textView" android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/totalcheckBox" android:layout_toEndOf="@+id/totalcheckBox"/>
 
-            <Button
-                    android:background="@color/af"
-                    android:layout_width="136dp"
-                    android:layout_height="match_parent"
-                    android:text="去结算"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:id="@+id/creatOrder" android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="16sp"
-                    android:textColor="#e3223f"
-                    android:text="￥"
-                    android:id="@+id/textView11" android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/textView" android:layout_toEndOf="@+id/textView"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0.00"
-                    android:textSize="16sp"
-                    android:textColor="#e3223f"
-                    android:id="@+id/total" android:layout_alignTop="@+id/textView11"
-                    android:layout_toRightOf="@+id/textView11" android:layout_toEndOf="@+id/textView11"/>
+                <Button
+                        android:background="@color/af"
+                        android:layout_width="136dp"
+                        android:layout_height="match_parent"
+                        android:text="去结算"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:id="@+id/creatOrder" android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true" android:layout_alignParentEnd="true"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="16sp"
+                        android:textColor="#e3223f"
+                        android:text="￥"
+                        android:id="@+id/textView11" android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/textView" android:layout_toEndOf="@+id/textView"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00"
+                        android:textSize="16sp"
+                        android:textColor="#e3223f"
+                        android:id="@+id/total" android:layout_alignTop="@+id/textView11"
+                        android:layout_toRightOf="@+id/textView11" android:layout_toEndOf="@+id/textView11"/>
 
-        </RelativeLayout>
-    </LinearLayout>
-</RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
             android:layout_width="fill_parent"
