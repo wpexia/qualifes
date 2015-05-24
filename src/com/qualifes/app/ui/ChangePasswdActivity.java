@@ -13,8 +13,14 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.qualifes.app.R;
 import com.qualifes.app.config.Api;
+import com.qualifes.app.util.RSAHelper;
 import org.apache.http.Header;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.security.PublicKey;
 
 public class ChangePasswdActivity extends Activity implements View.OnClickListener {
 
@@ -56,8 +62,20 @@ public class ChangePasswdActivity extends Activity implements View.OnClickListen
                 RequestParams params = new RequestParams();
                 SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
                 params.put("token", sp.getString("token", ""));
-                params.put("data[pwd]", oldpw.getText().toString());
-                params.put("data[new_pwd]", newpw.getText().toString());
+                String oldPass = "";
+                String newPass = "";
+                try {
+                    InputStream publickKeyIn = getAssets().open("public.der");
+                    PublicKey pk = RSAHelper.loadPublicKey(publickKeyIn);
+                    oldPass = RSAHelper.encrypy(oldpw.getText().toString(), pk);
+                    newPass = RSAHelper.encrypy(newpw.getText().toString(), pk);
+//            Log.e("password", URLEncoder.encode(this.password));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                params.put("data[pwd]", URLEncoder.encode(oldPass));
+
+                params.put("data[new_pwd]", URLEncoder.encode(newPass));
                 final Message msg = new Message();
                 client.post(Api.url("upd_user"), params, new JsonHttpResponseHandler() {
                     @Override

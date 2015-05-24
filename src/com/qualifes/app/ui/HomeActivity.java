@@ -18,11 +18,9 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.qualifes.app.R;
 import com.qualifes.app.config.Api;
-import com.qualifes.app.ui.fragment.HomeFragment;
-import com.qualifes.app.ui.fragment.PersonalFragment;
-import com.qualifes.app.ui.fragment.SearchFragment;
-import com.qualifes.app.ui.fragment.ShoppingCartFragment;
+import com.qualifes.app.ui.fragment.*;
 import com.qualifes.app.util.AsyncHttpCilentUtil;
+import com.qualifes.app.util.PlistHelper;
 import com.readystatesoftware.viewbadger.BadgeView;
 import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
@@ -39,6 +37,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
     private SearchFragment searchFragment;
     private ShoppingCartFragment shoppingCartFragment;
     private PersonalFragment personalFragment;
+    private SearchKindFragment searchKindFragment;
     boolean flag = false;
 
 
@@ -58,6 +57,13 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         MobclickAgent.updateOnlineConfig(this);
 
         Api.setContext(getApplicationContext());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final PlistHelper plistHelper = PlistHelper.getInstance(getApplicationContext());
+            }
+        }).start();
     }
 
 
@@ -173,9 +179,11 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
             }
             break;
             case R.id.list: {
-                Intent intent = new Intent(this, SearchKindActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
+//                Intent intent = new Intent(this, SearchKindActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                startActivity(intent);
+                fragmentId = 1;
+                changeFragment();
             }
         }
     }
@@ -192,6 +200,16 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                     transaction.show(homeFragment);
                 }
                 if (flag) {
+                    tab.setVisibility(View.VISIBLE);
+                }
+            }
+            break;
+            case 1: {
+                if (searchKindFragment == null) {
+                    searchKindFragment = new SearchKindFragment();
+                    transaction.add(R.id.main, searchKindFragment);
+                } else {
+                    transaction.show(searchKindFragment);
                     tab.setVisibility(View.VISIBLE);
                 }
             }
@@ -243,18 +261,19 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         if (shoppingCartFragment != null) {
             transaction.hide(shoppingCartFragment);
         }
+        if (searchKindFragment != null) {
+            transaction.hide(searchKindFragment);
+        }
     }
 
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            switch (fragmentId) {
-                case 4: {
-                    fragmentId = 0;
-                    changeFragment();
-                    return false;
-                }
+            if (fragmentId != 0) {
+                fragmentId = 0;
+                changeFragment();
+                return false;
             }
         }
         return super.onKeyDown(keyCode, event);

@@ -6,10 +6,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.qualifes.app.R;
 import com.qualifes.app.manager.PositionManager;
 import com.qualifes.app.ui.adapter.PositionChoseAdapter;
@@ -39,6 +41,7 @@ public class ChoosePositionActivity extends Activity implements View.OnClickList
 
         findViewById(R.id.finish).setOnClickListener(this);
         findViewById(R.id.back_button).setOnClickListener(this);
+        findViewById(R.id.add).setOnClickListener(this);
         getPos();
     }
 
@@ -66,11 +69,20 @@ public class ChoosePositionActivity extends Activity implements View.OnClickList
                 Intent intent = new Intent();
                 if (adapter.getChecked() != -1) {
                     intent.putExtra("position", (adapter.getPosition().toString()));
-                } else {
+                } else if (defaultPo != null) {
                     intent.putExtra("position", (defaultPo.toString()));
+                } else {
+                    Toast toast = Toast.makeText(this, "请选择收货地址", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }
                 this.setResult(1, intent);
                 finish();
+            }
+            break;
+            case R.id.add: {
+                Intent intent = new Intent(ChoosePositionActivity.this, AddPositionActivity.class);
+                startActivity(intent);
             }
         }
     }
@@ -110,6 +122,9 @@ public class ChoosePositionActivity extends Activity implements View.OnClickList
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
+            } else {
+                findViewById(R.id.okposition).setVisibility(View.GONE);
+                findViewById(R.id.noposition).setVisibility(View.VISIBLE);
             }
         }
     };

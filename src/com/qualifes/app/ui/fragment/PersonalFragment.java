@@ -107,6 +107,11 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if (!sp.contains("token")) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            return;
+        }
         final int id = v.getId();
         switch (id) {
             case R.id.personal_history: {

@@ -41,7 +41,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
     SearchAdapter adapter;
 
     AsyncHttpClient client;
-    boolean flag =true;
+    boolean flag = true;
     List<HashMap<String, Object>> data;
 
     String ids;
@@ -67,7 +67,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
                     home_search_result_input.setText(searchKeyWord);
                 }
             } else {
-                flag =false;
+                flag = false;
                 ids = bundle.getString("searchKeyWord");
 //                ids = "49";
             }
@@ -122,7 +122,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
                     data = new ArrayList<HashMap<String, Object>>();
 
                     RequestParams params = new RequestParams();
-                    if(flag) {
+                    if (flag) {
                         params.put("data[keywords]", input);
                     } else {
                         params.put("data[cat_id]", ids);
@@ -162,7 +162,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
                     data = new ArrayList<HashMap<String, Object>>();
 
                     RequestParams params = new RequestParams();
-                    if(flag) {
+                    if (flag) {
                         params.put("data[keywords]", input);
                     } else {
                         params.put("data[cat_id]", ids);
@@ -195,7 +195,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
                     data = new ArrayList<HashMap<String, Object>>();
 
                     RequestParams params = new RequestParams();
-                    if(flag) {
+                    if (flag) {
                         params.put("data[keywords]", input);
                     } else {
                         params.put("data[cat_id]", ids);
@@ -250,7 +250,8 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
         try {
             JSONObject dataObject = response.getJSONObject("data");
             JSONArray dataArray = dataObject.getJSONArray("data");
-
+            findViewById(R.id.noresult).setVisibility(View.GONE);
+            findViewById(R.id.haveresult).setVisibility(View.VISIBLE);
             for (int i = 0; i < dataArray.length(); i++) {
                 JSONObject itemObject = dataArray.getJSONObject(i);
                 HashMap<String, Object> item = new HashMap<String, Object>();
@@ -272,6 +273,8 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
             MyThread thread = new MyThread();
             thread.start();
         } catch (JSONException e) {
+            findViewById(R.id.noresult).setVisibility(View.VISIBLE);
+            findViewById(R.id.haveresult).setVisibility(View.GONE);
             e.printStackTrace();
         }
     }

@@ -5,7 +5,6 @@
                 android:id="@+id/notdefaultposition"
                 android:layout_height="80dp"
                 android:minHeight="80dp">
-
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

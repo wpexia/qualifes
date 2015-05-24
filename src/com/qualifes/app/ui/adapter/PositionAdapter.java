@@ -59,14 +59,15 @@ public class PositionAdapter extends BaseAdapter {
             ((TextView) convertView.findViewById(R.id.name)).setText(obj.getString("consignee"));
             ((TextView) convertView.findViewById(R.id.phone)).setText(obj.getString("mobile"));
             ((TextView) convertView.findViewById(R.id.address)).setText(obj.getString("province_name") + "省" + obj.getString("city_name") + "市" + obj.getString("district_name") + obj.getString("address"));
-            convertView.findViewById(R.id.icon_in).setOnClickListener(new View.OnClickListener() {
+            View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, AddPositionActivity.class);
                     intent.putExtra("position", obj.toString());
                     mContext.startActivity(intent);
                 }
-            });
+            };
+            convertView.findViewById(R.id.address).setOnClickListener(listener);
         } catch (JSONException e) {
             e.printStackTrace();
         }

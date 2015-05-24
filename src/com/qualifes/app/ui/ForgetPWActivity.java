@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.qualifes.app.R;
-import com.qualifes.app.manager.ChangePasswordManager;
+import com.qualifes.app.manager.ForgetPasswordManager;
 import com.qualifes.app.manager.LoginManager;
 
 import java.util.Timer;
@@ -32,13 +32,13 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
     private int count;
     private Timer time;
     private TimerTask task;
-    private ChangePasswordManager registerManager;
+    private ForgetPasswordManager forgetPasswordManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-        registerManager = ChangePasswordManager.getInst();
+        forgetPasswordManager = ForgetPasswordManager.getInst();
         initView();
     }
 
@@ -82,7 +82,7 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
                 } else {
-                    registerManager.getCode(username.getText().toString(), gcHandler, getApplicationContext());
+                    forgetPasswordManager.getCode(username.getText().toString(), gcHandler, getApplicationContext());
                 }
             }
             break;
@@ -103,7 +103,7 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
                     toast.show();
                     break;
                 } else {
-                    registerManager.register(username.getText().toString(), code.getText().toString(), password.getText().toString(), registerHandler, getApplicationContext());
+                    forgetPasswordManager.register(username.getText().toString(), code.getText().toString(), password.getText().toString(), registerHandler, getApplicationContext());
                 }
             }
             break;

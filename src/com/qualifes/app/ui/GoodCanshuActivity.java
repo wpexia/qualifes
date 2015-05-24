@@ -1,4 +1,4 @@
-package com.qualifes.app.ui.view;
+package com.qualifes.app.ui;
 
 import android.app.Activity;
 import android.content.Intent;

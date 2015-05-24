@@ -4,7 +4,6 @@
                 android:layout_height="match_parent"
                 android:background="@color/f4f4f4"
                 tools:context="com.qualifes.app.qualifieslife.SearchResultActivity">
-
     <RelativeLayout
             android:id="@+id/home_search_result_head"
             android:layout_width="fill_parent"
@@ -53,63 +52,90 @@
                 android:text="搜索"
                 />
     </RelativeLayout>
-    <LinearLayout
-            android:id="@+id/home_search_result_order"
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
+    <RelativeLayout
+            android:id="@+id/noresult"
+            android:visibility="gone"
             android:layout_below="@+id/home_search_result_head"
-            android:background="@drawable/item_stroke"
-            android:orientation="horizontal">
+            android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/icon"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView14" android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" android:layout_marginTop="100dp"/>
         <TextView
-                android:id="@+id/search_result_order_default"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:text="暂时没有找到您需要的商品\n很抱歉"
                 android:gravity="center"
-                android:scaleType="fitXY"
-                android:textColor="@drawable/search_result_button"
-                android:text="默认"/>
-        <TextView
-                android:id="@+id/search_result_order_price"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:scaleType="fitXY"
-                android:textColor="@drawable/search_result_button"
-                android:text="价格"/>
-        <TextView
-                android:id="@+id/search_result_order_sales"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:scaleType="fitXY"
-                android:textColor="@drawable/search_result_button"
-                android:text="销量"/>
-        <TextView
-                android:id="@+id/search_result_order_popu"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:scaleType="fitXY"
-                android:textColor="@drawable/search_result_button"
-                android:text="人气"/>
-    </LinearLayout>
-    <ListView
-            android:id="@+id/home_search_result_items"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/home_search_result_order">
+                android:textColor="#6e6e6e"
+                android:textSize="16sp"
+                android:lines="2"
+                android:id="@+id/textView9" android:layout_below="@+id/imageView14"
+                android:layout_centerHorizontal="true"/>
 
-    </ListView>
+    </RelativeLayout>
+    <RelativeLayout android:layout_width="fill_parent"
+                    android:id="@+id/haveresult"
+                    android:layout_below="@+id/home_search_result_head"
+                    android:layout_height="fill_parent">
+        <LinearLayout
+                android:id="@+id/home_search_result_order"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/item_stroke"
+                android:orientation="horizontal">
+            <TextView
+                    android:id="@+id/search_result_order_default"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:scaleType="fitXY"
+                    android:textColor="@drawable/search_result_button"
+                    android:text="默认"/>
+            <TextView
+                    android:id="@+id/search_result_order_price"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:scaleType="fitXY"
+                    android:textColor="@drawable/search_result_button"
+                    android:text="价格"/>
+            <TextView
+                    android:id="@+id/search_result_order_sales"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:scaleType="fitXY"
+                    android:textColor="@drawable/search_result_button"
+                    android:text="销量"/>
+            <TextView
+                    android:id="@+id/search_result_order_popu"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:scaleType="fitXY"
+                    android:textColor="@drawable/search_result_button"
+                    android:text="人气"/>
+        </LinearLayout>
+        <ListView
+                android:id="@+id/home_search_result_items"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/home_search_result_order">
+        </ListView>
+    </RelativeLayout>
 </RelativeLayout>

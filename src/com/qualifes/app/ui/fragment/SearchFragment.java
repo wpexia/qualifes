@@ -19,13 +19,12 @@ import com.qualifes.app.util.SearchRecordDbHelper;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class SearchFragment extends Fragment implements View.OnClickListener {
     private SearchRecordDbHelper db;
     private Cursor mCursor;
-    private List<String> daList;
+    private LinkedList<String> daList;
 
 
     private ImageButton home_search_back;
@@ -56,11 +55,12 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         db = new SearchRecordDbHelper(getActivity());
         mCursor = db.select();
 
-        daList = new ArrayList<String>();
+        daList = new LinkedList<String>();
 
         while (mCursor.moveToNext()) {
             daList.add(mCursor.getString(1));
         }
+        Collections.reverse(daList);
 
         home_search_history_label = (TextView) getActivity().findViewById(R.id.home_search_history_label);
         home_search_history_items = (GridView) getActivity().findViewById(R.id.home_search_history_items);
@@ -96,7 +96,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
 
                     if (!daList.contains(input)) {
-                        daList.add(input);
+                        daList.addFirst(input);
                         db.insert(input);
                     }
                     Intent intent = new Intent(getActivity(), SearchResultActivity.class);
@@ -104,7 +104,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     bundle.putString("searchKeyWord", input);
                     intent.putExtras(bundle);
                     startActivity(intent);
-
                 }
             }
             break;

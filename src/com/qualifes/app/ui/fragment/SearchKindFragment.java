@@ -1,12 +1,20 @@
-package com.qualifes.app.ui;
+package com.qualifes.app.ui.fragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import android.app.Fragment;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.*;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.ConnectionURL;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.qualifes.app.R;
+import com.qualifes.app.ui.HomeActivity;
+import com.qualifes.app.ui.SearchResultActivity;
 import com.qualifes.app.ui.adapter.SearchKindAdapter;
 import com.qualifes.app.util.DisplayParams;
 import com.qualifes.app.util.DisplayUtil;
@@ -16,26 +24,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.ConnectionURL;
-import com.loopj.android.http.JsonHttpResponseHandler;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+public class SearchKindFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+    View mView;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-public class SearchKindActivity extends Activity implements OnClickListener, OnItemClickListener {
 
     private SearchRecordDbHelper db;
 
@@ -53,33 +49,41 @@ public class SearchKindActivity extends Activity implements OnClickListener, OnI
     String[] from = {"cat_name", "find"};
     int[] to = {R.id.home_search_kind_item_name, R.id.home_search_kind_item_children};
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_kind_activity);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mView = inflater.inflate(R.layout.search_kind_activity, container, false);
+        return mView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         init();
     }
 
     private void init() {
-        db = new SearchRecordDbHelper(SearchKindActivity.this);
+        db = new SearchRecordDbHelper(getActivity());
 
         client = new AsyncHttpClient();
-        back = (ImageButton) findViewById(R.id.home_search_kind_back);
+        back = (ImageButton) getActivity().findViewById(R.id.home_search_kind_back);
         back.setOnClickListener(this);
 
-        input = (EditText) findViewById(R.id.home_search_kind_input);
+        input = (EditText) getActivity().findViewById(R.id.home_search_kind_input);
 
-        search = (TextView) findViewById(R.id.home_search_kind_search);
+        search = (TextView) getActivity().findViewById(R.id.home_search_kind_search);
         search.setOnClickListener(this);
 
-        kind = (ListView) findViewById(R.id.homeSearchKindItems);
+        kind = (ListView) getActivity().findViewById(R.id.homeSearchKindItems);
         kind.setOnItemClickListener(this);
 
-        kindItems = (ListView) findViewById(R.id.homeSearchKindDetails);
+        kindItems = (ListView) getActivity().findViewById(R.id.homeSearchKindDetails);
         kindItems.setOnItemClickListener(this);
 
         accessServer();
     }
+
+
 
     private void accessServer() {
         client.get(ConnectionURL.getGoodCategory(), new JsonHttpResponseHandler() {
@@ -109,7 +113,7 @@ public class SearchKindActivity extends Activity implements OnClickListener, OnI
                     e.printStackTrace();
                 }
 
-                kind.setAdapter(new SearchKindAdapter(getApplicationContext(), cateList, R.layout.search_kind_item1, from, to));
+                kind.setAdapter(new SearchKindAdapter(getActivity(), cateList, R.layout.search_kind_item1, from, to));
             }
         });
     }
@@ -117,19 +121,21 @@ public class SearchKindActivity extends Activity implements OnClickListener, OnI
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.home_search_kind_back:
-                this.finish();
-                overridePendingTransition(0, 0);
-                break;
+            case R.id.home_search_kind_back: {
+                ((HomeActivity) getActivity()).fragmentId = 0;
+                ((HomeActivity) getActivity()).changeFragment();
+            }
+
+            break;
             case R.id.home_search_kind_search:
                 if (input.getText().toString().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "请输入搜索的商品信息", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "请输入搜索的商品信息", Toast.LENGTH_SHORT).show();
                 } else {
                     String inputData = input.getText().toString();
                     if (!db.containKey(inputData)) {
                         db.insert(inputData);
                     }
-                    Intent intent = new Intent(SearchKindActivity.this, SearchResultActivity.class);
+                    Intent intent = new Intent(getActivity(), SearchResultActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("searchKeyWord", inputData);
                     intent.putExtras(bundle);
@@ -141,13 +147,14 @@ public class SearchKindActivity extends Activity implements OnClickListener, OnI
         }
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         switch (parent.getId()) {
 
             case R.id.homeSearchKindItems: {
-                DisplayParams params2 = DisplayParams.getInstance(getApplicationContext());
+                DisplayParams params2 = DisplayParams.getInstance(getActivity());
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(DisplayUtil.dip2px(105, params2.scale), RelativeLayout.LayoutParams.MATCH_PARENT);
                 kind.setLayoutParams(params);
                 for (int i = 0; i < cateList.size(); i++) {
@@ -174,7 +181,7 @@ public class SearchKindActivity extends Activity implements OnClickListener, OnI
                                 childList.add(map);
                                 String[] from = {"child"};
                                 int[] to = {R.id.home_search_kind_child_name};
-                                kindItems.setAdapter(new SearchKindAdapter(SearchKindActivity.this, childList, R.layout.search_kind_item2, from, to));
+                                kindItems.setAdapter(new SearchKindAdapter(getActivity(), childList, R.layout.search_kind_item2, from, to));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -201,7 +208,7 @@ public class SearchKindActivity extends Activity implements OnClickListener, OnI
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Intent intent = new Intent(SearchKindActivity.this, SearchResultActivity.class);
+                        Intent intent = new Intent(getActivity(), SearchResultActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putBoolean("flag", true);
                         bundle.putString("searchKeyWord", keyWord.toString());
@@ -215,12 +222,5 @@ public class SearchKindActivity extends Activity implements OnClickListener, OnI
                 break;
         }
     }
-
-    @Override
-    public void onBackPressed() {
-        finish();
-        overridePendingTransition(0, 0);
-    }
-
 
 }

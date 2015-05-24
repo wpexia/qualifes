@@ -164,9 +164,12 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
                 break;
             case R.id.spec_count_add:
                 int numAdd = Integer.parseInt(spec_count_num.getText().toString());
-                if (numAdd < goods_number && numAdd < 100)
+                if (numAdd < goods_number && numAdd < 100) {
                     numAdd++;
-                spec_count_num.setText(String.valueOf(numAdd));
+                    spec_count_num.setText(String.valueOf(numAdd));
+                } else {
+                    Toast.makeText(getApplicationContext(), "亲，库存只有这么多哦", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.spec_addto_shoppingcart:
                 if (goodsAttrIDs() != null) {
@@ -178,7 +181,11 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
                         manager.addShoppingCart(sp.getString("token", ""), goodsId, goodsAttr, goodsNum, addGoodsHandler, getApplicationContext());
                     } else {
                         OfflineCartDbHelper dbHelper = new OfflineCartDbHelper(getApplicationContext());
-                        dbHelper.insert(String.valueOf(goods_id), goodsAttrIDs(), spec_count_num.getText().toString(), goodsAttrNames());
+                        if (dbHelper.contain(String.valueOf(goods_id)) == -1) {
+                            dbHelper.insert(String.valueOf(goods_id), goodsAttrIDs(), spec_count_num.getText().toString(), goodsAttrNames());
+                        } else {
+                            dbHelper.update(dbHelper.contain(String.valueOf(goods_id)), String.valueOf(goods_id), goodsAttrIDs(), String.valueOf(dbHelper.numByGoodId(String.valueOf(goods_id)) + Integer.parseInt(spec_count_num.getText().toString())), goodsAttrNames());
+                        }
                         Toast.makeText(GoodSpecActivity.this, "添加离线购物车成功", Toast.LENGTH_SHORT).show();
                         GoodSpecActivity.this.finish();
                     }

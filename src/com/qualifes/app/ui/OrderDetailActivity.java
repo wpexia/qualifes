@@ -48,6 +48,13 @@ public class OrderDetailActivity extends Activity {
                 finish();
             }
         });
+        findViewById(R.id.price).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OrderDetailActivity.this, SendFunctionPriceActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -121,19 +128,19 @@ public class OrderDetailActivity extends Activity {
                                 OrderManager manager = OrderManager.getInstance();
                                 SharedPreferences sp = getSharedPreferences("user", Activity.MODE_PRIVATE);
 
-                                manager.cancleOrder(sp.getString("token",""), orderId,handler);
+                                manager.cancleOrder(sp.getString("token", ""), orderId, handler);
                             }
 
-                            Handler handler = new Handler(){
+                            Handler handler = new Handler() {
                                 @Override
                                 public void handleMessage(Message msg) {
-                                    Toast.makeText(getApplicationContext(),(String) msg.obj,Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), (String) msg.obj, Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
                             };
 
                         });
-                        final int payId= data.getInt("pay_id");
+                        final int payId = data.getInt("pay_id");
                         findViewById(R.id.pay).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

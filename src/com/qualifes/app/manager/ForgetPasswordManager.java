@@ -15,9 +15,9 @@ import java.io.InputStream;
 import java.net.URLEncoder;
 import java.security.PublicKey;
 
-public class ChangePasswordManager {
+public class ForgetPasswordManager {
 
-    private static ChangePasswordManager inst = new ChangePasswordManager();
+    private static ForgetPasswordManager inst = new ForgetPasswordManager();
     private Handler handler;
     private String username;
     private String password;
@@ -25,7 +25,7 @@ public class ChangePasswordManager {
     private String service = "pwd_user";
     private Context context;
 
-    public static ChangePasswordManager getInst() {
+    public static ForgetPasswordManager getInst() {
         return inst;
     }
 

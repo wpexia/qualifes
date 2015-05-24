@@ -32,7 +32,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.aboutus).setOnClickListener(this);
         findViewById(R.id.help).setOnClickListener(this);
         findViewById(R.id.changepassword).setOnClickListener(this);
-        if(!sp.contains("token")) {
+        if (!sp.contains("token")) {
             findViewById(R.id.logout).setVisibility(View.INVISIBLE);
         }
     }
@@ -54,7 +54,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                     wifi.setTextColor(getResources().getColor(R.color.settingRed));
                     openImage.setBackgroundResource(R.drawable.settingred);
                     open.setBackgroundResource(R.drawable.settingbuttonred);
-                }else{
+                } else {
                     openText.setText("关");
                     wifi.setTextColor(getResources().getColor(R.color.settingGray));
                     openImage.setBackgroundResource(R.drawable.settingbutton);
@@ -76,26 +76,31 @@ public class SettingActivity extends Activity implements View.OnClickListener {
             }
             break;
             case R.id.cleancache: {
-                Toast.makeText(this,"清除成功",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "清除成功", Toast.LENGTH_SHORT).show();
             }
             break;
             case R.id.aboutus: {
                 Intent intent = new Intent(SettingActivity.this, WebActivity.class);
-                intent.putExtra("title","关于我们");
+                intent.putExtra("title", "关于我们");
                 intent.putExtra("url", "http://www.qualifes.com/webview/release/ios_info/about.html");
                 startActivity(intent);
             }
             break;
             case R.id.help: {
                 Intent intent = new Intent(SettingActivity.this, WebActivity.class);
-                intent.putExtra("title","使用帮助");
+                intent.putExtra("title", "使用帮助");
                 intent.putExtra("url", "http://www.qualifes.com/webview/release/ios_info/help.html");
                 startActivity(intent);
             }
             break;
             case R.id.changepassword: {
-                Intent intent = new Intent(SettingActivity.this, ChangePasswdActivity.class);
-                startActivity(intent);
+                if (sp.contains("token")) {
+                    Intent intent = new Intent(SettingActivity.this, ChangePasswdActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         }
     }

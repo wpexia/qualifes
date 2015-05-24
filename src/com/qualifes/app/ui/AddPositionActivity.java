@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -94,7 +95,6 @@ public class AddPositionActivity extends Activity implements View.OnClickListene
         findViewById(R.id.save).setOnClickListener(this);
         findViewById(R.id.savedefault).setOnClickListener(this);
         position = (TextView) findViewById(R.id.icon_position);
-
 
         final PlistHelper plistHelper = PlistHelper.getInstance(this);
         String[] provinces = plistHelper.getProvince();
@@ -241,7 +241,9 @@ public class AddPositionActivity extends Activity implements View.OnClickListene
     Handler addPositionHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            Toast.makeText(AddPositionActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
+            Toast toast = Toast.makeText(AddPositionActivity.this, (String) msg.obj, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
             if (msg.what == 0) {
                 finish();
             }

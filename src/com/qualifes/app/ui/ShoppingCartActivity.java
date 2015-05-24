@@ -50,6 +50,12 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
         ((TextView) ShoppingCartActivity.this.findViewById(R.id.total)).setText("0.00");
         ((CheckBox) ShoppingCartActivity.this.findViewById(R.id.totalcheckBox)).setChecked(false);
         ShoppingCartActivity.this.findViewById(R.id.creatOrder).setOnClickListener(this);
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 

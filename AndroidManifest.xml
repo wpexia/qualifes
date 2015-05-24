@@ -67,12 +67,11 @@
         <activity android:launchMode="singleTop" android:name=".ui.OrderNoShipActivity"/>
         <activity android:launchMode="singleTop" android:name=".ui.OrderListActivity"/>
         <activity android:launchMode="singleTop" android:name=".ui.WuLiuActivity"/>
-        <activity android:name=".ui.SearchKindActivity"/>
         <activity android:name=".ui.WebActivity"/>
         <activity android:name=".ui.GoodInfoActivity"/>
         <activity android:name=".ui.ShoppingCartActivity"/>
         <activity android:name=".ui.ChangePasswdActivity"/>
-        <activity android:name=".ui.view.GoodCanshuActivity"/>
+        <activity android:name=".ui.GoodCanshuActivity"/>
         <activity android:exported="true" android:launchMode="singleTop"
                   android:name="com.qualifes.app.wxapi.WXPayEntryActivity">
             <intent-filter>

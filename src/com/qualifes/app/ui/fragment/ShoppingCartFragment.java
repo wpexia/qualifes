@@ -112,7 +112,8 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
                 try {
-
+                    getActivity().findViewById(R.id.gone).setVisibility(View.GONE);
+                    getActivity().findViewById(R.id.page).setVisibility(View.VISIBLE);
                     JSONArray data = (JSONArray) msg.obj;
                     OfflineCartDbHelper dbHelper = new OfflineCartDbHelper(getActivity());
                     Cursor cursor = dbHelper.select();
@@ -175,6 +176,8 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
                 try {
+                    getActivity().findViewById(R.id.gone).setVisibility(View.GONE);
+                    getActivity().findViewById(R.id.page).setVisibility(View.VISIBLE);
                     JSONArray data = (JSONArray) msg.obj;
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject obj = data.getJSONObject(i);
