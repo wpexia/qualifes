@@ -2,6 +2,7 @@ package com.qualifes.app.ui;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Message;
@@ -60,7 +61,7 @@ public class ChangePasswdActivity extends Activity implements View.OnClickListen
                 }
                 AsyncHttpClient client = new AsyncHttpClient();
                 RequestParams params = new RequestParams();
-                SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
+                final SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
                 params.put("token", sp.getString("token", ""));
                 String oldPass = "";
                 String newPass = "";
@@ -84,6 +85,9 @@ public class ChangePasswdActivity extends Activity implements View.OnClickListen
                         Toast.makeText(ChangePasswdActivity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
                         if (msg.what == 0) {
                             finish();
+                            sp.edit().remove("token").apply();
+                            Intent intent = new Intent(ChangePasswdActivity.this, LoginActivity.class);
+                            startActivity(intent);
                         }
                     }
                 });

@@ -134,7 +134,7 @@ public class ShoppingCartManager {
             AsyncHttpClient client = AsyncHttpCilentUtil.getInstence();
             final Message msg = handler.obtainMessage();
             RequestParams params = new RequestParams();
-            for(int i = 0; i < num ; i++) {
+            for(int i = 0; i <= num ; i++) {
                 params.put("goods["+ i +"][goods_id]", goodsId[i]);
                 params.put("goods["+ i +"][attribute]", goodsAttrs[i]);
             }
@@ -144,7 +144,11 @@ public class ShoppingCartManager {
                     try {
                         Api.dealSuccessRes(response, msg);
                         Log.e("get_off_cart", response.toString());
-                        msg.obj = response.getJSONObject("data").getJSONObject("data");
+                        try {
+                            msg.obj = response.getJSONObject("data").getJSONObject("data");
+                        } catch (JSONException e) {
+                            msg.obj = response.getJSONObject("data").getJSONArray("data");
+                        }
                         handler.sendMessage(msg);
                     } catch (JSONException e) {
                         msg.what = 1;

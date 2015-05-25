@@ -17,7 +17,7 @@
                 android:id="@+id/home_search_kind_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_back_b"
+                android:src="@drawable/icon_back"
                 android:layout_marginLeft="15dp"
                 android:background="#00aaff"
                 android:layout_centerVertical="true"/>

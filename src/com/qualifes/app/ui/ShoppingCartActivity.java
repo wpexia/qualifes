@@ -25,6 +25,7 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
     private ListView listView;
     private SharedPreferences sp;
     ShoppingCartAdapter adapter;
+    int[] dbIds = new int[100];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
             while (cursor.moveToNext()) {
                 goodsIds[i] = cursor.getString(1);
                 goodsAttrs[i] = cursor.getString(2);
+                dbIds[i] = cursor.getInt(0);
                 i++;
             }
             ShoppingCartManager manager = ShoppingCartManager.getInstance();
@@ -182,25 +184,41 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
                 try {
-                    JSONObject data = (JSONObject) msg.obj;
-                    OfflineCartDbHelper dbHelper = new OfflineCartDbHelper(ShoppingCartActivity.this);
-                    Cursor cursor = dbHelper.select();
                     JSONArray arry = new JSONArray();
-                    for (int i = 0; i < 100; i++) {
-                        if (data.has(String.valueOf(i))) {
-                            JSONObject obj = data.getJSONObject(String.valueOf(i));
+                    try {
+                        JSONArray data = (JSONArray) msg.obj;
+                        OfflineCartDbHelper dbHelper = new OfflineCartDbHelper(ShoppingCartActivity.this);
+                        Cursor cursor = dbHelper.select();
+                        for (int i = 0; i < data.length(); i++) {
+                            JSONObject obj = data.getJSONObject(i);
                             obj.put("checked", false);
                             obj.put("delete", false);
+                            obj.put("dbid", dbIds[i]);
                             cursor.moveToNext();
                             obj.remove("goods_number");
                             obj.put("goods_number", cursor.getString(3));
                             obj.remove("goods_attr");
                             arry.put(obj);
                         }
+                    } catch (ClassCastException e) {
+                        JSONObject data = (JSONObject) msg.obj;
+                        OfflineCartDbHelper dbHelper = new OfflineCartDbHelper(ShoppingCartActivity.this);
+                        Cursor cursor = dbHelper.select();
+                        for (int i = 0; i < 100; i++) {
+                            if (data.has(String.valueOf(i))) {
+                                JSONObject obj = data.getJSONObject(String.valueOf(i));
+                                obj.put("checked", false);
+                                obj.put("delete", false);
+                                obj.put("dbid", dbIds[i]);
+                                cursor.moveToNext();
+                                obj.remove("goods_number");
+                                obj.put("goods_number", cursor.getString(3));
+                                obj.remove("goods_attr");
+                                arry.put(obj);
+                            }
+                        }
                     }
-
-                    Log.e("after", data.toString());
-                    final ShoppingCartAdapter adapter = new ShoppingCartAdapter(ShoppingCartActivity.this, arry);
+                    adapter = new ShoppingCartAdapter(ShoppingCartActivity.this, arry);
                     listView.setAdapter(adapter);
                     listView.setDividerHeight(0);
                     createSwipeMenu();

@@ -21,6 +21,7 @@ import com.qualifes.app.ui.GoodDetailActivity;
 import com.qualifes.app.ui.HomeActivity;
 import com.qualifes.app.ui.ShoppingCartActivity;
 import com.qualifes.app.util.AsyncImageLoader;
+import com.qualifes.app.util.OfflineCartDbHelper;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -170,6 +171,16 @@ public class ShoppingCartAdapter extends BaseAdapter {
                                     }
                                 }
                             });
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        OfflineCartDbHelper helper = new OfflineCartDbHelper(context);
+                        try {
+                            helper.delete(obj.getInt("dbid"));
+                            mData.remove(position);
+                            Toast.makeText(context, "删除离线购物车成功", Toast.LENGTH_SHORT).show();
+                            notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

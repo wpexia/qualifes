@@ -53,6 +53,10 @@ public class LoginActivity extends Activity implements OnClickListener {
                 finish();
             }
         });
+        SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
+        if (sp.contains("username")) {
+            ((EditText) findViewById(R.id.LoginUsername)).setText(sp.getString("username", ""));
+        }
     }
 
     @Override

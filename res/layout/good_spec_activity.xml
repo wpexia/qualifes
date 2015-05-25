@@ -13,7 +13,7 @@
             android:background="#00aaff">
         <ImageButton
                 android:id="@+id/spec_back"
-                android:src="@drawable/icon_back_b"
+                android:src="@drawable/icon_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -108,7 +108,6 @@
                 android:textSize="14sp"
                 android:layout_below="@+id/spec_count_shuliang"
                 android:layout_marginTop="14dp"
-                android:layout_marginBottom="24dp"
                 android:textColor="#00aaff"
                 android:background="@drawable/spec_button"
                 android:text="-"/>
@@ -120,7 +119,6 @@
                 android:layout_marginLeft="15dp"
                 android:layout_below="@+id/spec_count_shuliang"
                 android:layout_marginTop="14dp"
-                android:layout_marginBottom="24dp"
                 android:gravity="center"
                 android:layout_toRightOf="@+id/spec_count_sub"
                 android:textColor="#ffffff"
@@ -134,7 +132,6 @@
                 android:layout_marginLeft="15dp"
                 android:layout_below="@+id/spec_count_shuliang"
                 android:layout_marginTop="14dp"
-                android:layout_marginBottom="24dp"
                 android:layout_toRightOf="@+id/spec_count_num"
                 android:textColor="@color/spec_button_color"
                 android:background="@drawable/spec_button"

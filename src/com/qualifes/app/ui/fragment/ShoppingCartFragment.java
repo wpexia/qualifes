@@ -21,11 +21,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 public class ShoppingCartFragment extends Fragment implements View.OnClickListener {
     private View mView;
     private ListView listView;
     private SharedPreferences sp;
     ShoppingCartAdapter adapter;
+    int[] dbIds = new int[100];
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -99,6 +103,7 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
         public boolean onTouch(View v, MotionEvent event) {
             final int position = listView.pointToPosition(
                     Math.round(event.getX()), Math.round(event.getY()));
+            Adapter madapter = adapter;
             JSONObject obj = (JSONObject) adapter.getItem(position);
             try {
                 if (obj.getBoolean("delete")) {
@@ -141,6 +146,7 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                 goodsIds[i] = cursor.getString(1);
                 goodsAttrs[i] = cursor.getString(2);
                 i++;
+                dbIds[i] = cursor.getInt(0);
             }
             ShoppingCartManager manager = ShoppingCartManager.getInstance();
             manager.getOfflineCart(goodsIds, goodsAttrs, i, getOfflineCartHandler);
@@ -148,6 +154,13 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
         ((TextView) getActivity().findViewById(R.id.total)).setText("0.00");
         ((CheckBox) getActivity().findViewById(R.id.totalcheckBox)).setChecked(false);
         getActivity().findViewById(R.id.creatOrder).setOnClickListener(this);
+        mView.findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((HomeActivity)getActivity()).fragmentId = 0;
+                ((HomeActivity)getActivity()).changeFragment();
+            }
+        });
     }
 
 
@@ -185,23 +198,41 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                 try {
                     getActivity().findViewById(R.id.gone).setVisibility(View.GONE);
                     getActivity().findViewById(R.id.page).setVisibility(View.VISIBLE);
-                    JSONObject data = (JSONObject) msg.obj;
-                    OfflineCartDbHelper dbHelper = new OfflineCartDbHelper(getActivity());
-                    Cursor cursor = dbHelper.select();
                     JSONArray arry = new JSONArray();
-                    for (int i = 0; i < 100; i++) {
-                        if (data.has(String.valueOf(i))) {
-                            JSONObject obj = data.getJSONObject(String.valueOf(i));
+                    try {
+                        JSONArray data = (JSONArray) msg.obj;
+                        OfflineCartDbHelper dbHelper = new OfflineCartDbHelper(getActivity());
+                        Cursor cursor = dbHelper.select();
+                        for (int i = 0; i < data.length(); i++) {
+                            JSONObject obj = data.getJSONObject(i);
                             obj.put("checked", false);
                             obj.put("delete", false);
+                            obj.put("dbid", dbIds[i]);
                             cursor.moveToNext();
                             obj.remove("goods_number");
                             obj.put("goods_number", cursor.getString(3));
+                            obj.remove("goods_attr");
                             arry.put(obj);
                         }
+                    } catch (ClassCastException e) {
+                        JSONObject data = (JSONObject) msg.obj;
+                        OfflineCartDbHelper dbHelper = new OfflineCartDbHelper(getActivity());
+                        Cursor cursor = dbHelper.select();
+                        for (int i = 0; i < 100; i++) {
+                            if (data.has(String.valueOf(i))) {
+                                JSONObject obj = data.getJSONObject(String.valueOf(i));
+                                obj.put("checked", false);
+                                obj.put("delete", false);
+                                obj.put("dbid", dbIds[i]);
+                                cursor.moveToNext();
+                                obj.remove("goods_number");
+                                obj.put("goods_number", cursor.getString(3));
+                                obj.remove("goods_attr");
+                                arry.put(obj);
+                            }
+                        }
                     }
-
-                    final ShoppingCartAdapter adapter = new ShoppingCartAdapter(getActivity(), arry);
+                    adapter = new ShoppingCartAdapter(getActivity(), arry);
                     listView.setAdapter(adapter);
                     listView.setDividerHeight(0);
                     createSwipeMenu();
@@ -255,6 +286,7 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                         JSONObject obj = data.getJSONObject(i);
                         obj.put("checked", false);
                         obj.put("delete", false);
+                        obj.put("dbid", dbIds[i]);
                     }
                     adapter = new ShoppingCartAdapter(getActivity(), data);
                     listView.setAdapter(adapter);

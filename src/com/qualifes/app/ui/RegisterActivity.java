@@ -53,19 +53,16 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         getCode.setOnClickListener(this);
         protocol.setOnClickListener(this);
         agree.setOnClickListener(this);
-        viewPassword.setOnTouchListener(new View.OnTouchListener() {
+        viewPassword.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    }
-                    break;
-                    case MotionEvent.ACTION_UP: {
-                        password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    }
+            public void onClick(View v) {
+                if (viewPassword.getText().equals("显示")) {
+                    viewPassword.setText("隐藏");
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    viewPassword.setText("显示");
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
-                return false;
             }
         });
         findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
