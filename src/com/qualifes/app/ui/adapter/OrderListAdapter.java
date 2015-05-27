@@ -16,6 +16,7 @@ import com.qualifes.app.R;
 import com.qualifes.app.manager.OrderManager;
 import com.qualifes.app.manager.ZFBManager;
 import com.qualifes.app.ui.OrderDetailActivity;
+import com.qualifes.app.ui.OrderListActivity;
 import com.qualifes.app.ui.WuLiuActivity;
 import com.qualifes.app.util.AsyncImageLoader;
 import com.qualifes.app.util.DisplayParams;
@@ -103,7 +104,6 @@ public class OrderListAdapter extends BaseAdapter {
                 convertView = inflater.inflate(R.layout.orderlistitemmany, parent, false);
                 ((TextView) convertView.findViewById(R.id.sn)).setText(obj.getString("order_sn"));
                 ((TextView) convertView.findViewById(R.id.add_time)).setText("下单时间：" + obj.getString("add_time"));
-                ((TextView) convertView.findViewById(R.id.money)).setText("￥" + obj.getString("order_amount"));
 
                 GridView grid = (GridView) convertView.findViewById(R.id.gridView);
                 DisplayParams displayParams = DisplayParams.getInstance(context);
@@ -223,12 +223,14 @@ public class OrderListAdapter extends BaseAdapter {
                     Handler ZFBPayHandler = new Handler() {
                         @Override
                         public void handleMessage(Message msg) {
-
+                            Intent intent = new Intent(context, OrderListActivity.class);
+                            context.startActivity(intent);
                         }
                     };
                 });
 
             } else if (status < 5) {
+                ((TextView) convertView.findViewById(R.id.money)).setText("￥" + obj.getString("money_paid"));
                 button.setText("物流追踪");
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -239,6 +241,7 @@ public class OrderListAdapter extends BaseAdapter {
                     }
                 });
             } else {
+                ((TextView) convertView.findViewById(R.id.money)).setText("￥0.00");
                 button.setVisibility(View.INVISIBLE);
             }
         } catch (JSONException e) {

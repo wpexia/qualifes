@@ -107,6 +107,12 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         super.onResume();
         if (flag) {
             initView();
+        } else {
+            findViewById(R.id.tab).setVisibility(View.GONE);
+            findViewById(R.id.main).setVisibility(View.GONE);
+            findViewById(R.id.start).setVisibility(View.VISIBLE);
+            Handler x = new Handler();
+            x.postDelayed(new splashhandler(), 2000);
         }
         onRefresh();
     }
@@ -284,6 +290,10 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                 fragmentId = 0;
                 changeFragment();
                 return false;
+            } else {
+                flag = false;
+                moveTaskToBack(false);
+                return true;
             }
         }
         return super.onKeyDown(keyCode, event);
@@ -297,8 +307,4 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         return super.dispatchTouchEvent(ev);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

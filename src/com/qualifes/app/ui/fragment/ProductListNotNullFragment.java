@@ -284,7 +284,6 @@ public class ProductListNotNullFragment extends Fragment {
         if (productListAdapter != null) {
             productListAdapter.notifyDataSetChanged();
             listView.smoothScrollBy(1, 0);
-            listView.onDropDownComplete();
         }
     }
 
@@ -307,7 +306,6 @@ public class ProductListNotNullFragment extends Fragment {
             } else {
                 id = id + "," + mData.get(i).get(id_name).toString();
             }
-            productListAdapter.delete(i - 1);
         }
         productListAdapter.notifyDataSetChanged();
         try {

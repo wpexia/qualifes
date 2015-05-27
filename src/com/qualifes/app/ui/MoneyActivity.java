@@ -27,6 +27,12 @@ public class MoneyActivity extends Activity implements View.OnClickListener {
         showNow();
         findViewById(R.id.history).setOnClickListener(this);
         findViewById(R.id.now).setOnClickListener(this);
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void showNow() {

@@ -115,6 +115,7 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
         switch (id) {
             case R.id.chooseposition: {
                 Intent intent = new Intent(this, ChoosePositionActivity.class);
+                intent.putExtra("position", position.toString());
                 startActivityForResult(intent, 1);
             }
             break;
@@ -165,10 +166,11 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
                 String payFunctionStr = payFunctions[payFunction - 1];
                 OrderManager manager = OrderManager.getInstance();
                 if (payFunction == 2) {
-                    manager.creatOrder(token, positionId, payFunctionStr,receiveTime, goods, createOrderWXHandler);
+                    manager.creatOrder(token, positionId, payFunctionStr, receiveTime, moneyId, goods, createOrderWXHandler);
                 } else if (payFunction == 1) {
-                    manager.creatOrder(token, positionId, payFunctionStr,receiveTime, goods, creatOrderZFBHandler);
+                    manager.creatOrder(token, positionId, payFunctionStr, receiveTime, moneyId, goods, creatOrderZFBHandler);
                 }
+                finish();
             }
             break;
         }

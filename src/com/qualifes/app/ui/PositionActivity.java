@@ -37,10 +37,15 @@ public class PositionActivity extends Activity implements View.OnClickListener {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initView();
+    }
+
     private void initView() {
         PositionManager positionManager = PositionManager.getInstance();
         positionManager.getPosition(sp.getString("token", ""), getPosition, PositionActivity.this);
-
     }
 
     Handler getPosition = new Handler() {

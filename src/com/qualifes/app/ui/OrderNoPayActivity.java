@@ -24,6 +24,12 @@ public class OrderNoPayActivity extends Activity {
         initView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initView();
+    }
+
     private void initView() {
         sp = getSharedPreferences("user", MODE_PRIVATE);
         mListView = (ListView) findViewById(R.id.content);
@@ -42,6 +48,10 @@ public class OrderNoPayActivity extends Activity {
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
                 JSONArray data = (JSONArray) msg.obj;
+                OrderListAdapter adapter = new OrderListAdapter(OrderNoPayActivity.this, data);
+                mListView.setAdapter(adapter);
+            } else {
+                JSONArray data = new JSONArray();
                 OrderListAdapter adapter = new OrderListAdapter(OrderNoPayActivity.this, data);
                 mListView.setAdapter(adapter);
             }

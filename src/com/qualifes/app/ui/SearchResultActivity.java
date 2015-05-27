@@ -99,6 +99,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
         search_result_order_popu.setOnClickListener(this);
 
         home_search_result_items = (ListView) findViewById(R.id.home_search_result_items);
+        home_search_result_items.setDividerHeight(0);
         home_search_result_items.setOnItemClickListener(this);
     }
 
@@ -112,6 +113,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
             case R.id.search_result_order_default:
                 search_result_order_default.setSelected(true);
                 search_result_order_price.setSelected(false);
+                findViewById(R.id.tri).setVisibility(View.INVISIBLE);
                 search_result_order_sales.setSelected(false);
                 search_result_order_popu.setSelected(false);
 
@@ -144,14 +146,40 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
             case R.id.search_result_order_price:
                 search_result_order_default.setSelected(false);
                 search_result_order_price.setSelected(true);
+                findViewById(R.id.tri).setVisibility(View.VISIBLE);
                 search_result_order_sales.setSelected(false);
                 search_result_order_popu.setSelected(false);
+                if (home_search_result_input.getText().toString().isEmpty() && flag) {
+                    Toast.makeText(getApplicationContext(), "请输入搜索的商品信息", Toast.LENGTH_SHORT).show();
+                } else {
+                    String input = home_search_result_input.getText().toString();
+                    data = new ArrayList<HashMap<String, Object>>();
 
+                    RequestParams params = new RequestParams();
+                    if (flag) {
+                        params.put("data[keywords]", input);
+                    } else {
+                        params.put("data[cat_id]", ids);
+                    }
+                    params.put("data[order_field]", "shop_price");
+                    params.put("data[order_sort]", "asc");
+                    params.put("data[limit_m]", 0);
+                    params.put("data[limit_n]", 5);
+                    client.get(ConnectionURL.getSearchURL(), params, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers,
+                                              JSONObject response) {
+                            handlerData(response);
+                        }
+                    });
+
+                }
 
                 break;
             case R.id.search_result_order_sales:
                 search_result_order_default.setSelected(false);
                 search_result_order_price.setSelected(false);
+                findViewById(R.id.tri).setVisibility(View.INVISIBLE);
                 search_result_order_sales.setSelected(true);
                 search_result_order_popu.setSelected(false);
 
@@ -186,6 +214,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
                 search_result_order_default.setSelected(false);
                 search_result_order_price.setSelected(false);
                 search_result_order_sales.setSelected(false);
+                findViewById(R.id.tri).setVisibility(View.INVISIBLE);
                 search_result_order_popu.setSelected(true);
 
                 if (home_search_result_input.getText().toString().isEmpty() && flag) {

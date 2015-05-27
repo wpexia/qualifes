@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.widget.TextView;
 import com.qualifes.app.R;
 import com.qualifes.app.manager.OrderManager;
@@ -25,6 +26,12 @@ public class WuLiuActivity extends Activity {
         OrderManager manager = OrderManager.getInstance();
         Intent intent = getIntent();
         manager.getOrderFollow(sp.getString("token", ""), intent.getStringExtra("orderId"), getFollowHandler);
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     Handler getFollowHandler = new Handler() {

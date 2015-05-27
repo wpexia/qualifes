@@ -226,7 +226,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
                                 double money = obj.getDouble("goods_price");
                                 double totalMoney = Double.parseDouble(total.getText().toString());
                                 totalMoney -= money;
-                                total.setText(String.valueOf(totalMoney));
+                                total.setText(String.format("%.2f", totalMoney));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -261,7 +261,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
                                     double money = obj.getDouble("goods_price");
                                     double totalMoney = Double.parseDouble(total.getText().toString());
                                     totalMoney += money;
-                                    total.setText(String.valueOf(totalMoney));
+                                    total.setText(String.format("%.2f", totalMoney));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -311,7 +311,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
                             }
                             double totalMoney = Double.parseDouble(total.getText().toString());
                             totalMoney -= money;
-                            total.setText(String.valueOf(totalMoney));
+                            total.setText(String.format("%.2f", totalMoney));
                         } else {
                             CheckBox totalCheck;
                             if (!isactivity) {
@@ -324,7 +324,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
                             if (allChecked()) {
                                 totalCheck.setChecked(true);
                             }
-                            total.setText(String.valueOf(totalMoney));
+                            total.setText(String.format("%.2f", totalMoney));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -61,6 +61,13 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         initView();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        HomeManger homeManger = HomeManger.getInstance();
+        homeManger.getGoodsInfo("home_goods_bottom", goodsBottomHandler, getActivity());
+    }
+
     private void initView() {
 
         editText = (EditText) getActivity().findViewById(R.id.input);
@@ -72,10 +79,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         });
 
         scrollView = (ScrollView) getActivity().findViewById(R.id.scrollView);
-
-
         viewFlipper = (ViewFlipper) getActivity().findViewById(R.id.viewFlipper);
-
 
         imageButtonL = (ImageView) getActivity().findViewById(R.id.secondPic);
         imageButtonL.setOnClickListener(this);
@@ -103,6 +107,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         homeManger.getGoodsInfo("home_goods_blue", goodsBlueHandler, getActivity());
         homeManger.getGoodsInfo("home_goods_bottom", goodsBottomHandler, getActivity());
     }
+
 
 
     Handler viewFlipperHandler = new Handler() {
@@ -312,6 +317,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                     totalHeight += listItem.getMeasuredHeight() * adapter.getCount();
                     params.height = totalHeight + listView.getDividerHeight() * (data.length() - 1);
                     listView.setLayoutParams(params);
+                    listView.setDividerHeight(0);
                     listView.setOnItemClickListener(HomeFragment.this);
                 } catch (NullPointerException e) {
                     e.printStackTrace();

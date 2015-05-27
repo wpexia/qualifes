@@ -97,17 +97,27 @@
                     android:scaleType="fitXY"
                     android:textColor="@drawable/search_result_button"
                     android:text="默认"/>
-            <TextView
-                    android:id="@+id/search_result_order_price"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+            <RelativeLayout
                     android:layout_weight="1"
-                    android:clickable="true"
-                    android:textSize="12sp"
-                    android:gravity="center"
-                    android:scaleType="fitXY"
-                    android:textColor="@drawable/search_result_button"
-                    android:text="价格"/>
+                    android:layout_width="fill_parent" android:layout_height="fill_parent">
+                <TextView
+                        android:id="@+id/search_result_order_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:textSize="12sp"
+                        android:scaleType="fitXY"
+                        android:textColor="@drawable/search_result_button"
+                        android:text="价格" android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/triangle"
+                        android:visibility="invisible"
+                        android:id="@+id/tri" android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/search_result_order_price"
+                        android:layout_toEndOf="@+id/search_result_order_price"/>
+            </RelativeLayout>
             <TextView
                     android:id="@+id/search_result_order_sales"
                     android:layout_width="fill_parent"

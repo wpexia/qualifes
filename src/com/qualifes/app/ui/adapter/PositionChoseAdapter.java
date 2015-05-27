@@ -30,6 +30,10 @@ public class PositionChoseAdapter extends BaseAdapter {
 
     }
 
+    public void setChecked(int checked) {
+        this.checked = checked;
+    }
+
     @Override
     public int getCount() {
         return mData.length();
@@ -89,6 +93,8 @@ public class PositionChoseAdapter extends BaseAdapter {
         });
         if (position != checked) {
             radio.setChecked(false);
+        } else {
+            radio.setChecked(true);
         }
         if (checked != -1) {
             head.setChecked(false);

@@ -27,6 +27,8 @@ public class ChoosePositionActivity extends Activity implements View.OnClickList
     private ListView listView;
     private JSONObject defaultPo;
     PositionChoseAdapter adapter;
+    JSONObject defposition;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,11 @@ public class ChoosePositionActivity extends Activity implements View.OnClickList
     private void initView() {
         sp = getSharedPreferences("user", MODE_PRIVATE);
         listView = (ListView) findViewById(R.id.listView);
-
+        try {
+            defposition = new JSONObject(getIntent().getStringExtra("position"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         findViewById(R.id.finish).setOnClickListener(this);
         findViewById(R.id.back_button).setOnClickListener(this);
         findViewById(R.id.add).setOnClickListener(this);
@@ -114,9 +120,20 @@ public class ChoosePositionActivity extends Activity implements View.OnClickList
                             });
                         }
                     }
+                    int check = -1;
+                    for (int i = 0; i < noDefault.length(); i++) {
+                        JSONObject obj = noDefault.getJSONObject(i);
+                        if (obj.getString("address_id").equals(defposition.getString("address_id"))) {
+                            check = i;
+                            break;
+                        }
+                    }
                     adapter = new PositionChoseAdapter();
+                    adapter.setChecked(check);
                     adapter.setContent(noDefault, ChoosePositionActivity.this);
                     listView.setAdapter(adapter);
+                    findViewById(R.id.okposition).setVisibility(View.VISIBLE);
+                    findViewById(R.id.noposition).setVisibility(View.GONE);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (NullPointerException e) {

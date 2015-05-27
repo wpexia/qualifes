@@ -135,8 +135,8 @@ public class OrderManager {
     }
 
 
-    public void creatOrder(String token, String addressId, String payType, int receiveTime, JSONArray goods, Handler handler) {
-        Thread creatOrderThread = new Thread(new CreatOrderThread(token, addressId, payType, receiveTime, goods, handler));
+    public void creatOrder(String token, String addressId, String payType, int receiveTime, String moneyId, JSONArray goods, Handler handler) {
+        Thread creatOrderThread = new Thread(new CreatOrderThread(token, addressId, payType, receiveTime, moneyId, goods, handler));
         creatOrderThread.start();
     }
 
@@ -146,14 +146,16 @@ public class OrderManager {
         private String payType;
         private JSONArray goods;
         private int receiveTime;
+        private String moneyId;
         private Handler handler;
 
-        public CreatOrderThread(String token, String addressId, String payType, int receiveTime, JSONArray goods, Handler handler) {
+        public CreatOrderThread(String token, String addressId, String payType, int receiveTime, String moneyId, JSONArray goods, Handler handler) {
             this.token = token;
             this.addressId = addressId;
             this.payType = payType;
             this.goods = goods;
             this.handler = handler;
+            this.moneyId = moneyId;
             this.receiveTime = receiveTime;
         }
 
@@ -166,6 +168,9 @@ public class OrderManager {
             params.put("data[referer]", "android");
             params.put("data[address_id]", addressId);
             params.put("data[pay_type]", payType);
+            if (!moneyId.equals("")) {
+                params.put("data[bonus_id]", moneyId);
+            }
             if (payType.equals("weixin_app")) {
                 params.put("data[pay_id]", "8");
             }
@@ -245,6 +250,8 @@ public class OrderManager {
                         msg.obj = response.getJSONObject("data").getJSONArray("data");
                         handler.sendMessage(msg);
                     } catch (JSONException e) {
+                        msg.what = 1;
+                        handler.sendMessage(msg);
                         e.printStackTrace();
                     }
                 }
@@ -393,7 +400,7 @@ public class OrderManager {
 
 
     public void cancleOrder(String token, String orderId, Handler handler) {
-        Thread thread = new Thread(new CancleOrderThread(token,orderId,handler));
+        Thread thread = new Thread(new CancleOrderThread(token, orderId, handler));
         thread.start();
     }
 
@@ -415,10 +422,10 @@ public class OrderManager {
             RequestParams params = new RequestParams();
             params.put("token", token);
             params.put("data[order_id]", orderId);
-            client.get(Api.url("cel_order"), params, new JsonHttpResponseHandler(){
+            client.get(Api.url("cel_order"), params, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    Api.dealSuccessRes(response,msg);
+                    Api.dealSuccessRes(response, msg);
                     handler.sendMessage(msg);
                 }
 

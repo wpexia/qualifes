@@ -104,7 +104,7 @@ public class OrderDetailActivity extends Activity {
                             "订单完成",
                             "订单取消",
                             "订单关闭"};
-                    int[] statusImg = {R.drawable.icon_wait, R.drawable.icon_ok, R.drawable.icon_ok, R.drawable.icon_ok, R.drawable.icon_ok, R.drawable.icon_ok, R.drawable.icon_cancel};
+                    int[] statusImg = {R.drawable.icon_wait, R.drawable.icon_ok, R.drawable.icon_ok, R.drawable.icon_ok, R.drawable.icon_ok, R.drawable.icon_cancel, R.drawable.icon_cancel};
                     ((TextView) findViewById(R.id.status)).setText(statusSt[status]);
                     ((ImageView) findViewById(R.id.statusImg)).setImageDrawable(getResources().getDrawable(statusImg[status]));
                     ((TextView) findViewById(R.id.goodsAmount)).setText("商品金额：" + data.getString("goods_amount"));

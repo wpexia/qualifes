@@ -46,6 +46,7 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
         ((TextView) findViewById(R.id.headers)).setText("忘记密码");
         ((EditText) findViewById(R.id.password_name)).setHint("请输入新密码");
         ((Button) findViewById(R.id.agree)).setText("确认并修改密码");
+        findViewById(R.id.protocol).setVisibility(View.GONE);
         username = (EditText) findViewById(R.id.username);
         code = (EditText) findViewById(R.id.codename);
         password = (EditText) findViewById(R.id.password_name);

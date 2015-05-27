@@ -33,6 +33,12 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
         setContentView(R.layout.shopping_cart);
         sp = getSharedPreferences("user", Activity.MODE_PRIVATE);
         listView = (ListView) findViewById(R.id.content);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         init();
     }
 
@@ -219,6 +225,7 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
                         }
                     }
                     adapter = new ShoppingCartAdapter(ShoppingCartActivity.this, arry);
+                    adapter.setIsactivity();
                     listView.setAdapter(adapter);
                     listView.setDividerHeight(0);
                     createSwipeMenu();

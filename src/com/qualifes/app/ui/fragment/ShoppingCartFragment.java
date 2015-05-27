@@ -114,6 +114,8 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
             return gDetector.onTouchEvent(event);
         }

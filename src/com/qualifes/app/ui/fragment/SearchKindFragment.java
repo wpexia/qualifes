@@ -149,7 +149,7 @@ public class SearchKindFragment extends Fragment implements View.OnClickListener
 
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemClick(final AdapterView<?> parent, View view, int position, long id) {
 
         switch (parent.getId()) {
 
@@ -167,12 +167,12 @@ public class SearchKindFragment extends Fragment implements View.OnClickListener
                 AsyncHttpClient client = new AsyncHttpClient();
                 RequestParams params1 = new RequestParams();
                 params1.put("data[parent_id]", cateList.get(position).get("cat_id"));
-                childList = new ArrayList<Map<String, String>>();
                 client.get(ConnectionURL.getGoodCategory(), params1, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         try {
                             JSONArray dataArray = response.getJSONArray("data");
+                            childList = new ArrayList<Map<String, String>>();
                             for (int i = 0; i < dataArray.length(); i++) {
                                 JSONObject data = dataArray.getJSONObject(i);
                                 Map<String, String> map = new HashMap<String, String>();
