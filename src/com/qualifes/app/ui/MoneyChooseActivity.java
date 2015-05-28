@@ -8,11 +8,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.inputmethod.EditorInfo;
+import android.widget.*;
 import com.qualifes.app.R;
 import com.qualifes.app.manager.MoneyManager;
 import com.qualifes.app.ui.adapter.MoneyChooseAdapter;
@@ -41,6 +40,18 @@ public class MoneyChooseActivity extends Activity implements View.OnClickListene
         addMoney.setOnClickListener(this);
 
         editText = (EditText) findViewById(R.id.editText);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
+                    addMoney.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -138,6 +149,14 @@ public class MoneyChooseActivity extends Activity implements View.OnClickListene
                 editText.setText("");
                 addMoney.setTextColor(getResources().getColor(R.color.be));
                 addMoney.setClickable(false);
+                Intent intent = getIntent();
+                try {
+                    JSONArray goods = new JSONArray(intent.getStringExtra("goods"));
+                    MoneyManager moneyManager = MoneyManager.getInstance();
+                    moneyManager.getCanUse(sp.getString("token", ""), goods, canUsehandler);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
     };

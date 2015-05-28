@@ -107,8 +107,8 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
                     }
                     if (data.getString("bonus").equals("yes")) {
                         findViewById(R.id.havered).setVisibility(View.VISIBLE);
-                        findViewById(R.id.redmoney).setOnClickListener(OrderConfirmActivity.this);
                     }
+                    findViewById(R.id.redmoney).setOnClickListener(OrderConfirmActivity.this);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
