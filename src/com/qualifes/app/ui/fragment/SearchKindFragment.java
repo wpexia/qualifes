@@ -176,7 +176,13 @@ public class SearchKindFragment extends Fragment implements View.OnClickListener
                     RelativeLayout layout = (RelativeLayout) parent.getChildAt(i);
                     TextView child = (TextView) layout.findViewById(R.id.home_search_kind_item_children);
                     child.setVisibility(View.GONE);
+                    if(i != position ) {
+                        layout.findViewById(R.id.point).setVisibility(View.INVISIBLE);
+                    }else {
+                        layout.findViewById(R.id.point).setVisibility(View.VISIBLE);
+                    }
                 }
+
                 String find = cateList.get(position).get("find");
                 String[] children = find.split("/");
                 AsyncHttpClient client = new AsyncHttpClient();

@@ -17,6 +17,7 @@ import com.qualifes.app.R;
 import com.qualifes.app.manager.ShoppingCartManager;
 import com.qualifes.app.ui.adapter.ShoppingCartAdapter;
 import com.qualifes.app.util.OfflineCartDbHelper;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,6 +40,7 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
         init();
     }
 
@@ -319,5 +321,11 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
             }
         }
     };
+
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
 }

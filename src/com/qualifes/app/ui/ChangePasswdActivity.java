@@ -19,6 +19,7 @@ import com.loopj.android.http.RequestParams;
 import com.qualifes.app.R;
 import com.qualifes.app.util.Api;
 import com.qualifes.app.util.RSAHelper;
+import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -59,6 +60,16 @@ public class ChangePasswdActivity extends Activity implements View.OnClickListen
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(ChangePasswdActivity.this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
     @Override
     public void onClick(View v) {
         int id = v.getId();

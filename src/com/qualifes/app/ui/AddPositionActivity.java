@@ -20,6 +20,7 @@ import com.qualifes.app.manager.PositionManager;
 import com.qualifes.app.util.DisplayParams;
 import com.qualifes.app.util.DisplayUtil;
 import com.qualifes.app.util.PlistHelper;
+import com.umeng.analytics.MobclickAgent;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.ArrayWheelAdapter;
@@ -88,6 +89,12 @@ public class AddPositionActivity extends Activity implements View.OnClickListene
             }
 
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(AddPositionActivity.this);
     }
 
     private void initView() {
@@ -259,6 +266,10 @@ public class AddPositionActivity extends Activity implements View.OnClickListene
 
     }
 
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     Handler addPositionHandler = new Handler() {
         @Override

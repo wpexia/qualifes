@@ -8,6 +8,7 @@ import android.view.View;
 import com.qualifes.app.R;
 import com.qualifes.app.ui.fragment.MoneyHistoryFragment;
 import com.qualifes.app.ui.fragment.MoneyNowFragment;
+import com.umeng.analytics.MobclickAgent;
 
 public class MoneyActivity extends Activity implements View.OnClickListener {
 
@@ -47,6 +48,12 @@ public class MoneyActivity extends Activity implements View.OnClickListener {
         transaction.commit();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
     private void showHistory() {
         FragmentTransaction transaction = manager.beginTransaction();
         hide(transaction);
@@ -81,5 +88,9 @@ public class MoneyActivity extends Activity implements View.OnClickListener {
             }
             break;
         }
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

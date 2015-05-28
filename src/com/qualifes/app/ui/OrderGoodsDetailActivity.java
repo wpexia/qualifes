@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ListView;
 import com.qualifes.app.R;
 import com.qualifes.app.ui.adapter.OrderDetailAdapter;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -34,5 +35,15 @@ public class OrderGoodsDetailActivity extends Activity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 }

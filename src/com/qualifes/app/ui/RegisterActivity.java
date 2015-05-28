@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.qualifes.app.R;
 import com.qualifes.app.manager.LoginManager;
 import com.qualifes.app.manager.RegisterManager;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -44,6 +45,14 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         registerManager = RegisterManager.getInst();
         initView();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+
 
     private void initView() {
         username = (EditText) findViewById(R.id.username);
@@ -193,4 +202,10 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
             }
         }
     };
+
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 }

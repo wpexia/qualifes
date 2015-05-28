@@ -25,6 +25,7 @@ import com.qualifes.app.util.WXApi;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +40,7 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
     private int fragmentId = 0;
 
 
-    private JSONObject position;
+    private JSONObject position = new JSONObject();
     private JSONArray goods;
     private int receiveTime = 0;
     private int payFunction = 0;
@@ -58,6 +59,12 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
             e.printStackTrace();
         }
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 
     private void initView() {
@@ -378,5 +385,9 @@ public class OrderConfirmActivity extends Activity implements View.OnClickListen
         if (okFragment != null) {
             transaction.hide(okFragment);
         }
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

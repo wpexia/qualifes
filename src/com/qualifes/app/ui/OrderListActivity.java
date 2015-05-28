@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.qualifes.app.R;
 import com.qualifes.app.manager.OrderManager;
 import com.qualifes.app.ui.adapter.OrderListAdapter;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 
 public class OrderListActivity extends Activity {
@@ -21,6 +22,10 @@ public class OrderListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orderlist);
         initView();
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     private void initView() {
@@ -47,4 +52,9 @@ public class OrderListActivity extends Activity {
         }
     };
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 }

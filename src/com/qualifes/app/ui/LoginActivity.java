@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.qualifes.app.manager.ShoppingCartManager;
 import com.qualifes.app.util.OfflineCartDbHelper;
+import com.umeng.analytics.MobclickAgent;
 
 public class LoginActivity extends Activity implements OnClickListener {
     private EditText userNameText;
@@ -72,6 +73,12 @@ public class LoginActivity extends Activity implements OnClickListener {
         if (sp.contains("username")) {
             ((EditText) findViewById(R.id.LoginUsername)).setText(sp.getString("username", ""));
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(LoginActivity.this);
     }
 
     @Override
@@ -153,6 +160,10 @@ public class LoginActivity extends Activity implements OnClickListener {
             }
         }
     };
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
 
 }

@@ -21,6 +21,7 @@ import com.qualifes.app.util.AsyncImageLoader;
 import com.qualifes.app.util.DisplayParams;
 import com.qualifes.app.util.DisplayUtil;
 import com.qualifes.app.util.WXApi;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -56,6 +57,8 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
     private ImageButton detail_star;
     private ImageButton detail_share;
     private TextView detail_good_name;
+    private LinearLayout mDotsLayout;
+    private int mDotsInt;
     private TextView detail_goods_name;
     private TextView detail_shop_price;
     private TextView detail_market_price;
@@ -111,6 +114,7 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
         detail_back_home.setOnClickListener(this);
 
         detail_imgs = (ViewFlipper) findViewById(R.id.detail_imgs);
+        mDotsLayout = (LinearLayout) findViewById(R.id.dots);
 
         detail_star = (ImageButton) findViewById(R.id.detail_star);
         detail_star.setOnClickListener(this);
@@ -150,6 +154,7 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(GoodDetailActivity.this);
         SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
         if (sp.contains("token")) {
             AsyncHttpClient client = new AsyncHttpClient();
@@ -181,6 +186,10 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
         } else {
             findViewById(R.id.badge).setVisibility(View.INVISIBLE);
         }
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     private void accessServer() {
@@ -272,7 +281,9 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
                         }
 
                         detail_imgs.addView(iv, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-
+                        mDotsLayout.addView(initDot());
+                        mDotsLayout.getChildAt(0).setSelected(true);
+                        mDotsInt = 0;
                         detail_imgs.setFlipInterval(1500);
                         if (imgsArray.length() > 1 && !detail_imgs.isFlipping()) {
                             Animation lInAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_left_in);        // 向左滑动左侧进入的渐变效果（alpha 0.1  -> 1.0）
@@ -487,6 +498,11 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
             detail_imgs.setInAnimation(rInAnim);
             detail_imgs.setOutAnimation(rOutAnim);
             detail_imgs.showPrevious();
+            mDotsInt--;
+            if(mDotsInt < 0) {
+                mDotsInt += detail_imgs.getChildCount();
+            }
+            changeDot();
             return true;
         } else if (e2.getX() - e1.getX() < -DisplayUtil.dip2px(100, params.scale)) {         // 从右向左滑动（右进左出）
             detail_imgs.stopFlipping();                // 点击事件后，停止自动播放
@@ -497,8 +513,27 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
             detail_imgs.setInAnimation(lInAnim);
             detail_imgs.setOutAnimation(lOutAnim);
             detail_imgs.showNext();
+            mDotsInt++;
+            if(mDotsInt == detail_imgs.getChildCount()) {
+                mDotsInt = 0;
+            }
+            changeDot();
             return true;
         }
         return false;
+    }
+
+    private View initDot() {
+        return LayoutInflater.from(getApplicationContext()).inflate(R.layout.smalldot, null);
+    }
+
+    private void changeDot() {
+        for(int i =0; i< detail_imgs.getChildCount(); i++) {
+            if(i != mDotsInt) {
+                mDotsLayout.getChildAt(i).setSelected(false);
+            } else {
+                mDotsLayout.getChildAt(i).setSelected(true);
+            }
+        }
     }
 }

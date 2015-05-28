@@ -13,6 +13,7 @@ import com.qualifes.app.R;
 import com.qualifes.app.manager.PositionManager;
 import com.qualifes.app.ui.fragment.PositionNullFragment;
 import com.qualifes.app.ui.fragment.PositionOKFragment;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 
 public class PositionActivity extends Activity implements View.OnClickListener {
@@ -37,9 +38,14 @@ public class PositionActivity extends Activity implements View.OnClickListener {
         });
     }
 
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
         initView();
     }
 

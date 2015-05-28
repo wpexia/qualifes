@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.qualifes.app.R;
 import com.qualifes.app.manager.MoneyManager;
 import com.qualifes.app.ui.adapter.MoneyChooseAdapter;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -76,6 +77,13 @@ public class MoneyChooseActivity extends Activity implements View.OnClickListene
         }
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
     @Override
     public void onClick(View v) {
         final int id = v.getId();
@@ -133,4 +141,8 @@ public class MoneyChooseActivity extends Activity implements View.OnClickListene
             }
         }
     };
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 }

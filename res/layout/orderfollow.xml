@@ -72,6 +72,7 @@
                 android:textSize="16sp"
                 android:textColor="#3d3d3d"
                 android:id="@+id/sn"
+                android:longClickable="true"
                 android:layout_alignBottom="@+id/textView35"
                 android:layout_alignLeft="@+id/textView36"
                 android:layout_alignStart="@+id/textView36"/>

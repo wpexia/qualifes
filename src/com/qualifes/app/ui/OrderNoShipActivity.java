@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.qualifes.app.R;
 import com.qualifes.app.manager.OrderManager;
 import com.qualifes.app.ui.adapter.OrderListAdapter;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 
 public class OrderNoShipActivity extends Activity{
@@ -22,6 +23,10 @@ public class OrderNoShipActivity extends Activity{
         setContentView(R.layout.orderlist);
         initView();
     }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
     private void initView() {
         sp = getSharedPreferences("user", MODE_PRIVATE);
         mListView = (ListView) findViewById(R.id.content);
@@ -33,6 +38,12 @@ public class OrderNoShipActivity extends Activity{
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 
     Handler getOrderHandler = new Handler() {

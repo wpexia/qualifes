@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.qualifes.app.R;
+import com.umeng.analytics.MobclickAgent;
 
 public class SettingActivity extends Activity implements View.OnClickListener {
     private SharedPreferences sp;
@@ -21,6 +22,12 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.setting);
         sp = getSharedPreferences("user", MODE_PRIVATE);
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 
     private void initView() {
@@ -109,5 +116,11 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 }
             }
         }
+    }
+
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

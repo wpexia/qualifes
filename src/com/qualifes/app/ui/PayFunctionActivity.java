@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import com.qualifes.app.R;
+import com.umeng.analytics.MobclickAgent;
 
 public class PayFunctionActivity extends Activity implements View.OnClickListener{
     @Override
@@ -14,6 +15,12 @@ public class PayFunctionActivity extends Activity implements View.OnClickListene
         initView();
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 
     private void initView() {
         findViewById(R.id.pay1).setOnClickListener(this);
@@ -26,6 +33,10 @@ public class PayFunctionActivity extends Activity implements View.OnClickListene
         });
     }
 
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
     @Override
     public void onClick(View v) {
         int id = v.getId();

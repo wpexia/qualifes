@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -63,17 +65,28 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                 final PlistHelper plistHelper = PlistHelper.getInstance(getApplicationContext());
             }
         }).start();
-    }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         manager = getFragmentManager();
         changeFragment();
         Handler x = new Handler();
-        x.postDelayed(new splashhandler(), 5000);
+        x.postDelayed(new splashhandler(), 3000);
+        SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
+        if (!sp.contains("first")) {
+            Handler xx = new Handler();
+            xx.postDelayed(new GuideHandler(), 1000);
+        }
     }
+
+
+    class GuideHandler implements Runnable {
+        @Override
+        public void run() {
+            flag = true;
+            Intent intent = new Intent(HomeActivity.this, GuideActivity.class);
+            startActivity(intent);
+        }
+    }
+
 
     class splashhandler implements Runnable {
 
@@ -81,7 +94,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
             flag = true;
             try {
                 initView();
-
+                Log.e("init", "1");
             } catch (IllegalStateException e) {
                 e.printStackTrace();
             }
@@ -104,7 +117,9 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(HomeActivity.this);
         if (flag) {
+            Log.e("init", "2");
             initView();
         } else {
             findViewById(R.id.tab).setVisibility(View.GONE);
@@ -115,6 +130,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         }
         onRefresh();
     }
+
 
 
     @Override
@@ -215,6 +231,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                     transaction.show(homeFragment);
                 }
                 if (flag) {
+                    findViewById(R.id.home).setSelected(true);
                     tab.setVisibility(View.VISIBLE);
                 }
             }
@@ -225,6 +242,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                     transaction.add(R.id.main, searchKindFragment);
                 } else {
                     transaction.show(searchKindFragment);
+                    findViewById(R.id.list).setSelected(true);
                     tab.setVisibility(View.VISIBLE);
                 }
             }
@@ -235,6 +253,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                     transaction.add(R.id.main, shoppingCartFragment);
                 } else {
                     transaction.show(shoppingCartFragment);
+                    findViewById(R.id.shoppingcart).setSelected(true);
                     tab.setVisibility(View.VISIBLE);
                 }
             }
@@ -245,6 +264,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                     transaction.add(R.id.main, personalFragment);
                 } else {
                     transaction.show(personalFragment);
+                    findViewById(R.id.personal).setSelected(true);
                     tab.setVisibility(View.VISIBLE);
                 }
             }
@@ -279,6 +299,10 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         if (searchKindFragment != null) {
             transaction.hide(searchKindFragment);
         }
+        findViewById(R.id.home).setSelected(false);
+        findViewById(R.id.personal).setSelected(false);
+        findViewById(R.id.shoppingcart).setSelected(false);
+        findViewById(R.id.list).setSelected(false);
         try {
             ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(HomeActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         } catch (NullPointerException e) {
@@ -309,6 +333,10 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
             if (homeFragment.onTouchEvent(ev)) return true;
         }
         return super.dispatchTouchEvent(ev);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
 }

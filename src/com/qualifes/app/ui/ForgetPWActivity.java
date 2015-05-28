@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.qualifes.app.R;
 import com.qualifes.app.manager.ForgetPasswordManager;
 import com.qualifes.app.manager.LoginManager;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,16 +40,21 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register);
+        setContentView(R.layout.forgetpw);
         forgetPasswordManager = ForgetPasswordManager.getInst();
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(ForgetPWActivity.this);
     }
 
     private void initView() {
         ((TextView) findViewById(R.id.headers)).setText("忘记密码");
         ((EditText) findViewById(R.id.password_name)).setHint("请输入新密码");
         ((Button) findViewById(R.id.agree)).setText("确认并修改密码");
-        findViewById(R.id.protocol).setVisibility(View.GONE);
         username = (EditText) findViewById(R.id.username);
         code = (EditText) findViewById(R.id.codename);
         password = (EditText) findViewById(R.id.password_name);
@@ -86,6 +92,10 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
         });
     }
 
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     @Override
     public void onClick(View v) {

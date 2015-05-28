@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.qualifes.app.R;
 import com.qualifes.app.manager.PositionManager;
 import com.qualifes.app.ui.adapter.PositionChoseAdapter;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,6 +55,7 @@ public class ChoosePositionActivity extends Activity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(ChoosePositionActivity.this);
         getPos();
     }
 
@@ -91,6 +93,10 @@ public class ChoosePositionActivity extends Activity implements View.OnClickList
                 startActivity(intent);
             }
         }
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     Handler getPosition = new Handler() {

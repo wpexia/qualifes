@@ -14,6 +14,7 @@ import com.qualifes.app.R;
 import com.qualifes.app.manager.FollowManager;
 import com.qualifes.app.ui.fragment.ProductListNotNullFragment;
 import com.qualifes.app.ui.fragment.ProductListNullFragment;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +38,12 @@ public class FollowActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.history);
         fragmentManager = getFragmentManager();
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(FollowActivity.this);
     }
 
     private void initView() {
@@ -63,6 +70,10 @@ public class FollowActivity extends Activity implements View.OnClickListener {
             }
             break;
         }
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     public void changeFragment(boolean isNull) {

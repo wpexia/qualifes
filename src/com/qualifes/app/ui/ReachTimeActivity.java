@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import com.qualifes.app.R;
+import com.umeng.analytics.MobclickAgent;
 
 public class ReachTimeActivity extends Activity implements View.OnClickListener{
     @Override
@@ -12,6 +13,12 @@ public class ReachTimeActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reachtime);
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 
     private void initView() {
@@ -36,6 +43,11 @@ public class ReachTimeActivity extends Activity implements View.OnClickListener{
                 finish();
             }
         });
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
     @Override
     public void onClick(View v) {

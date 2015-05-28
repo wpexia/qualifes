@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 import com.loopj.android.http.AsyncHttpClient;
@@ -18,6 +20,7 @@ import com.qualifes.app.R;
 import com.qualifes.app.ui.adapter.SearchAdapter;
 import com.qualifes.app.util.DisplayParams;
 import com.qualifes.app.util.DisplayUtil;
+import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -86,9 +89,26 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
 
         home_search_result_back = (ImageButton) findViewById(R.id.home_search_result_back);
         home_search_result_back.setOnClickListener(this);
-        home_search_result_input = (EditText) findViewById(R.id.home_search_result_input);
+
+
+
+
         home_search_result_search = (TextView) findViewById(R.id.home_search_result_search);
         home_search_result_search.setOnClickListener(this);
+
+        home_search_result_input = (EditText) findViewById(R.id.home_search_result_input);
+        home_search_result_input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
+                    home_search_result_search.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         search_result_order_default = (TextView) findViewById(R.id.search_result_order_default);
         search_result_order_default.setOnClickListener(this);
@@ -105,6 +125,13 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
         home_search_result_items = (ListView) findViewById(R.id.home_search_result_items);
         home_search_result_items.setDividerHeight(0);
         home_search_result_items.setOnItemClickListener(this);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 
     @Override
@@ -335,6 +362,11 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
         bundle.putInt("goods_id", goods_id);
         intent.putExtra("goods_id", bundle);
         startActivity(intent);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }
 

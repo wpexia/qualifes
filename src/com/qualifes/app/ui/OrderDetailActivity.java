@@ -20,6 +20,7 @@ import com.qualifes.app.util.WXApi;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +58,11 @@ public class OrderDetailActivity extends Activity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 
     Handler getOrderByIdHandler = new Handler() {
         @Override
@@ -214,4 +220,8 @@ public class OrderDetailActivity extends Activity {
             }
         }
     };
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 }

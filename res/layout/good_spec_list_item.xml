@@ -18,6 +18,7 @@
             android:layout_below="@+id/spec_model_name"
             android:layout_marginTop="14dp"
             android:columnWidth="75dp"
+            android:paddingBottom="15dp"
             android:layout_marginBottom="15dp"
             android:layout_width="match_parent"
             android:layout_alignLeft="@+id/spec_model_name"

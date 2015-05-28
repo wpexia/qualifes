@@ -8,6 +8,7 @@ import com.qualifes.app.manager.ShoppingCartManager;
 import com.qualifes.app.ui.adapter.SpecListViewAdapter;
 import com.qualifes.app.util.AsyncImageLoader;
 import com.qualifes.app.util.OfflineCartDbHelper;
+import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -131,9 +132,8 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
 
                     JSONObject attribute = dataObject.getJSONObject("attribute");
                     specArray = attribute.getJSONArray("spe");
-
+                    spec_listView.setDividerHeight(0);
                     spec_listView.setAdapter(new SpecListViewAdapter(getApplicationContext(), specArray));
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -146,6 +146,12 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(GoodSpecActivity.this);
     }
 
     @Override
@@ -264,5 +270,9 @@ public class GoodSpecActivity extends Activity implements OnClickListener {
             }
         }
         return result;
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

@@ -241,7 +241,6 @@ public class OrderListAdapter extends BaseAdapter {
                     }
                 });
             } else {
-                ((TextView) convertView.findViewById(R.id.money)).setText("￥0.00");
                 button.setVisibility(View.INVISIBLE);
             }
         } catch (JSONException e) {

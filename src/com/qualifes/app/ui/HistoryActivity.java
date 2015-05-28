@@ -13,6 +13,7 @@ import com.qualifes.app.R;
 import com.qualifes.app.manager.HistoryManager;
 import com.qualifes.app.ui.fragment.ProductListNotNullFragment;
 import com.qualifes.app.ui.fragment.ProductListNullFragment;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +37,12 @@ public class HistoryActivity extends Activity  implements View.OnClickListener{
         setContentView(R.layout.history);
         fragmentManager = getFragmentManager();
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(HistoryActivity.this);
     }
 
     private void initView() {
@@ -142,4 +149,8 @@ public class HistoryActivity extends Activity  implements View.OnClickListener{
             }
         }
     };
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 }

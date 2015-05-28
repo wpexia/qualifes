@@ -7,6 +7,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
 import com.qualifes.app.R;
+import com.umeng.analytics.MobclickAgent;
 
 public class WebActivity extends Activity {
     @Override
@@ -31,5 +32,16 @@ public class WebActivity extends Activity {
 //        webView.getSettings().setJavaScriptEnabled(true);
 //        webView.getSettings().setDomStorageEnabled(true);
         webView.loadUrl(url);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }
