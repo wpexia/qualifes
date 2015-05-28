@@ -14,26 +14,29 @@
             android:paddingRight="15dp"
             android:src="@drawable/personal_setting"
             android:background="#ff0087c2"/>
-    <Button
-            android:layout_width="110dp"
-            android:layout_height="33dp"
-            android:text="登录"
-            android:textColor="@drawable/press80_white"
-            android:textSize="14sp"
-            android:id="@+id/personal_login"
-            android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
-            android:layout_marginLeft="60dp" android:layout_marginTop="58dp"
-            android:background="@drawable/buttonstyle"/>
-    <Button
-            android:layout_width="110dp"
-            android:layout_height="33dp"
-            android:text="注册"
-            android:textColor="@drawable/press80_white"
-            android:textSize="14sp"
-            android:id="@+id/personal_register"
-            android:layout_alignTop="@+id/personal_login" android:layout_toRightOf="@+id/personal_login"
-            android:layout_marginLeft="20dp"
-            android:layout_toEndOf="@+id/personal_login" android:background="@drawable/buttonstyle"/>
+    <RelativeLayout
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <Button
+                android:layout_width="110dp"
+                android:layout_height="33dp"
+                android:text="登录"
+                android:textColor="@drawable/press80_white"
+                android:textSize="14sp"
+                android:id="@+id/personal_login"
+                android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
+                android:background="@drawable/buttonstyle"/>
+        <Button
+                android:layout_width="110dp"
+                android:layout_height="33dp"
+                android:text="注册"
+                android:textColor="@drawable/press80_white"
+                android:textSize="14sp"
+                android:id="@+id/personal_register"
+                android:layout_alignTop="@+id/personal_login" android:layout_toRightOf="@+id/personal_login"
+                android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@+id/personal_login" android:background="@drawable/buttonstyle"/>
+    </RelativeLayout>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

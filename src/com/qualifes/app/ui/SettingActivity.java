@@ -35,6 +35,12 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         if (!sp.contains("token")) {
             findViewById(R.id.logout).setVisibility(View.INVISIBLE);
         }
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

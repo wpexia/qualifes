@@ -26,12 +26,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:clickable="true"
+                android:textColor="#b3e6ff"
                 android:layout_toRightOf="@+id/logo"
                 android:layout_marginLeft="14dp"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
                 android:background="@drawable/shape"
                 android:textSize="10sp"
+                android:textColorHint="#b3e6ff"
                 android:hint="请输入搜索的商品名称和品牌名"/>
 
         <ImageButton

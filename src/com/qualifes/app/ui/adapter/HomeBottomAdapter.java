@@ -16,7 +16,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.qualifes.app.R;
-import com.qualifes.app.config.Api;
+import com.qualifes.app.util.Api;
 import com.qualifes.app.ui.GoodDetailActivity;
 import com.qualifes.app.ui.LoginActivity;
 import com.qualifes.app.util.AsyncImageLoader;

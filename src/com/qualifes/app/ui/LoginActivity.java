@@ -3,6 +3,9 @@ package com.qualifes.app.ui;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.qualifes.app.manager.LoginManager;
 import com.qualifes.app.R;
@@ -46,6 +49,18 @@ public class LoginActivity extends Activity implements OnClickListener {
         LoginButton.setOnClickListener(this);
         forgetPasswordButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
+        passwordText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
+                    LoginButton.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
         findViewById(R.id.ForgetPassword).setOnClickListener(this);
         findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
             @Override

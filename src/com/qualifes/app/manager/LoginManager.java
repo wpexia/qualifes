@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import com.loopj.android.http.*;
-import com.qualifes.app.config.Api;
+import com.qualifes.app.util.Api;
 import com.qualifes.app.util.AsyncHttpCilentUtil;
 import com.qualifes.app.util.RSAHelper;
 import org.apache.http.Header;
@@ -73,6 +73,8 @@ public class LoginManager {
                         try {
                             SharedPreferences sp = context.getSharedPreferences("user", context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sp.edit();
+                            editor.remove("token");
+                            editor.remove("username");
                             editor.putString("token",response.getString("token"));
                             editor.putString("username", username);
                             editor.apply();

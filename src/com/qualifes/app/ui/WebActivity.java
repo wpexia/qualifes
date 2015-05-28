@@ -28,8 +28,8 @@ public class WebActivity extends Activity {
             }
         });
         WebView webView = (WebView) findViewById(R.id.webView);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setDomStorageEnabled(true);
+//        webView.getSettings().setJavaScriptEnabled(true);
+//        webView.getSettings().setDomStorageEnabled(true);
         webView.loadUrl(url);
     }
 }

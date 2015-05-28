@@ -6,14 +6,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.qualifes.app.R;
-import com.qualifes.app.config.Api;
+import com.qualifes.app.util.Api;
 import com.qualifes.app.util.RSAHelper;
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -37,9 +41,22 @@ public class ChangePasswdActivity extends Activity implements View.OnClickListen
 
     private void initView() {
         findViewById(R.id.back_button).setOnClickListener(this);
+        final Button login = (Button) findViewById(R.id.Login);
         findViewById(R.id.Login).setOnClickListener(this);
         oldpw = (EditText) findViewById(R.id.old_pwd);
         newpw = (EditText) findViewById(R.id.new_pwd);
+        newpw.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
+                    login.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override

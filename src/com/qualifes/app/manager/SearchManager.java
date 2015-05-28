@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.qualifes.app.config.Api;
+import com.qualifes.app.util.Api;
 import com.qualifes.app.util.AsyncHttpCilentUtil;
 import org.apache.http.Header;
 import org.json.JSONException;

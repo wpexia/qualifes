@@ -80,11 +80,20 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
         scrollView = (ScrollView) getActivity().findViewById(R.id.scrollView);
         viewFlipper = (ViewFlipper) getActivity().findViewById(R.id.viewFlipper);
+        ViewGroup.LayoutParams params = viewFlipper.getLayoutParams();
+        DisplayParams params1 = DisplayParams.getInstance(getActivity());
+        params.height = params1.screenWidth / 2;
+        viewFlipper.setLayoutParams(params);
 
         imageButtonL = (ImageView) getActivity().findViewById(R.id.secondPic);
         imageButtonL.setOnClickListener(this);
         imageButtonR = (ImageView) getActivity().findViewById(R.id.thirdPic);
         imageButtonR.setOnClickListener(this);
+        params = imageButtonL.getLayoutParams();
+        params.height = ((params1.screenWidth /2) / 16) * 9;
+        imageButtonL.setLayoutParams(params);
+        imageButtonR.setLayoutParams(params);
+
 
         gridView1 = (GridView) getActivity().findViewById(R.id.gridView1);
         gridView1.setOnItemClickListener(this);
@@ -311,13 +320,11 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                     HomeBottomAdapter adapter = new HomeBottomAdapter(getActivity(), goodsBottomData);
                     listView.setAdapter(adapter);
                     ViewGroup.LayoutParams params = listView.getLayoutParams();
-                    int totalHeight = 0;
-                    View listItem = adapter.getView(0, null, listView);
-                    listItem.measure(0, 0);
-                    totalHeight += listItem.getMeasuredHeight() * adapter.getCount();
-                    params.height = totalHeight + listView.getDividerHeight() * (data.length() - 1);
-                    listView.setLayoutParams(params);
+                    int count = adapter.getCount();
                     listView.setDividerHeight(0);
+                    DisplayParams params1 = DisplayParams.getInstance(getActivity());
+                    params.height = count * DisplayUtil.dip2px(100, params1.scale);
+                    listView.setLayoutParams(params);
                     listView.setOnItemClickListener(HomeFragment.this);
                 } catch (NullPointerException e) {
                     e.printStackTrace();

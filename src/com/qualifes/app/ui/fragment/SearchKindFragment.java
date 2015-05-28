@@ -4,9 +4,11 @@ package com.qualifes.app.ui.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.ConnectionURL;
@@ -69,10 +71,23 @@ public class SearchKindFragment extends Fragment implements View.OnClickListener
         back = (ImageButton) getActivity().findViewById(R.id.home_search_kind_back);
         back.setOnClickListener(this);
 
-        input = (EditText) getActivity().findViewById(R.id.home_search_kind_input);
 
         search = (TextView) getActivity().findViewById(R.id.home_search_kind_search);
         search.setOnClickListener(this);
+
+        input = (EditText) getActivity().findViewById(R.id.home_search_kind_input);
+        input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
+                    search.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         kind = (ListView) getActivity().findViewById(R.id.homeSearchKindItems);
         kind.setOnItemClickListener(this);

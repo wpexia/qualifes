@@ -16,11 +16,12 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.qualifes.app.R;
-import com.qualifes.app.config.Api;
+import com.qualifes.app.util.Api;
 import com.qualifes.app.ui.GoodDetailActivity;
 import com.qualifes.app.ui.HomeActivity;
 import com.qualifes.app.ui.ShoppingCartActivity;
 import com.qualifes.app.util.AsyncImageLoader;
+import com.qualifes.app.util.JsonUtil;
 import com.qualifes.app.util.OfflineCartDbHelper;
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -164,7 +165,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
                                     Api.dealSuccessRes(response, msg);
                                     Log.e("del_cart", response.toString());
                                     Toast.makeText(context, msg.obj.toString(), Toast.LENGTH_SHORT).show();
-                                    mData.remove(position);
+                                    mData = JsonUtil.getInstance().removeJsonArray(mData,position);
                                     notifyDataSetChanged();
                                     if (mData.length() == 0) {
                                         ((Activity) context).onContentChanged();
@@ -178,7 +179,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
                         OfflineCartDbHelper helper = new OfflineCartDbHelper(context);
                         try {
                             helper.delete(obj.getInt("dbid"));
-                            mData.remove(position);
+                            mData = JsonUtil.getInstance().removeJsonArray(mData,position);
                             Toast.makeText(context, "删除离线购物车成功", Toast.LENGTH_SHORT).show();
                             notifyDataSetChanged();
                         } catch (JSONException e) {

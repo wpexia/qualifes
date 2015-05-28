@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import com.loopj.android.http.*;
-import com.qualifes.app.config.Api;
+import com.qualifes.app.util.Api;
 import com.qualifes.app.util.AsyncHttpCilentUtil;
 import com.qualifes.app.util.RSAHelper;
 import org.apache.http.Header;

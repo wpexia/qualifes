@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
@@ -15,6 +16,8 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.qualifes.app.R;
 import com.qualifes.app.ui.adapter.SearchAdapter;
+import com.qualifes.app.util.DisplayParams;
+import com.qualifes.app.util.DisplayUtil;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +46,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
     AsyncHttpClient client;
     boolean flag = true;
     List<HashMap<String, Object>> data;
+    boolean isPrice = false;
 
     String ids;
 
@@ -116,7 +120,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
                 findViewById(R.id.tri).setVisibility(View.INVISIBLE);
                 search_result_order_sales.setSelected(false);
                 search_result_order_popu.setSelected(false);
-
+                isPrice = false;
                 if (home_search_result_input.getText().toString().isEmpty() && flag) {
                     Toast.makeText(getApplicationContext(), "请输入搜索的商品信息", Toast.LENGTH_SHORT).show();
                 } else {
@@ -131,7 +135,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
                     }
                     params.put("data[order_sort]", "desc");
                     params.put("data[limit_m]", 0);
-                    params.put("data[limit_n]", 5);
+                    params.put("data[limit_n]", 100);
                     client.get(ConnectionURL.getSearchURL(), params, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers,
@@ -162,9 +166,17 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
                         params.put("data[cat_id]", ids);
                     }
                     params.put("data[order_field]", "shop_price");
-                    params.put("data[order_sort]", "asc");
+                    if (!isPrice) {
+                        isPrice = true;
+                        params.put("data[order_sort]", "asc");
+                        ((ImageView) findViewById(R.id.tri)).setImageDrawable(getResources().getDrawable(R.drawable.triangle));
+                    } else {
+                        isPrice = false;
+                        params.put("data[order_sort]", "desc");
+                        ((ImageView) findViewById(R.id.tri)).setImageDrawable(getResources().getDrawable(R.drawable.triangle_turn));
+                    }
                     params.put("data[limit_m]", 0);
-                    params.put("data[limit_n]", 5);
+                    params.put("data[limit_n]", 100);
                     client.get(ConnectionURL.getSearchURL(), params, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers,
@@ -182,7 +194,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
                 findViewById(R.id.tri).setVisibility(View.INVISIBLE);
                 search_result_order_sales.setSelected(true);
                 search_result_order_popu.setSelected(false);
-
+                isPrice = false;
                 if (home_search_result_input.getText().toString().isEmpty() && flag) {
                     Toast.makeText(getApplicationContext(), "请输入搜索的商品信息", Toast.LENGTH_SHORT).show();
                 } else {
@@ -198,7 +210,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
                     params.put("data[order_field]", "is_hot");
                     params.put("data[order_sort]", "desc");
                     params.put("data[limit_m]", 0);
-                    params.put("data[limit_n]", 5);
+                    params.put("data[limit_n]", 100);
                     client.get(ConnectionURL.getSearchURL(), params, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers,
@@ -215,6 +227,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
                 search_result_order_price.setSelected(false);
                 search_result_order_sales.setSelected(false);
                 findViewById(R.id.tri).setVisibility(View.INVISIBLE);
+                isPrice = false;
                 search_result_order_popu.setSelected(true);
 
                 if (home_search_result_input.getText().toString().isEmpty() && flag) {
@@ -232,7 +245,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
                     params.put("data[order_field]", "click_count");
                     params.put("data[order_sort]", "desc");
                     params.put("data[limit_m]", 0);
-                    params.put("data[limit_n]", 5);
+                    params.put("data[limit_n]", 100);
                     client.get(ConnectionURL.getSearchURL(), params, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers,
@@ -252,6 +265,10 @@ public class SearchResultActivity extends Activity implements OnClickListener, O
     Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             adapter = new SearchAdapter(getApplicationContext(), data, R.layout.search_result_item, from, to);
+            ViewGroup.LayoutParams params =home_search_result_items.getLayoutParams();
+            DisplayParams params1 = DisplayParams.getInstance(getApplicationContext());
+            params.height = data.size() * DisplayUtil.dip2px(100, params1.scale);
+            home_search_result_items.setLayoutParams(params);
             home_search_result_items.setAdapter(adapter);
         }
 

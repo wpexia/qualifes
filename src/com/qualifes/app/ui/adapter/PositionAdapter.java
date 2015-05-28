@@ -16,9 +16,9 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.qualifes.app.R;
-import com.qualifes.app.config.Api;
+import com.qualifes.app.util.Api;
 import com.qualifes.app.ui.AddPositionActivity;
-import com.qualifes.app.ui.PositionActivity;
+import com.qualifes.app.util.JsonUtil;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -89,11 +89,11 @@ public class PositionAdapter extends BaseAdapter {
         client.post(Api.url("del_address"), params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.e("del_adderss",response.toString());
+                Log.e("del_adderss", response.toString());
                 Api.dealSuccessRes(response, msg);
                 if (msg.what == 0) {
                     Toast.makeText(mContext, msg.obj.toString(), Toast.LENGTH_SHORT).show();
-                    mData.remove(position);
+                    mData = JsonUtil.getInstance().removeJsonArray(mData, position);
                     notifyDataSetChanged();
                 }
             }

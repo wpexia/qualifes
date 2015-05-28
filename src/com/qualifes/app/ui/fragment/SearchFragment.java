@@ -1,14 +1,18 @@
 package com.qualifes.app.ui.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.qualifes.app.R;
 import com.qualifes.app.manager.SearchManager;
@@ -51,6 +55,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         initView();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initView();
+        ((InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE)).showSoftInput(home_search_input, InputMethodManager.SHOW_FORCED);
+    }
+
     private void initView() {
         db = new SearchRecordDbHelper(getActivity());
         mCursor = db.select();
@@ -58,7 +69,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         daList = new LinkedList<String>();
 
         while (mCursor.moveToNext()) {
-            daList.add(mCursor.getString(1));
+            daList.addFirst(mCursor.getString(1));
         }
         Collections.reverse(daList);
 
@@ -80,6 +91,18 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         home_search_search = (TextView) getActivity().findViewById(R.id.home_search_search);
         home_search_search.setOnClickListener(this);
         home_search_input = (EditText) getActivity().findViewById(R.id.home_search_input);
+        home_search_input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
+                    home_search_search.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         home_search_hot_items = (GridView) getActivity().findViewById(R.id.home_search_hot_items);
         SearchManager searchManager = SearchManager.getInstance();
@@ -93,8 +116,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(getActivity(), "请输入搜索的商品信息", Toast.LENGTH_SHORT).show();
                 } else {
                     String input = home_search_input.getText().toString();
-
-
                     if (!daList.contains(input)) {
                         daList.addFirst(input);
                         db.insert(input);

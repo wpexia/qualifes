@@ -8,8 +8,10 @@ import android.os.Message;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -55,6 +57,18 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
         agree = (Button) findViewById(R.id.agree);
         getCode.setOnClickListener(this);
         agree.setOnClickListener(this);
+        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
+                    agree.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
         viewPassword.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -163,28 +177,7 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    LoginManager loginManager = LoginManager.getInstance();
-                    loginManager.login(username.getText().toString(), password.getText().toString(), loginHandle, ForgetPWActivity.this);
-                }
-                break;
-                case 1: {
-                    Toast toast = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
-                }
-            }
-        }
-    };
-
-
-    Handler loginHandle = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0: {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("username", username.getText().toString());
-                    Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(ForgetPWActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(ForgetPWActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
                 break;
@@ -192,9 +185,9 @@ public class ForgetPWActivity extends Activity implements View.OnClickListener {
                     Toast toast = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
-                    break;
                 }
             }
         }
     };
+
 }

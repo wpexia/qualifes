@@ -16,7 +16,7 @@ import android.view.animation.AnimationUtils;
 
 import android.widget.*;
 import com.qualifes.app.R;
-import com.qualifes.app.config.Api;
+import com.qualifes.app.util.Api;
 import com.qualifes.app.util.AsyncImageLoader;
 import com.qualifes.app.util.DisplayParams;
 import com.qualifes.app.util.DisplayUtil;
@@ -273,15 +273,12 @@ public class GoodDetailActivity extends Activity implements OnClickListener, Ges
 
                         detail_imgs.addView(iv, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-                        detail_imgs.setAutoStart(true);
                         detail_imgs.setFlipInterval(1500);
-                        if (detail_imgs.isAutoStart() && imgsArray.length() > 1 && !detail_imgs.isFlipping()) {
+                        if (imgsArray.length() > 1 && !detail_imgs.isFlipping()) {
                             Animation lInAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_left_in);        // 向左滑动左侧进入的渐变效果（alpha 0.1  -> 1.0）
                             Animation lOutAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.push_left_out);    // 向左滑动右侧滑出的渐变效果（alpha 1.0  -> 0.1）
-
                             detail_imgs.setInAnimation(lInAnim);
                             detail_imgs.setOutAnimation(lOutAnim);
-                            detail_imgs.startFlipping();
                         }
                     }
                     findViewById(R.id.detail_share).setOnClickListener(new OnClickListener() {

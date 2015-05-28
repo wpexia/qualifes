@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -95,6 +97,19 @@ public class AddPositionActivity extends Activity implements View.OnClickListene
         findViewById(R.id.save).setOnClickListener(this);
         findViewById(R.id.savedefault).setOnClickListener(this);
         position = (TextView) findViewById(R.id.icon_position);
+
+        ((EditText) findViewById(R.id.position)).setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
+                    findViewById(R.id.save).callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,11 +1,14 @@
-package com.qualifes.app.config;
+package com.qualifes.app.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Looper;
 import android.os.Message;
 import android.view.Gravity;
 import android.widget.Toast;
+import com.qualifes.app.ui.LoginActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,9 +35,18 @@ public class Api {
                 if (response.getInt("status") == 401) {
                     SharedPreferences sp = mContext.getSharedPreferences("user", Activity.MODE_PRIVATE);
                     sp.edit().remove("token").apply();
-                    Toast toast = Toast.makeText(mContext, "请重新登录!", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
+                    new Thread() {
+                        public void run() {
+                            Looper.prepare();
+                            Toast toast = Toast.makeText(mContext, "请重新登录!", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                            Intent intent = new Intent(mContext, LoginActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            mContext.startActivity(intent);
+                            Looper.loop();
+                        }
+                    }.start();
                 }
                 if (response.getInt("status") < 200 || response.getInt("status") >= 300)
                     msg.what = 1;

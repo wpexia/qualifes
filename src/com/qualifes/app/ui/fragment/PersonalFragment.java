@@ -68,6 +68,8 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
                 } else {
                     getActivity().findViewById(R.id.newBadge).setVisibility(View.INVISIBLE);
                 }
+            } else {
+                getActivity().findViewById(R.id.newBadge).setVisibility(View.INVISIBLE);
             }
         }
     };

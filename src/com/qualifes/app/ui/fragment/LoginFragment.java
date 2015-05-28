@@ -31,9 +31,19 @@ public class LoginFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        changeUsername();
+    }
+
+
+    private void changeUsername() {
         SharedPreferences sp = getActivity().getSharedPreferences("user", Activity.MODE_PRIVATE);
         String username = sp.getString("username","00000000000");
         username = username.substring(0,3) + "****" + username.substring(7,11);
         ((TextView) getActivity().findViewById(R.id.username)).setText(username);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        changeUsername();
     }
 }

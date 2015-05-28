@@ -3,7 +3,7 @@ package com.qualifes.app.ui;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,17 +11,16 @@ import android.os.Message;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.qualifes.app.R;
-import com.qualifes.app.config.Api;
+import com.qualifes.app.util.Api;
 import com.qualifes.app.ui.fragment.*;
-import com.qualifes.app.util.AsyncHttpCilentUtil;
 import com.qualifes.app.util.PlistHelper;
-import com.readystatesoftware.viewbadger.BadgeView;
 import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -279,6 +278,11 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         }
         if (searchKindFragment != null) {
             transaction.hide(searchKindFragment);
+        }
+        try {
+            ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(HomeActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 
