@@ -59,7 +59,7 @@ public class SearchKindAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = mInflater.inflate(resource, null);
+            convertView = mInflater.inflate(resource, parent, false);
             if (to.length == 2) {
                 View v = convertView.findViewById(to[1]);
                 v.setVisibility(View.VISIBLE);

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="40dp"
     android:minHeight="40dp"
     android:gravity="center"
-    android:background="@drawable/search_kind_list2_selector">
+    android:background="#f4f4f4">
     <TextView 
         android:id="@+id/home_search_kind_child_name"
         android:layout_width="match_parent"

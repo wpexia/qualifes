@@ -3,14 +3,24 @@ package com.qualifes.app.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.qualifes.app.R;
+import com.qualifes.app.util.Api;
 import com.umeng.analytics.MobclickAgent;
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SettingActivity extends Activity implements View.OnClickListener {
     private SharedPreferences sp;
@@ -39,6 +49,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.aboutus).setOnClickListener(this);
         findViewById(R.id.help).setOnClickListener(this);
         findViewById(R.id.changepassword).setOnClickListener(this);
+        findViewById(R.id.checkupdate).setOnClickListener(this);
         if (!sp.contains("token")) {
             findViewById(R.id.logout).setVisibility(View.INVISIBLE);
         }
@@ -114,6 +125,38 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                     Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
+            }
+            break;
+            case R.id.checkupdate: {
+                try {
+                    PackageManager manager = this.getPackageManager();
+                    PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+                    String version = String.valueOf(info.versionCode);
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    RequestParams params = new RequestParams();
+                    params.put("data[appver]", version);
+                    params.put("data[codetype]", "android");
+                    client.post(Api.url("get_app_ver"), params, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            try {
+                                if (response.getBoolean("data")) {
+                                    Uri uri = Uri.parse("http://m.qualifes.com");
+                                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(SettingActivity.this, "当前是最新版本", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                Toast.makeText(SettingActivity.this, "当前是最新版本", Toast.LENGTH_SHORT).show();
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
     }

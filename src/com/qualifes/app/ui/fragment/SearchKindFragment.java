@@ -99,7 +99,6 @@ public class SearchKindFragment extends Fragment implements View.OnClickListener
     }
 
 
-
     private void accessServer() {
         client.get(ConnectionURL.getGoodCategory(), new JsonHttpResponseHandler() {
             @Override
@@ -129,6 +128,7 @@ public class SearchKindFragment extends Fragment implements View.OnClickListener
                 }
 
                 kind.setAdapter(new SearchKindAdapter(getActivity(), cateList, R.layout.search_kind_item1, from, to));
+                kind.setDividerHeight(0);
             }
         });
     }
@@ -176,9 +176,9 @@ public class SearchKindFragment extends Fragment implements View.OnClickListener
                     RelativeLayout layout = (RelativeLayout) parent.getChildAt(i);
                     TextView child = (TextView) layout.findViewById(R.id.home_search_kind_item_children);
                     child.setVisibility(View.GONE);
-                    if(i != position ) {
+                    if (i != position) {
                         layout.findViewById(R.id.point).setVisibility(View.INVISIBLE);
-                    }else {
+                    } else {
                         layout.findViewById(R.id.point).setVisibility(View.VISIBLE);
                     }
                 }
@@ -202,6 +202,8 @@ public class SearchKindFragment extends Fragment implements View.OnClickListener
                                 childList.add(map);
                                 String[] from = {"child"};
                                 int[] to = {R.id.home_search_kind_child_name};
+                                kindItems.setDividerHeight(1);
+                                kindItems.setDivider(getActivity().getResources().getDrawable(R.drawable.diviter));
                                 kindItems.setAdapter(new SearchKindAdapter(getActivity(), childList, R.layout.search_kind_item2, from, to));
                             }
                         } catch (JSONException e) {
