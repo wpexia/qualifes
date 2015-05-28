@@ -224,6 +224,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
         hideFragment(transaction);
         switch (fragmentId) {
             case 0: {
+                findViewById(R.id.home).setSelected(true);
                 if (homeFragment == null) {
                     homeFragment = new HomeFragment();
                     transaction.add(R.id.main, homeFragment);
@@ -231,40 +232,40 @@ public class HomeActivity extends Activity implements View.OnClickListener, View
                     transaction.show(homeFragment);
                 }
                 if (flag) {
-                    findViewById(R.id.home).setSelected(true);
                     tab.setVisibility(View.VISIBLE);
                 }
             }
             break;
             case 1: {
+                findViewById(R.id.list).setSelected(true);
                 if (searchKindFragment == null) {
                     searchKindFragment = new SearchKindFragment();
                     transaction.add(R.id.main, searchKindFragment);
                 } else {
                     transaction.show(searchKindFragment);
-                    findViewById(R.id.list).setSelected(true);
                     tab.setVisibility(View.VISIBLE);
                 }
             }
             break;
             case 2: {
+                findViewById(R.id.shoppingcart).setSelected(true);
                 if (shoppingCartFragment == null) {
                     shoppingCartFragment = new ShoppingCartFragment();
                     transaction.add(R.id.main, shoppingCartFragment);
                 } else {
                     transaction.show(shoppingCartFragment);
-                    findViewById(R.id.shoppingcart).setSelected(true);
+
                     tab.setVisibility(View.VISIBLE);
                 }
             }
             break;
             case 3: {
+                findViewById(R.id.personal).setSelected(true);
                 if (personalFragment == null) {
                     personalFragment = new PersonalFragment();
                     transaction.add(R.id.main, personalFragment);
                 } else {
                     transaction.show(personalFragment);
-                    findViewById(R.id.personal).setSelected(true);
                     tab.setVisibility(View.VISIBLE);
                 }
             }
